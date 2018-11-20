@@ -1,6 +1,5 @@
 package pokemonHeroes;
 
-import pokemonHeroes.Units.Unit;
 import javax.swing.*;
 import java.awt.*;
 

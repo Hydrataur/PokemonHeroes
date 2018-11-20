@@ -1,8 +1,5 @@
 package pokemonHeroes;
 
-import pokemonHeroes.Units.Unit;
-
-import java.util.Queue;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Graphics;
@@ -22,10 +19,7 @@ public class Scene extends JPanel{
     private ImageIcon bgIcon = new ImageIcon("tempBG.png"); //Background image
     private Image bgImage = bgIcon.getImage();
 
-    private ImageIcon queueBG = new ImageIcon("tempQueueBG.png");
-    private Image queueBGImage = queueBG.getImage();
-
-    public Queue<Unit> queue; //Turn queue
+    private Unit[] queue; //Turn queue
 
     public static void main(String[] args){
         JFrame frame = new JFrame(); //Opens up the game's frame
@@ -63,13 +57,52 @@ public class Scene extends JPanel{
         Graphics trainerGraphics = trainerOneImage.getGraphics();
         trainerGraphics.drawImage(trainerOne.getTrainerImage(), 0, 0, trainerOne.getTrainerImage().getWidth(null), trainerOne.getTrainerImage().getHeight(null), this);
         trainerOneImage = op.filter(trainerOneImage, null); //Flips image
+        trainerGraphics.dispose();
 
         g2d.drawImage(trainerOneImage, 200, getHeight()/2, 100, 200, this); //Draw first trainer
         g2d.drawImage(trainerTwo.getTrainerImage(), getWidth()-200, getHeight()/2, 100, 200, this); //Draw second trainer
 
-        g.drawImage(queueBGImage, 20, getHeight()-(int) 1.5*queueTileLength, (int)1.5*queueTileLength, (int) 1.5*queueTileLength, this);
-        for(int i=1; i<14; i++){
-            g.drawImage(queueBGImage, 20+queueTileLength+i*queueTileLength, getHeight()-(int) 1.5*queueTileLength, queueTileLength, queueTileLength, this);
+        trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Wobbuffet", 1, true));
+        trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Xatu", 2, false));
+        trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Yanmega", 3, true));
+        trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Zapdos", 4, true));
+        trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Togekiss", 100, false));
+        trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Torterra", 6, true));
+        trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Toxicroak", 7, false));
+        trainerTwo.addUnit(null);
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Tyranitar", 9, false));
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Ursaring", 10, true));
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Vespiquen", 11, false));
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Wailord", 12, false));
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Walrein", 13, true));
+        trainerTwo.addUnit(null);
+
+        queue = SceneFunctions.createQueue(trainerOne, trainerTwo);
+
+        g.setColor(Color.ORANGE);
+        g.fillRect(20, getHeight()-(int)(1.5*queueTileLength), (int)(1.5*queueTileLength), (int)(1.5*queueTileLength));
+        ImageIcon pokeIcon = new ImageIcon("PokePics/Zoomed/"+queue[0].getUnitName()+".png");
+        Image pokeImage = pokeIcon.getImage();
+        BufferedImage pokeQueueImage = new BufferedImage(pokeImage.getWidth(null)/2, pokeImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        Graphics pokeGraphics = pokeQueueImage.getGraphics();
+        pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+        pokeGraphics.dispose();
+        g2d.drawImage(pokeQueueImage, 20, getHeight()-(int)(1.5*queueTileLength), (int)(1.5*queueTileLength), (int)(1.5*queueTileLength), this);
+        for(int i=1; i<14; i++) {
+            if (queue[i] != null) {
+                if(queue[i].isTeam())
+                    g.setColor(Color.BLUE);
+                else
+                    g.setColor(Color.RED);
+                g.fillRect((i+1)*queueTileLength, getHeight()-queueTileLength, queueTileLength, queueTileLength);
+                pokeIcon = new ImageIcon("PokePics/Zoomed/"+queue[i].getUnitName()+".png");
+                pokeImage = pokeIcon.getImage();
+                pokeQueueImage = new BufferedImage(pokeImage.getWidth(null)/2, pokeImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                pokeGraphics = pokeQueueImage.getGraphics();
+                pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+                pokeGraphics.dispose();
+                g2d.drawImage(pokeQueueImage, (i+1)*queueTileLength, getHeight()-queueTileLength, queueTileLength, queueTileLength, this);
+            }
         }
 
     }
