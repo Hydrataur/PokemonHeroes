@@ -47,13 +47,13 @@ public class Scene extends JPanel implements MouseListener {
         trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Togekiss", 100, false));
         trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Torterra", 6, true));
         trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Toxicroak", 7, false));
-        trainerTwo.addUnit(null);
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Gyarados", 7, false));
         trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Tyranitar", 9, false));
         trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Ursaring", 10, true));
         trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Vespiquen", 11, false));
         trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Wailord", 12, false));
         trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Walrein", 13, true));
-        trainerTwo.addUnit(null);
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Empoleon", 7, false));
 
         queue = SceneFunctions.createQueue(trainerOne, trainerTwo);
     }
