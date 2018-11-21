@@ -32,10 +32,21 @@ public class SceneFunctions {
 
     public static Unit[] updateQueue(Unit[] queue){
         Unit temp = queue[0];
-        for(int i=1; i<queue.length; i++){
+        for(int i=1; i<queue.length; i++){ //Moves entire queue by one spot
             queue[i-1] = queue[i];
         }
         queue[queue.length-1] = temp;
+
+        for (int i=0; i<queue.length; i++){ //Makes sure all null units are at the end
+            if (queue[i] == null){
+                for (int j=i+1; j<queue.length; j++){
+                    queue[j-1]=queue[j];
+                }
+                queue[queue.length-1]=null;
+                break;
+            }
+        }
+
         return queue;
     }
 }
