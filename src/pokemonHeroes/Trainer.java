@@ -7,6 +7,15 @@ public class Trainer {
 
     private String name; //Trainer name used to get correct image
     private boolean team; //Tells which team the trainer is, right or left
+    private boolean attackedThisTurn; //Trainer can only attack once per round
+
+    public boolean isAttackedThisTurn() {
+        return attackedThisTurn;
+    }
+
+    public void setAttackedThisTurn(boolean attackedThisTurn) {
+        this.attackedThisTurn = attackedThisTurn;
+    }
 
     private ImageIcon trainerIcon;
     private Image trainerImage;

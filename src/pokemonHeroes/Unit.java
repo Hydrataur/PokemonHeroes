@@ -16,6 +16,25 @@ public class Unit {
     private int unitsInStack;  //Number of units currently in a stack. Might need to move somewhere else
     private String unitName;
 
+    private int x;
+    private int y;
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public void setCurrentHealth(int currentHealth) {
         this.currentHealth = currentHealth;
     }
