@@ -23,6 +23,8 @@ public class Scene extends JPanel implements MouseListener {
 
     private Unit[] queue; //Turn queue
 
+    private Tile[][] tilesArr = new Tile[(int)Math.sqrt(tiles)][(int)Math.sqrt(tiles)];
+
     private Trainer trainerOne, trainerTwo; //The two player's trainers
 
     public Scene(){
@@ -56,6 +58,21 @@ public class Scene extends JPanel implements MouseListener {
         trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Empoleon", 7, false));
 
         queue = SceneFunctions.createQueue(trainerOne, trainerTwo);
+
+        queue[0].setX(0);queue[0].setY(0);
+        queue[1].setX(0);queue[1].setY(1);
+        queue[2].setX(0);queue[2].setY(2);
+        queue[3].setX(0);queue[3].setY(3);
+        queue[4].setX(0);queue[4].setY(4);
+        queue[5].setX(0);queue[5].setY(5);
+        queue[6].setX(0);queue[6].setY(6);
+        queue[7].setX(9);queue[7].setY(0);
+        queue[8].setX(9);queue[8].setY(1);
+        queue[9].setX(9);queue[9].setY(2);
+        queue[10].setX(9);queue[10].setY(3);
+        queue[11].setX(9);queue[11].setY(4);
+        queue[12].setX(9);queue[12].setY(5);
+        queue[13].setX(9);queue[13].setY(6);
     }
 
     public static void main(String[] args){
@@ -71,17 +88,12 @@ public class Scene extends JPanel implements MouseListener {
         Graphics2D g2d = (Graphics2D) g;
         int tileStart = (int) Math.round((getWidth() - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
         g.drawImage(bgImage, 0, 0, getWidth(), getHeight(), this); //Draw background
-        for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
-            for (int j = 0; j < Math.sqrt(tiles); j++) {
-                g.drawImage(tileImage, tileStart + j * tileLength + j * 5, 50 + i * tileLength + i * 5, tileLength, tileLength, this);
-            }
-        }
+
+        BufferedImage trainerOneImage = new BufferedImage(trainerOne.getTrainerImage().getWidth(null), trainerOne.getTrainerImage().getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
         AffineTransform tx = AffineTransform.getScaleInstance(-1, 1); //All trainer pictures are by default facing left. This flips them.
         tx.translate(-trainerOne.getTrainerImage().getWidth(null), 0);
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-
-        BufferedImage trainerOneImage = new BufferedImage(trainerOne.getTrainerImage().getWidth(null), trainerOne.getTrainerImage().getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
         Graphics trainerGraphics = trainerOneImage.getGraphics();
         trainerGraphics.drawImage(trainerOne.getTrainerImage(), 0, 0, trainerOne.getTrainerImage().getWidth(null), trainerOne.getTrainerImage().getHeight(null), this);
@@ -115,28 +127,50 @@ public class Scene extends JPanel implements MouseListener {
                 pokeGraphics.dispose();
                 g2d.drawImage(pokeQueueImage, (i + 1) * queueTileLength, getHeight() - queueTileLength, queueTileLength, queueTileLength, this);
 
-                pokeIcon = new ImageIcon("PokePics/Combat/"+queue[i].getUnitName()+".png");
-                pokeImage = pokeIcon.getImage();
-                BufferedImage pokeFieldImage = new BufferedImage(pokeImage.getWidth(null)/2, pokeImage.getHeight(null)/4, BufferedImage.TYPE_INT_ARGB);
-                pokeGraphics=pokeFieldImage.getGraphics();
-                pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-                pokeGraphics.dispose();
-                g2d.drawImage(pokeFieldImage, (i+1)*100, 300, pokeFieldImage.getWidth()*2, pokeFieldImage.getHeight()*2, this);
+
+            }
+        }
+
+        for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
+            for (int j = 0; j < Math.sqrt(tiles); j++) {
+                g.drawImage(tileImage, tileStart + j * tileLength + j * 5, 50 + i * tileLength + i * 5, tileLength, tileLength, this);
+                tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5+tileLength, 80 + i * tileLength + i * 5, 80 + i * tileLength + i * 5+tileLength);
+                for (int k = 0; k < 14; k++) {
+                    if (queue[k].getX() == j && queue[k].getY() == i) {
+                        pokeIcon = new ImageIcon("PokePics/Combat/" + queue[k].getUnitName() + ".png");
+                        pokeImage = pokeIcon.getImage();
+                        BufferedImage pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
+                        pokeGraphics = pokeFieldImage.getGraphics();
+                        if (queue[k].isTeam())
+                            pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+                        else
+                            pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+                        pokeGraphics.dispose();
+                        g2d.drawImage(pokeFieldImage, tileStart+j*tileLength+j*5, 50+i*tileLength+i*5, pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
+                    }
+                }
             }
         }
     }
 
+    public void turn(int x, int y){
+        for (int i=0; i<tilesArr.length; i++){
+            for (int j=0; j<tilesArr.length; j++){
+                //System.out.println(e.getX()+" "+e.getY()+" "+ tilesArr[j][i].toString());
+                if(SceneFunctions.inTile(x, y, tilesArr[j][i]) && !SceneFunctions.spotTaken(j, i, queue)) {
+                    System.out.println(tilesArr[j][i].getX() + " " + tilesArr[j][i].getY());
+                    queue[0].setX(j);
+                    queue[0].setY(i);
+                    SceneFunctions.updateQueue(queue);
+                }
+            }
+        }
+        repaint();
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        SceneFunctions.updateQueue(queue);
-        repaint();
-        for (int i=0; i<queue.length; i++){
-            if (queue[i]==null)
-                System.out.print("null");
-            else
-                System.out.print(queue[i].getUnitName());
-        }
-        System.out.println();
+        turn(e.getX(), e.getY());
     }
 
     @Override

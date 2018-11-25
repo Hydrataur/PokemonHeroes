@@ -49,4 +49,20 @@ public class SceneFunctions {
 
         return queue;
     }
+
+    public static boolean spotTaken(int X, int Y, Unit[] queue){ //Checks if the spot a unit wants to move to is taken
+
+        for (int i=0; i<queue.length; i++)
+            if (queue[i].getX()==X && queue[i].getY()==Y)
+                return true;
+
+        return false;
+
+    }
+
+    public static boolean inTile(int x, int y, Tile tile){ //Checks which tile was clicked
+        if (tile.getLeftX()<x && x<tile.getRightX() && tile.getTopY()<y && y<tile.getBottomY())
+            return true;
+        return false;
+    }
 }
