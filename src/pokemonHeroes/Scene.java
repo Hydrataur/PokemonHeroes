@@ -27,6 +27,10 @@ public class Scene extends JPanel implements MouseListener {
 
     private Trainer trainerOne, trainerTwo; //The two player's trainers
 
+    private long time;
+    private long oldTime = 0;
+    private int deltaTime = 1;
+
     public Scene(){
         JFrame frame = new JFrame(); //Opens up the game's frame
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //Terminates app when closing window so that it doesn't run in the background
@@ -57,7 +61,7 @@ public class Scene extends JPanel implements MouseListener {
         trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Walrein", 13, true));
         trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Empoleon", 7, false));
 
-        queue = SceneFunctions.createQueue(trainerOne, trainerTwo);
+        queue = SceneFunctions.createQueue(trainerOne, trainerTwo); //Creates the queue according to player's teams
 
         queue[0].setX(0);queue[0].setY(0);
         queue[1].setX(0);queue[1].setY(1);
@@ -73,10 +77,21 @@ public class Scene extends JPanel implements MouseListener {
         queue[11].setX(9);queue[11].setY(4);
         queue[12].setX(9);queue[12].setY(5);
         queue[13].setX(9);queue[13].setY(6);
+
+        while(true){
+            time = System.nanoTime();
+            deltaTime = (int) ((time-oldTime));
+            oldTime = time;
+        }
     }
 
     public static void main(String[] args){
+
         Scene scene = new Scene(); //Panel we draw on
+
+        int time_last_frame = 0;
+        int time_this_frame = 0;
+
     }
 
     protected void paintComponent(Graphics g){ //Default panel function that allows us to add stuff to the panel
@@ -89,11 +104,11 @@ public class Scene extends JPanel implements MouseListener {
         int tileStart = (int) Math.round((getWidth() - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
         g.drawImage(bgImage, 0, 0, getWidth(), getHeight(), this); //Draw background
 
-        BufferedImage trainerOneImage = new BufferedImage(trainerOne.getTrainerImage().getWidth(null), trainerOne.getTrainerImage().getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
         AffineTransform tx = AffineTransform.getScaleInstance(-1, 1); //All trainer pictures are by default facing left. This flips them.
         tx.translate(-trainerOne.getTrainerImage().getWidth(null), 0);
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+
+        BufferedImage trainerOneImage = new BufferedImage(trainerOne.getTrainerImage().getWidth(null), trainerOne.getTrainerImage().getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
         Graphics trainerGraphics = trainerOneImage.getGraphics();
         trainerGraphics.drawImage(trainerOne.getTrainerImage(), 0, 0, trainerOne.getTrainerImage().getWidth(null), trainerOne.getTrainerImage().getHeight(null), this);
@@ -146,7 +161,9 @@ public class Scene extends JPanel implements MouseListener {
                         else
                             pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
                         pokeGraphics.dispose();
-                        g2d.drawImage(pokeFieldImage, tileStart+j*tileLength+j*5, 50+i*tileLength+i*5, pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
+                        g2d.drawImage(pokeFieldImage, queue[k].getTileX(), queue[k].getTileY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
+                        //queue[k].setTileX(tileStart+j*tileLength+j*5);
+                        //queue[k].setTileY(50+i*tileLength+i*5);
                     }
                 }
             }
@@ -170,7 +187,9 @@ public class Scene extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        turn(e.getX(), e.getY());
+        //turn(e.getX(), e.getY());
+        queue[0].moveTo(e.getX(), e.getY(), deltaTime);
+        repaint();
     }
 
     @Override

@@ -19,6 +19,25 @@ public class Unit {
     private int x;
     private int y;
 
+    private int tileX;
+    private int tileY;
+
+    public int getTileX() {
+        return tileX;
+    }
+
+    public void setTileX(int tileX) {
+        this.tileX = tileX;
+    }
+
+    public int getTileY() {
+        return tileY;
+    }
+
+    public void setTileY(int tileY) {
+        this.tileY = tileY;
+    }
+
     public int getX() {
         return x;
     }
@@ -103,6 +122,35 @@ public class Unit {
         this.unitName=unitName;
         this.initiative=initiative;
         this.team=team;
+    }
+
+    public void moveTo(int x, int y, int delta_time){
+        int moveX, moveY;
+        moveX = 10*delta_time;
+        moveY = 10*delta_time;
+
+        if (tileX<x){
+            tileX+=moveX;
+            if (tileX>x)
+                tileX = x;
+        }
+
+        if (tileX>x){
+            tileX-=moveX;
+            if (tileX<x)
+                tileX=x;
+        }
+
+        if (tileY<y){
+            tileY+=moveY;
+            if (tileY>y)
+                tileY = y;
+        }
+        if (tileY>y){
+            tileY-=moveY;
+            if (tileY<y)
+                tileY = y;
+        }
     }
 
 }
