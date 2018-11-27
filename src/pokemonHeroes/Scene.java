@@ -29,7 +29,15 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     private Trainer trainerOne, trainerTwo; //The two player's trainers
 
-    private int speed = 1000; //Time in between ticks. Lower speed-->Things happen faster. Counted in milliseconds.
+    private int speed = 50; //Time in between ticks. Lower speed-->Things happen faster. Counted in milliseconds.
+
+    private ImageIcon pokeIcon; //Pokemon related graphics
+    private Image pokeImage;
+    private BufferedImage pokeQueueImage;
+    private Graphics pokeGraphics;
+    private BufferedImage pokeFieldImage;
+
+    private boolean inTurn;
 
     public Scene(){
         JFrame frame = new JFrame(); //Opens up the game's frame
@@ -81,6 +89,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         Timer timer = new Timer(speed, this);
         timer.start();
 
+        inTurn=false;
     }
 
     protected void paintComponent(Graphics g){ //Default panel function that allows us to add stuff to the panel
@@ -109,10 +118,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
         g.setColor(Color.ORANGE);
         g.fillRect(20, getHeight() - (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength));
-        ImageIcon pokeIcon = new ImageIcon("PokePics/Zoomed/" + queue[0].getUnitName() + ".png");
-        Image pokeImage = pokeIcon.getImage();
-        BufferedImage pokeQueueImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        Graphics pokeGraphics = pokeQueueImage.getGraphics();
+        pokeIcon = new ImageIcon("PokePics/Zoomed/" + queue[0].getUnitName() + ".png");
+        pokeImage = pokeIcon.getImage();
+        pokeQueueImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        pokeGraphics = pokeQueueImage.getGraphics();
         pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
         pokeGraphics.dispose();
         g2d.drawImage(pokeQueueImage, 20, getHeight() - (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength), this);
@@ -143,16 +152,16 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
                     if (queue[k].getX() == j && queue[k].getY() == i) {
                         pokeIcon = new ImageIcon("PokePics/Combat/" + queue[k].getUnitName() + ".png");
                         pokeImage = pokeIcon.getImage();
-                        BufferedImage pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
+                        pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
                         pokeGraphics = pokeFieldImage.getGraphics();
                         if (queue[k].isTeam())
                             pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
                         else
                             pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
                         pokeGraphics.dispose();
-                        g2d.drawImage(pokeFieldImage, queue[k].getTileX(), queue[k].getTileY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
-                        //queue[k].setTileX(tileStart+j*tileLength+j*5);
-                        //queue[k].setTileY(50+i*tileLength+i*5);
+                        g2d.drawImage(pokeFieldImage, queue[k].getX(), queue[k].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
+                        //queue[k].setX(tileStart+j*tileLength+j*5);
+                        //queue[k].setY(50+i*tileLength+i*5);
                     }
                 }
             }
@@ -165,8 +174,8 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
                 //System.out.println(e.getX()+" "+e.getY()+" "+ tilesArr[j][i].toString());
                 if(SceneFunctions.inTile(x, y, tilesArr[j][i]) && !SceneFunctions.spotTaken(j, i, queue)) {
                     //System.out.println(tilesArr[j][i].getX() + " " + tilesArr[j][i].getY());
-                    queue[0].setX(j);
-                    queue[0].setY(i);
+                    queue[0].setTileX(j);
+                    queue[0].setTileY(i);
                     SceneFunctions.updateQueue(queue);
                 }
             }
@@ -176,6 +185,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        inTurn=true;
         turn(e.getX(), e.getY());
     }
 
@@ -201,7 +211,9 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e){
-        System.out.println("Test");
+        queue[5].setX(queue[5].getX()+20);
+//        System.out.println("Test");
+        repaint();
     }
 
 }

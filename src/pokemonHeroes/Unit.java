@@ -16,10 +16,10 @@ public class Unit {
     private int unitsInStack;  //Number of units currently in a stack. Might need to move somewhere else
     private String unitName;
 
-    private int x;
+    private int x; //Actual X, Y coords for place on board
     private int y;
 
-    private int tileX;
+    private int tileX; //X, Y of tile they're on
     private int tileY;
 
     public int getTileX() {
