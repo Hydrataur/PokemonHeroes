@@ -3,13 +3,15 @@ package pokemonHeroes;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
-public class Scene extends JPanel implements MouseListener {
+public class Scene extends JPanel implements MouseListener, ActionListener {
 
     private int tiles = 100; //Number of tiles on board
     private int tileLength = 64; //Length of each tile
@@ -27,9 +29,7 @@ public class Scene extends JPanel implements MouseListener {
 
     private Trainer trainerOne, trainerTwo; //The two player's trainers
 
-    private long time;
-    private long oldTime = 0;
-    private int deltaTime = 1;
+    private int speed = 1000; //Time in between ticks. Lower speed-->Things happen faster. Counted in milliseconds.
 
     public Scene(){
         JFrame frame = new JFrame(); //Opens up the game's frame
@@ -78,19 +78,8 @@ public class Scene extends JPanel implements MouseListener {
         queue[12].setX(9);queue[12].setY(5);
         queue[13].setX(9);queue[13].setY(6);
 
-        while(true){
-            time = System.nanoTime();
-            deltaTime = (int) ((time-oldTime));
-            oldTime = time;
-        }
-    }
-
-    public static void main(String[] args){
-
-        Scene scene = new Scene(); //Panel we draw on
-
-        int time_last_frame = 0;
-        int time_this_frame = 0;
+        Timer timer = new Timer(speed, this);
+        timer.start();
 
     }
 
@@ -175,7 +164,7 @@ public class Scene extends JPanel implements MouseListener {
             for (int j=0; j<tilesArr.length; j++){
                 //System.out.println(e.getX()+" "+e.getY()+" "+ tilesArr[j][i].toString());
                 if(SceneFunctions.inTile(x, y, tilesArr[j][i]) && !SceneFunctions.spotTaken(j, i, queue)) {
-                    System.out.println(tilesArr[j][i].getX() + " " + tilesArr[j][i].getY());
+                    //System.out.println(tilesArr[j][i].getX() + " " + tilesArr[j][i].getY());
                     queue[0].setX(j);
                     queue[0].setY(i);
                     SceneFunctions.updateQueue(queue);
@@ -187,9 +176,7 @@ public class Scene extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        //turn(e.getX(), e.getY());
-        queue[0].moveTo(e.getX(), e.getY(), deltaTime);
-        repaint();
+        turn(e.getX(), e.getY());
     }
 
     @Override
@@ -211,4 +198,10 @@ public class Scene extends JPanel implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e){
+        System.out.println("Test");
+    }
+
 }
