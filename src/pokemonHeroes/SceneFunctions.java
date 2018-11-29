@@ -53,7 +53,7 @@ public class SceneFunctions {
     public static boolean spotTaken(int X, int Y, Unit[] queue){ //Checks if the spot a unit wants to move to is taken
 
         for (int i=0; i<queue.length; i++)
-            if (queue[i].getX()==X && queue[i].getY()==Y)
+            if (queue[i].getTileX()==X && queue[i].getTileY()==Y)
                 return true;
 
         return false;

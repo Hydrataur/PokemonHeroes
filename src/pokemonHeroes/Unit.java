@@ -22,6 +22,16 @@ public class Unit {
     private int tileX; //X, Y of tile they're on
     private int tileY;
 
+    private String direction;
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
     public int getTileX() {
         return tileX;
     }
@@ -122,35 +132,12 @@ public class Unit {
         this.unitName=unitName;
         this.initiative=initiative;
         this.team=team;
-    }
 
-    public void moveTo(int x, int y, int delta_time){
-        int moveX, moveY;
-        moveX = 10*delta_time;
-        moveY = 10*delta_time;
-
-        if (tileX<x){
-            tileX+=moveX;
-            if (tileX>x)
-                tileX = x;
-        }
-
-        if (tileX>x){
-            tileX-=moveX;
-            if (tileX<x)
-                tileX=x;
-        }
-
-        if (tileY<y){
-            tileY+=moveY;
-            if (tileY>y)
-                tileY = y;
-        }
-        if (tileY>y){
-            tileY-=moveY;
-            if (tileY<y)
-                tileY = y;
-        }
+        if (team)
+            setDirection("Right");
+        else
+            setDirection("Left");
     }
 
 }
+

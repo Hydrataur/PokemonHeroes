@@ -13,6 +13,9 @@ import java.awt.image.BufferedImage;
 
 public class Scene extends JPanel implements MouseListener, ActionListener {
 
+    private final static int BOARDWIDTH = 1533;
+    private final static int BOARDHEIGHT = 845;
+
     private int tiles = 100; //Number of tiles on board
     private int tileLength = 64; //Length of each tile
     private int queueTileLength = 100; //Length of each tile in the queue
@@ -40,16 +43,8 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     private boolean inTurn;
 
     public Scene(){
-        JFrame frame = new JFrame(); //Opens up the game's frame
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //Terminates app when closing window so that it doesn't run in the background
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); //Sets width and height of frame depending on screen size
-        //frame.setUndecorated(true);    //Add this later. Removes borders allowing fullscreen.
 
-        frame.add(this); //Adds panel to frame
-
-        frame.addMouseListener(this); //Adds ability to change things with mouse
-
-        frame.setVisible(true); //Makes frame visible
+        this.addMouseListener(this); //Adds ability to change things with mouse
 
         trainerOne = new Trainer("Cynthia", true); //Creates first trainer. Temporary until player can choose
         trainerTwo = new Trainer("Cyrus", false); //Same as above
@@ -71,20 +66,38 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
         queue = SceneFunctions.createQueue(trainerOne, trainerTwo); //Creates the queue according to player's teams
 
-        queue[0].setX(0);queue[0].setY(0);
-        queue[1].setX(0);queue[1].setY(1);
-        queue[2].setX(0);queue[2].setY(2);
-        queue[3].setX(0);queue[3].setY(3);
-        queue[4].setX(0);queue[4].setY(4);
-        queue[5].setX(0);queue[5].setY(5);
-        queue[6].setX(0);queue[6].setY(6);
-        queue[7].setX(9);queue[7].setY(0);
-        queue[8].setX(9);queue[8].setY(1);
-        queue[9].setX(9);queue[9].setY(2);
-        queue[10].setX(9);queue[10].setY(3);
-        queue[11].setX(9);queue[11].setY(4);
-        queue[12].setX(9);queue[12].setY(5);
-        queue[13].setX(9);queue[13].setY(6);
+        queue[0].setTileX(0);queue[0].setTileY(0);
+        queue[1].setTileX(0);queue[1].setTileY(1);
+        queue[2].setTileX(0);queue[2].setTileY(2);
+        queue[3].setTileX(0);queue[3].setTileY(3);
+        queue[4].setTileX(0);queue[4].setTileY(4);
+        queue[5].setTileX(0);queue[5].setTileY(5);
+        queue[6].setTileX(0);queue[6].setTileY(6);
+        queue[7].setTileX(9);queue[7].setTileY(0);
+        queue[8].setTileX(9);queue[8].setTileY(1);
+        queue[9].setTileX(9);queue[9].setTileY(2);
+        queue[10].setTileX(9);queue[10].setTileY(3);
+        queue[11].setTileX(9);queue[11].setTileY(4);
+        queue[12].setTileX(9);queue[12].setTileY(5);
+        queue[13].setTileX(9);queue[13].setTileY(6);
+
+        int tileStart = (int) Math.round((BOARDWIDTH - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
+//        System.out.println(tileStart);
+
+        queue[0].setX(tileStart+queue[0].getTileX()*tileLength+queue[0].getTileX()*5);queue[0].setY(50+queue[0].getTileY()*tileLength+queue[0].getTileY()*5);
+        queue[1].setX(tileStart+queue[1].getTileX()*tileLength+queue[1].getTileX()*5);queue[1].setY(50+queue[1].getTileY()*tileLength+queue[1].getTileY()*5);
+        queue[2].setX(tileStart+queue[2].getTileX()*tileLength+queue[2].getTileX()*5);queue[2].setY(50+queue[2].getTileY()*tileLength+queue[2].getTileY()*5);
+        queue[3].setX(tileStart+queue[3].getTileX()*tileLength+queue[3].getTileX()*5);queue[3].setY(50+queue[3].getTileY()*tileLength+queue[3].getTileY()*5);
+        queue[4].setX(tileStart+queue[4].getTileX()*tileLength+queue[4].getTileX()*5);queue[4].setY(50+queue[4].getTileY()*tileLength+queue[4].getTileY()*5);
+        queue[5].setX(tileStart+queue[5].getTileX()*tileLength+queue[5].getTileX()*5);queue[5].setY(50+queue[5].getTileY()*tileLength+queue[5].getTileY()*5);
+        queue[6].setX(tileStart+queue[6].getTileX()*tileLength+queue[6].getTileX()*5);queue[6].setY(50+queue[6].getTileY()*tileLength+queue[6].getTileY()*5);
+        queue[7].setX(tileStart+queue[7].getTileX()*tileLength+queue[7].getTileX()*5);queue[7].setY(50+queue[7].getTileY()*tileLength+queue[7].getTileY()*5);
+        queue[8].setX(tileStart+queue[8].getTileX()*tileLength+queue[8].getTileX()*5);queue[8].setY(50+queue[8].getTileY()*tileLength+queue[8].getTileY()*5);
+        queue[9].setX(tileStart+queue[9].getTileX()*tileLength+queue[9].getTileX()*5);queue[9].setY(50+queue[9].getTileY()*tileLength+queue[9].getTileY()*5);
+        queue[10].setX(tileStart+queue[10].getTileX()*tileLength+queue[10].getTileX()*5);queue[10].setY(50+queue[10].getTileY()*tileLength+queue[10].getTileY()*5);
+        queue[11].setX(tileStart+queue[11].getTileX()*tileLength+queue[11].getTileX()*5);queue[11].setY(50+queue[11].getTileY()*tileLength+queue[11].getTileY()*5);
+        queue[12].setX(tileStart+queue[12].getTileX()*tileLength+queue[12].getTileX()*5);queue[12].setY(50+queue[12].getTileY()*tileLength+queue[12].getTileY()*5);
+        queue[13].setX(tileStart+queue[13].getTileX()*tileLength+queue[13].getTileX()*5);queue[13].setY(50+queue[13].getTileY()*tileLength+queue[13].getTileY()*5);
 
         Timer timer = new Timer(speed, this);
         timer.start();
@@ -100,6 +113,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     protected void drawBattleground(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         int tileStart = (int) Math.round((getWidth() - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
+//        System.out.println(tileStart);
         g.drawImage(bgImage, 0, 0, getWidth(), getHeight(), this); //Draw background
 
         AffineTransform tx = AffineTransform.getScaleInstance(-1, 1); //All trainer pictures are by default facing left. This flips them.
@@ -146,27 +160,73 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
         for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
             for (int j = 0; j < Math.sqrt(tiles); j++) {
-                g.drawImage(tileImage, tileStart + j * tileLength + j * 5, 50 + i * tileLength + i * 5, tileLength, tileLength, this);
-                tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5+tileLength, 80 + i * tileLength + i * 5, 80 + i * tileLength + i * 5+tileLength);
+                tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5+tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5+tileLength);
+                g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+
                 for (int k = 0; k < 14; k++) {
-                    if (queue[k].getX() == j && queue[k].getY() == i) {
+                    if (queue[k].getTileX() == j && queue[k].getTileY() == i) {
                         pokeIcon = new ImageIcon("PokePics/Combat/" + queue[k].getUnitName() + ".png");
                         pokeImage = pokeIcon.getImage();
                         pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
                         pokeGraphics = pokeFieldImage.getGraphics();
-                        if (queue[k].isTeam())
-                            pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-                        else
-                            pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+                        drawPokeFieldImage(k);
                         pokeGraphics.dispose();
-                        g2d.drawImage(pokeFieldImage, queue[k].getX(), queue[k].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
-                        //queue[k].setX(tileStart+j*tileLength+j*5);
-                        //queue[k].setY(50+i*tileLength+i*5);
+                        g.drawImage(pokeFieldImage, queue[k].getX(), queue[k].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
+//                        queue[k].setX(tileStart+j*tileLength+j*5);
+//                        queue[k].setY(50+i*tileLength+i*5);
+//                        if(k==0){
+//                            System.out.println("X "+queue[k].getX()+" "+ (tileStart+j*tileLength+j*5));
+//                            System.out.println("Y "+queue[k].getY()+" "+(50+i*tileLength+i*5));
+//                        }
                     }
                 }
             }
         }
     }
+
+    public void drawPokeFieldImage(int numInQueue){
+        if(numInQueue != 0) {
+            if (queue[numInQueue].isTeam())
+                pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+            else
+                pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+            return;
+        }
+        if (queue[0].getDirection().equals("Right")){
+            if (moveOne)
+                pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+            else
+                pokeGraphics.drawImage(pokeImage, -32, -96, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+//            System.out.println("Right");
+            return;
+        }
+        if (queue[0].getDirection().equals("Left")){
+            if (moveOne)
+                pokeGraphics.drawImage(pokeImage, -32, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+            else
+                pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+//            System.out.println("Left");
+            return;
+        }
+        if (queue[0].getDirection().equals("Up")){
+            if (moveOne)
+                pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+            else
+                pokeGraphics.drawImage(pokeImage, 0, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+//            System.out.println("Up");
+            return;
+        }
+        if (queue[0].getDirection().equals("Down")){
+            if (moveOne)
+                pokeGraphics.drawImage(pokeImage, 0, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+            else
+                pokeGraphics.drawImage(pokeImage, 0, -96, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+//            System.out.println("Down");
+            return;
+        }
+    }
+
+    private Tile chosenTile;
 
     public void turn(int x, int y){
         for (int i=0; i<tilesArr.length; i++){
@@ -176,7 +236,8 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
                     //System.out.println(tilesArr[j][i].getX() + " " + tilesArr[j][i].getY());
                     queue[0].setTileX(j);
                     queue[0].setTileY(i);
-                    SceneFunctions.updateQueue(queue);
+                    chosenTile = tilesArr[j][i];
+                    inTurn=true;
                 }
             }
         }
@@ -185,8 +246,8 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        inTurn=true;
-        turn(e.getX(), e.getY());
+        if (!inTurn)
+            turn(e.getX(), e.getY());
     }
 
     @Override
@@ -209,11 +270,62 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     }
 
+    private boolean moveOne = false; //Used to know which part of the animation should be played
+
     @Override
     public void actionPerformed(ActionEvent e){
-        queue[5].setX(queue[5].getX()+20);
-//        System.out.println("Test");
-        repaint();
+        if(inTurn) {
+            if (queue[0].getX() < chosenTile.getLeftX()) {
+                queue[0].setX(queue[0].getX() + 10);
+                queue[0].setDirection("Right");
+                if(queue[0].getX() >= chosenTile.getLeftX()){
+                    queue[0].setX(chosenTile.getLeftX());
+                }
+            }
+
+            if (queue[0].getX() > chosenTile.getLeftX()) {
+                queue[0].setX(queue[0].getX() - 10);
+                queue[0].setDirection("Left");
+                if(queue[0].getX() <= chosenTile.getLeftX()){
+                    queue[0].setX(chosenTile.getLeftX());
+                }
+            }
+
+            if(queue[0].getX() == chosenTile.getLeftX()) {
+
+                if (queue[0].getY() < chosenTile.getTopY()) {
+                    queue[0].setY(queue[0].getY() + 10);
+                    queue[0].setDirection("Down");
+                    if (queue[0].getY() >= chosenTile.getTopY()) {
+                        queue[0].setY(chosenTile.getTopY());
+
+                    }
+                }
+
+
+                if (queue[0].getY() > chosenTile.getTopY()) {
+                    queue[0].setY(queue[0].getY() - 10);
+                    queue[0].setDirection("Up");
+                    if (queue[0].getY() <= chosenTile.getTopY()) {
+                        queue[0].setY(chosenTile.getTopY());
+                    }
+                }
+
+            }
+
+            if(moveOne)
+                moveOne=false;
+            else
+                moveOne=true;
+
+            if (queue[0].getX() == chosenTile.getLeftX() && queue[0].getY() == chosenTile.getTopY()) {
+                inTurn = false;
+                SceneFunctions.updateQueue(queue);
+                moveOne = false;
+                queue[0].setDirection("Right");
+            }
+            repaint();
+        }
     }
 
 }
