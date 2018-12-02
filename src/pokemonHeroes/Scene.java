@@ -1,6 +1,11 @@
 package pokemonHeroes;
 
+import javax.print.attribute.standard.Media;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
+import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -10,6 +15,9 @@ import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;;
 
 public class Scene extends JPanel implements MouseListener, ActionListener {
 
@@ -20,10 +28,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     private int tileLength = 64; //Length of each tile
     private int queueTileLength = 100; //Length of each tile in the queue
 
-    private ImageIcon tile = new ImageIcon("temp.jpg"); //The image with which a tile will be shown
+    private ImageIcon tile = new ImageIcon("Images/temp.jpg"); //The image with which a tile will be shown
     private Image tileImage = tile.getImage();
 
-    private ImageIcon bgIcon = new ImageIcon("tempBG.png"); //Background image
+    private ImageIcon bgIcon = new ImageIcon("Images/tempBG.png"); //Background image
     private Image bgImage = bgIcon.getImage();
 
     private Unit[] queue; //Turn queue
@@ -44,6 +52,18 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     public Scene(){
 
+        setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("Images/Cursors/AttackCursor.png").getImage(), new Point(0, 0), "custom cursor"));
+
+        try {
+            File soundFile = new File("CynthiaBattleMusic.wav");
+            AudioInputStream as = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(as);
+            clip.start();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         this.addMouseListener(this); //Adds ability to change things with mouse
 
         trainerOne = new Trainer("Cynthia", true); //Creates first trainer. Temporary until player can choose
@@ -132,7 +152,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
         g.setColor(Color.ORANGE);
         g.fillRect(20, getHeight() - (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength));
-        pokeIcon = new ImageIcon("PokePics/Zoomed/" + queue[0].getUnitName() + ".png");
+        pokeIcon = new ImageIcon("Images/PokePics/Zoomed/" + queue[0].getUnitName() + ".png");
         pokeImage = pokeIcon.getImage();
         pokeQueueImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         pokeGraphics = pokeQueueImage.getGraphics();
@@ -146,7 +166,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
                 else
                     g.setColor(Color.RED);
                 g.fillRect((i + 1) * queueTileLength, getHeight() - queueTileLength, queueTileLength, queueTileLength);
-                pokeIcon = new ImageIcon("PokePics/Zoomed/" + queue[i].getUnitName() + ".png");
+                pokeIcon = new ImageIcon("Images/PokePics/Zoomed/" + queue[i].getUnitName() + ".png");
                 pokeImage = pokeIcon.getImage();
                 pokeQueueImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
                 pokeGraphics = pokeQueueImage.getGraphics();
@@ -166,7 +186,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         }
 
         for (int k = 0; k < 14; k++) {
-            pokeIcon = new ImageIcon("PokePics/Combat/" + queue[k].getUnitName() + ".png");
+            pokeIcon = new ImageIcon("Images/PokePics/Combat/" + queue[k].getUnitName() + ".png");
             pokeImage = pokeIcon.getImage();
             pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
             pokeGraphics = pokeFieldImage.getGraphics();
