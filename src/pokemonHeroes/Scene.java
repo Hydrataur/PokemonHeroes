@@ -160,28 +160,28 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
         for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
             for (int j = 0; j < Math.sqrt(tiles); j++) {
-                tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5+tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5+tileLength);
+                tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
                 g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+            }
+        }
 
-                for (int k = 0; k < 14; k++) {
-                    if (queue[k].getTileX() == j && queue[k].getTileY() == i) {
-                        pokeIcon = new ImageIcon("PokePics/Combat/" + queue[k].getUnitName() + ".png");
-                        pokeImage = pokeIcon.getImage();
-                        pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
-                        pokeGraphics = pokeFieldImage.getGraphics();
-                        drawPokeFieldImage(k);
-                        pokeGraphics.dispose();
-                        g.drawImage(pokeFieldImage, queue[k].getX(), queue[k].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
+        for (int k = 0; k < 14; k++) {
+            pokeIcon = new ImageIcon("PokePics/Combat/" + queue[k].getUnitName() + ".png");
+            pokeImage = pokeIcon.getImage();
+            pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
+            pokeGraphics = pokeFieldImage.getGraphics();
+            drawPokeFieldImage(k);
+            pokeGraphics.dispose();
+            g.drawImage(pokeFieldImage, queue[k].getX(), queue[k].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
 //                        queue[k].setX(tileStart+j*tileLength+j*5);
 //                        queue[k].setY(50+i*tileLength+i*5);
 //                        if(k==0){
 //                            System.out.println("X "+queue[k].getX()+" "+ (tileStart+j*tileLength+j*5));
 //                            System.out.println("Y "+queue[k].getY()+" "+(50+i*tileLength+i*5));
 //                        }
-                    }
-                }
-            }
+
         }
+
     }
 
     public void drawPokeFieldImage(int numInQueue){
@@ -320,9 +320,9 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
             if (queue[0].getX() == chosenTile.getLeftX() && queue[0].getY() == chosenTile.getTopY()) {
                 inTurn = false;
-                SceneFunctions.updateQueue(queue);
                 moveOne = false;
                 queue[0].setDirection("Right");
+                SceneFunctions.updateQueue(queue);
             }
             repaint();
         }
