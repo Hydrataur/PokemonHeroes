@@ -65,4 +65,11 @@ public class SceneFunctions {
             return true;
         return false;
     }
+
+    public static boolean inRange(int x, int y, Unit poke){
+        if(Math.abs(poke.getTileX()-x)+Math.abs(poke.getTileY()-y)<=poke.getMovement())
+            return true;
+        return false;
+    }
+
 }

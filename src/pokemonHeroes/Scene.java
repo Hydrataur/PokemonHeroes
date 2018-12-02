@@ -28,7 +28,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     private int tileLength = 64; //Length of each tile
     private int queueTileLength = 100; //Length of each tile in the queue
 
-    private ImageIcon tile = new ImageIcon("Images/temp.jpg"); //The image with which a tile will be shown
+    private ImageIcon tile = new ImageIcon("Images/grassTile.jpg"); //The image with which a tile will be shown
     private Image tileImage = tile.getImage();
 
     private ImageIcon bgIcon = new ImageIcon("Images/tempBG.png"); //Background image
@@ -69,20 +69,20 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         trainerOne = new Trainer("Cynthia", true); //Creates first trainer. Temporary until player can choose
         trainerTwo = new Trainer("Cyrus", false); //Same as above
 
-        trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Wobbuffet", 1, true));
-        trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Xatu", 2, false));
-        trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Yanmega", 3, true));
-        trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Zapdos", 4, true));
-        trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Togekiss", 100, false));
-        trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Torterra", 6, true));
-        trainerOne.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Toxicroak", 7, false));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Gyarados", 7, false));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Tyranitar", 9, false));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Ursaring", 10, true));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Vespiquen", 11, false));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Grumpig", 12, false));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Walrein", 13, true));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 0, 0, false, 0, "Empoleon", 7, false));
+        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Wobbuffet", 1, true));
+        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Xatu", 2, false));
+        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Yanmega", 3, true));
+        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Zapdos", 4, true));
+        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Togekiss", 100, false));
+        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Torterra", 6, true));
+        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Toxicroak", 7, false));
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Gyarados", 7, false));
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Tyranitar", 9, false));
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Ursaring", 10, true));
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Vespiquen", 11, false));
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Grumpig", 12, false));
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Walrein", 13, true));
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Empoleon", 7, false));
 
         queue = SceneFunctions.createQueue(trainerOne, trainerTwo); //Creates the queue according to player's teams
 
@@ -181,7 +181,9 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
             for (int j = 0; j < Math.sqrt(tiles); j++) {
                 tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
-                g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+                if (SceneFunctions.inRange(j, i, queue[0]) && !inTurn && !SceneFunctions.spotTaken(j, i, queue)) {
+                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+                }
             }
         }
 
@@ -252,7 +254,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         for (int i=0; i<tilesArr.length; i++){
             for (int j=0; j<tilesArr.length; j++){
                 //System.out.println(e.getX()+" "+e.getY()+" "+ tilesArr[j][i].toString());
-                if(SceneFunctions.inTile(x, y, tilesArr[j][i]) && !SceneFunctions.spotTaken(j, i, queue)) {
+                if(SceneFunctions.inTile(x, y, tilesArr[j][i]) && !SceneFunctions.spotTaken(j, i, queue) && SceneFunctions.inRange(j, i, queue[0])) {
                     //System.out.println(tilesArr[j][i].getX() + " " + tilesArr[j][i].getY());
                     queue[0].setTileX(j);
                     queue[0].setTileY(i);
