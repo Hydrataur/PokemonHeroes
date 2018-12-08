@@ -31,7 +31,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     private ImageIcon tile = new ImageIcon("Images/grassTile.jpg"); //The image with which a tile will be shown
     private Image tileImage = tile.getImage();
 
-    private ImageIcon bgIcon = new ImageIcon("Images/tempBG.png"); //Background image
+    private ImageIcon bgIcon = new ImageIcon("Images/Maps/CmBkBch.png"); //Background image
     private Image bgImage = bgIcon.getImage();
 
     private Unit[] queue; //Turn queue
@@ -182,7 +182,11 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             for (int j = 0; j < Math.sqrt(tiles); j++) {
                 tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
                 if (SceneFunctions.inRange(j, i, queue[0]) && !inTurn && !SceneFunctions.spotTaken(j, i, queue)) {
-                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+                    g.setColor(new Color(0, 100, 0, 100));
+                    g.fillRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+                    g.setColor(new Color(0, 100, 0, 255));
+                    g.drawRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+//                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
                 }
             }
         }
