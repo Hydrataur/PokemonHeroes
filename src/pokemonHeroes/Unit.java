@@ -1,5 +1,7 @@
 package pokemonHeroes;
 
+@SuppressWarnings("WeakerAccess")
+
 public class Unit {
 
     private int maxHealth;
@@ -133,7 +135,7 @@ public class Unit {
         this.initiative=initiative;
         this.team=team;
 
-        if (team)
+        if (team) //Make sure the units on each team are facing the correct direction
             setDirection("Right");
         else
             setDirection("Left");

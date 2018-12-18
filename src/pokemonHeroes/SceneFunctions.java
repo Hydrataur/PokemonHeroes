@@ -1,6 +1,10 @@
 package pokemonHeroes;
 
+import java.awt.*;
+
 public class SceneFunctions {
+
+    @SuppressWarnings("WeakerAccess")
 
     protected static Unit[] createQueue(Trainer trainer1, Trainer trainer2) { //Creates the queue according to unit initiative
         Unit[] queue = new Unit[14];
@@ -52,8 +56,8 @@ public class SceneFunctions {
 
     public static boolean spotTaken(int X, int Y, Unit[] queue){ //Checks if the spot a unit wants to move to is taken
 
-        for (int i=0; i<queue.length; i++)
-            if (queue[i].getTileX()==X && queue[i].getTileY()==Y)
+        for (Unit unit : queue)
+            if (unit.getTileX()==X && unit.getTileY()==Y)
                 return true;
 
         return false;
@@ -66,10 +70,25 @@ public class SceneFunctions {
         return false;
     }
 
-    public static boolean inRange(int x, int y, Unit poke){
+    public static boolean inRange(int x, int y, Unit poke){ //Returns true if tile is within movement range
         if(Math.abs(poke.getTileX()-x)+Math.abs(poke.getTileY()-y)<=poke.getMovement())
             return true;
         return false;
+    }
+
+    public static boolean enemyInRange(Unit[] units){ //Returns true if enemy is in attack range
+        for(int i=1; i<units.length; i++){
+            if (Math.abs(units[0].getTileX()-units[i].getTileX())<=1 && Math.abs(units[0].getTileY()-units[i].getTileY())<=1)
+                if (units[0].isTeam()!=units[i].isTeam())
+                    return true;
+        }
+        return false;
+    }
+
+    public static Cursor makeCursor(int x, int y, Unit[] units){ //Changes cursor according to situation.
+        Cursor c = null;
+        
+        return c;
     }
 
 }

@@ -1,8 +1,10 @@
 package pokemonHeroes;
 
+@SuppressWarnings("WeakerAccess")
+
 public class Tile {
 
-    private int X, Y, leftX, rightX, topY, bottomY;
+    private int X, Y, leftX, rightX, topY, bottomY; //X, Y in the tile arry, and actual X, Y coords
 
     public int getLeftX() {
         return leftX;

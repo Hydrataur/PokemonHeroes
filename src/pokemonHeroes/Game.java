@@ -6,7 +6,7 @@ import java.awt.*;
 public class Game {
 
     public static void main(String[] args){
-        EventQueue.invokeLater(new Runnable() {
+        EventQueue.invokeLater(new Runnable() { //Delays functions in order to allow for everything to load
             @Override
             public void run() {
                 JFrame frame = new JFrame(); //Opens up the game's frame
@@ -16,7 +16,7 @@ public class Game {
 
                 Scene scene = new Scene(); //Panel we draw on
 
-                frame.add(scene);
+                frame.add(scene); //Insert our scene into the frame
 
                 frame.setVisible(true); //Makes frame visible
             }

@@ -1,35 +1,27 @@
 package pokemonHeroes;
 
-import javax.print.attribute.standard.Media;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
-import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;;
 
-public class Scene extends JPanel implements MouseListener, ActionListener {
+public class Scene extends JPanel implements MouseListener, MouseMotionListener, ActionListener {
 
-    private final static int BOARDWIDTH = 1533;
-    private final static int BOARDHEIGHT = 845;
+    private Client client;
+
+    private final static int BOARDWIDTH = 1533; //Width of screen in pixels
+    private final static int BOARDHEIGHT = 845; //Height of screen in pixels
 
     private int tiles = 100; //Number of tiles on board
     private int tileLength = 64; //Length of each tile
     private int queueTileLength = 100; //Length of each tile in the queue
-
-    private ImageIcon tile = new ImageIcon("Images/grassTile.jpg"); //The image with which a tile will be shown
-    private Image tileImage = tile.getImage();
 
     private ImageIcon bgIcon = new ImageIcon("Images/Maps/CmBkBch.png"); //Background image
     private Image bgImage = bgIcon.getImage();
@@ -48,13 +40,15 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     private Graphics pokeGraphics;
     private BufferedImage pokeFieldImage;
 
-    private boolean inTurn;
+    private boolean inTurn; //Checks if a pokemon is currently moving (if yes, then we must wait until it's done)
+
+    private boolean canAttack; //Checks if there are enemies in range of the pokemon
+
+    private int mouseX, mouseY;
 
     public Scene(){
 
-        setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("Images/Cursors/AttackCursor.png").getImage(), new Point(0, 0), "custom cursor"));
-
-        try {
+        try { //Sound related code. Starts music when opening the app
             File soundFile = new File("CynthiaBattleMusic.wav");
             AudioInputStream as = AudioSystem.getAudioInputStream(soundFile);
             Clip clip = AudioSystem.getClip();
@@ -65,6 +59,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             e.printStackTrace();
         }
         this.addMouseListener(this); //Adds ability to change things with mouse
+        this.addMouseMotionListener(this);
 
         trainerOne = new Trainer("Cynthia", true); //Creates first trainer. Temporary until player can choose
         trainerTwo = new Trainer("Cyrus", false); //Same as above
@@ -73,16 +68,16 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Xatu", 2, false));
         trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Yanmega", 3, true));
         trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Zapdos", 4, true));
-        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Togekiss", 100, false));
+        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Togekiss", 5, false));
         trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Torterra", 6, true));
         trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Toxicroak", 7, false));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Gyarados", 7, false));
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Gyarados", 8, false));
         trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Tyranitar", 9, false));
         trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Ursaring", 10, true));
         trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Vespiquen", 11, false));
         trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Grumpig", 12, false));
         trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Walrein", 13, true));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Empoleon", 7, false));
+        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Empoleon", 14, false));
 
         queue = SceneFunctions.createQueue(trainerOne, trainerTwo); //Creates the queue according to player's teams
 
@@ -119,15 +114,21 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         queue[12].setX(tileStart+queue[12].getTileX()*tileLength+queue[12].getTileX()*5);queue[12].setY(50+queue[12].getTileY()*tileLength+queue[12].getTileY()*5);
         queue[13].setX(tileStart+queue[13].getTileX()*tileLength+queue[13].getTileX()*5);queue[13].setY(50+queue[13].getTileY()*tileLength+queue[13].getTileY()*5);
 
-        Timer timer = new Timer(speed, this);
+        Timer timer = new Timer(speed, this); //Timer according to which an action will be taken during every tick
         timer.start();
 
-        inTurn=false;
+        inTurn=false; //Starts false by default since nobody has started moving
+
+        client = new Client(this);
     }
 
-    protected void paintComponent(Graphics g){ //Default panel function that allows us to add stuff to the panel
+    protected void paintComponent(Graphics g) { //Default panel function that allows us to add stuff to the panel
         super.paintComponent(g);
         drawBattleground(g); //Functionized draw so that I can have it draw different stuff depending on the situation
+        if (canAttack) {
+            g.drawString("Enemy in range", 0, 0);
+            System.out.println("Enemy in Range");
+        }
     }
 
     protected void drawBattleground(Graphics g) {
@@ -210,7 +211,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     }
 
-    public void drawPokeFieldImage(int numInQueue){
+    private void drawPokeFieldImage(int numInQueue){
         if(numInQueue != 0) {
             if (queue[numInQueue].isTeam())
                 pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
@@ -248,7 +249,6 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             else
                 pokeGraphics.drawImage(pokeImage, 0, -96, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
 //            System.out.println("Down");
-            return;
         }
     }
 
@@ -293,6 +293,20 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        mouseX = e.getX();
+        mouseY = e.getY();
+        System.out.println(mouseX + " "+ mouseY);
+        setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("Images/Cursors/AttackCursor.png").getImage(), new Point(0, 0), "custom cursor")); //Allows for a custom cursor
 
     }
 
@@ -348,7 +362,9 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
                 inTurn = false;
                 moveOne = false;
                 queue[0].setDirection("Right");
-                SceneFunctions.updateQueue(queue);
+                canAttack = SceneFunctions.enemyInRange(queue);
+                if(!canAttack)
+                    SceneFunctions.updateQueue(queue);
             }
             repaint();
         }
