@@ -35,23 +35,32 @@ public class SceneFunctions {
     }
 
     public static Unit[] updateQueue(Unit[] queue){
-        Unit temp = queue[0];
-        for(int i=1; i<queue.length; i++){ //Moves entire queue by one spot
-            queue[i-1] = queue[i];
-        }
-        queue[queue.length-1] = temp;
 
-        for (int i=0; i<queue.length; i++){ //Makes sure all null units are at the end
-            if (queue[i] == null){
-                for (int j=i+1; j<queue.length; j++){
-                    queue[j-1]=queue[j];
-                }
-                queue[queue.length-1]=null;
-                break;
+        int numAlive = 0; //To tell how long the new queue needs to be
+
+        for (Unit unit : queue)
+            if (unit.getCurrentHealth()>0)
+                numAlive++;
+
+        Unit[] newQueue = new Unit[numAlive]; //New queue to contain only those who are still alive
+
+        int counter = 0; //Skips over dead units
+
+        for (int i = 0; i<newQueue.length; i++){
+            while (queue[counter].getCurrentHealth()<=0){
+                counter++;
             }
+            newQueue[i] = queue[counter];
+            counter++;
         }
 
-        return queue;
+        Unit temp = newQueue[0];
+
+        for (int i=1; i<newQueue.length; i++) //Move entire queue by 1
+            newQueue[i-1] = newQueue[i];
+        newQueue[newQueue.length-1] = temp;
+
+        return newQueue;
     }
 
     public static boolean spotTaken(int X, int Y, Unit[] queue){ //Checks if the spot a unit wants to move to is taken
@@ -76,16 +85,38 @@ public class SceneFunctions {
         return false;
     }
 
-    public static boolean enemyInRange(Unit[] units){ //Returns true if enemy is in attack range
+    public static boolean[] enemyInRange(Unit[] units){ //Returns true if enemy is in attack range
+        boolean[] inRange = new boolean[units.length];
         for(int i=1; i<units.length; i++){
             if (Math.abs(units[0].getTileX()-units[i].getTileX())<=1 && Math.abs(units[0].getTileY()-units[i].getTileY())<=1)
                 if (units[0].isTeam()!=units[i].isTeam())
-                    return true;
+                    inRange[i] = true;
         }
-        return false;
+        return inRange;
     }
 
-    public static Cursor makeCursor(int x, int y, Unit[] units){ //Changes cursor according to situation.
+    public static int unitInSpot(Unit[] queue, int x, int y){
+        for (int i = 0; i<queue.length; i++){
+            if (queue[i].getTileX() == x && queue[i].getTileY() == y)
+                return i;
+        }
+        return -1;
+    }
+
+    public static void takeDamage(Unit unit, int damage){
+        System.out.println("Before attack: "+unit.getCurrentHealth());
+        unit.setCurrentHealth(unit.getCurrentHealth()-damage);
+        System.out.println("After attack: "+unit.getCurrentHealth());
+    }
+
+    public static void Attack(Unit attacker, Unit defender){
+        takeDamage(defender, attacker.getMoves()[0].getDamage());
+        if (defender.getCurrentHealth()<=0){
+            System.out.println(defender.getUnitName() + " is dead");
+        }
+    }
+
+    public static Cursor makeCursor(boolean canAttack, boolean canFly){ //Changes cursor according to situation.
         Cursor c = null;
         
         return c;

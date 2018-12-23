@@ -12,9 +12,9 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class Scene extends JPanel implements MouseListener, MouseMotionListener, ActionListener {
+public class Scene extends JPanel implements MouseListener, ActionListener {
 
-    private Client client;
+//    private Client client;
 
     private final static int BOARDWIDTH = 1533; //Width of screen in pixels
     private final static int BOARDHEIGHT = 845; //Height of screen in pixels
@@ -39,10 +39,13 @@ public class Scene extends JPanel implements MouseListener, MouseMotionListener,
     private BufferedImage pokeQueueImage;
     private Graphics pokeGraphics;
     private BufferedImage pokeFieldImage;
+    private ImageIcon targetIcon = new ImageIcon("Images/targetTemp.png");
+    private Image target = targetIcon.getImage();
 
     private boolean inTurn; //Checks if a pokemon is currently moving (if yes, then we must wait until it's done)
 
     private boolean canAttack; //Checks if there are enemies in range of the pokemon
+    private boolean[] enemiesInRange;
 
     private int mouseX, mouseY;
 
@@ -59,25 +62,24 @@ public class Scene extends JPanel implements MouseListener, MouseMotionListener,
             e.printStackTrace();
         }
         this.addMouseListener(this); //Adds ability to change things with mouse
-        this.addMouseMotionListener(this);
 
         trainerOne = new Trainer("Cynthia", true); //Creates first trainer. Temporary until player can choose
         trainerTwo = new Trainer("Cyrus", false); //Same as above
 
-        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Wobbuffet", 1, true));
-        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Xatu", 2, false));
-        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Yanmega", 3, true));
-        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Zapdos", 4, true));
-        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Togekiss", 5, false));
-        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Torterra", 6, true));
-        trainerOne.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Toxicroak", 7, false));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Gyarados", 8, false));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Tyranitar", 9, false));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Ursaring", 10, true));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Vespiquen", 11, false));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Grumpig", 12, false));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Walrein", 13, true));
-        trainerTwo.addUnit(new Unit(0, 0, 0, 0, 5, 0, false, 0, "Empoleon", 14, false));
+        trainerOne.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Wobbuffet", 1, true));
+        trainerOne.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Xatu", 2, false));
+        trainerOne.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Yanmega", 3, true));
+        trainerOne.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Zapdos", 4, true));
+        trainerOne.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Togekiss", 5, false));
+        trainerOne.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Torterra", 6, true));
+        trainerOne.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Toxicroak", 7, false));
+        trainerTwo.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Gyarados", 8, false));
+        trainerTwo.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Tyranitar", 9, false));
+        trainerTwo.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Ursaring", 10, true));
+        trainerTwo.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Vespiquen", 11, false));
+        trainerTwo.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Grumpig", 12, false));
+        trainerTwo.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Walrein", 13, true));
+        trainerTwo.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Empoleon", 14, false));
 
         queue = SceneFunctions.createQueue(trainerOne, trainerTwo); //Creates the queue according to player's teams
 
@@ -95,6 +97,8 @@ public class Scene extends JPanel implements MouseListener, MouseMotionListener,
         queue[11].setTileX(9);queue[11].setTileY(4);
         queue[12].setTileX(9);queue[12].setTileY(5);
         queue[13].setTileX(9);queue[13].setTileY(6);
+
+        enemiesInRange = SceneFunctions.enemyInRange(queue);
 
         int tileStart = (int) Math.round((BOARDWIDTH - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
 //        System.out.println(tileStart);
@@ -119,16 +123,12 @@ public class Scene extends JPanel implements MouseListener, MouseMotionListener,
 
         inTurn=false; //Starts false by default since nobody has started moving
 
-        client = new Client(this);
+//        client = new Client(this);
     }
 
     protected void paintComponent(Graphics g) { //Default panel function that allows us to add stuff to the panel
         super.paintComponent(g);
         drawBattleground(g); //Functionized draw so that I can have it draw different stuff depending on the situation
-        if (canAttack) {
-            g.drawString("Enemy in range", 0, 0);
-            System.out.println("Enemy in Range");
-        }
     }
 
     protected void drawBattleground(Graphics g) {
@@ -160,7 +160,7 @@ public class Scene extends JPanel implements MouseListener, MouseMotionListener,
         pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
         pokeGraphics.dispose();
         g2d.drawImage(pokeQueueImage, 20, getHeight() - (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength), this);
-        for (int i = 1; i < 14; i++) {
+        for (int i = 1; i < queue.length; i++) {
             if (queue[i] != null) {
                 if (queue[i].isTeam())
                     g.setColor(Color.BLUE);
@@ -182,7 +182,7 @@ public class Scene extends JPanel implements MouseListener, MouseMotionListener,
         for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
             for (int j = 0; j < Math.sqrt(tiles); j++) {
                 tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
-                if (SceneFunctions.inRange(j, i, queue[0]) && !inTurn && !SceneFunctions.spotTaken(j, i, queue)) {
+                if (SceneFunctions.inRange(j, i, queue[0]) && !inTurn && !SceneFunctions.spotTaken(j, i, queue) && !hasMoved) {
                     g.setColor(new Color(0, 100, 0, 100));
                     g.fillRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
                     g.setColor(new Color(0, 100, 0, 255));
@@ -192,7 +192,7 @@ public class Scene extends JPanel implements MouseListener, MouseMotionListener,
             }
         }
 
-        for (int k = 0; k < 14; k++) {
+        for (int k = 0; k < queue.length; k++) {
             pokeIcon = new ImageIcon("Images/PokePics/Combat/" + queue[k].getUnitName() + ".png");
             pokeImage = pokeIcon.getImage();
             pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
@@ -206,6 +206,8 @@ public class Scene extends JPanel implements MouseListener, MouseMotionListener,
 //                            System.out.println("X "+queue[k].getX()+" "+ (tileStart+j*tileLength+j*5));
 //                            System.out.println("Y "+queue[k].getY()+" "+(50+i*tileLength+i*5));
 //                        }
+            if (enemiesInRange[k])
+                g.drawImage(target, queue[k].getX(), queue[k].getY(), tileLength, tileLength, this);
 
         }
 
@@ -258,12 +260,22 @@ public class Scene extends JPanel implements MouseListener, MouseMotionListener,
         for (int i=0; i<tilesArr.length; i++){
             for (int j=0; j<tilesArr.length; j++){
                 //System.out.println(e.getX()+" "+e.getY()+" "+ tilesArr[j][i].toString());
-                if(SceneFunctions.inTile(x, y, tilesArr[j][i]) && !SceneFunctions.spotTaken(j, i, queue) && SceneFunctions.inRange(j, i, queue[0])) {
+                if(!hasMoved && SceneFunctions.inTile(x, y, tilesArr[j][i]) && !SceneFunctions.spotTaken(j, i, queue) && SceneFunctions.inRange(j, i, queue[0])) {
                     //System.out.println(tilesArr[j][i].getX() + " " + tilesArr[j][i].getY());
                     queue[0].setTileX(j);
                     queue[0].setTileY(i);
                     chosenTile = tilesArr[j][i];
                     inTurn=true;
+                }
+
+                int inSpot = SceneFunctions.unitInSpot(queue, j, i);
+
+                if (SceneFunctions.spotTaken(j, i, queue) && enemiesInRange[inSpot] && SceneFunctions.inTile(x, y, tilesArr[j][i])){
+                    System.out.println(queue[0].getUnitName() + " has attacked " + queue[inSpot].getUnitName());
+                    SceneFunctions.Attack(queue[0], queue[inSpot]);
+                    queue = SceneFunctions.updateQueue(queue);
+                    enemiesInRange = SceneFunctions.enemyInRange(queue);
+                    hasMoved = false;
                 }
             }
         }
@@ -296,21 +308,8 @@ public class Scene extends JPanel implements MouseListener, MouseMotionListener,
 
     }
 
-    @Override
-    public void mouseDragged(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        mouseX = e.getX();
-        mouseY = e.getY();
-        System.out.println(mouseX + " "+ mouseY);
-        setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("Images/Cursors/AttackCursor.png").getImage(), new Point(0, 0), "custom cursor")); //Allows for a custom cursor
-
-    }
-
     private boolean moveOne = false; //Used to know which part of the animation should be played
+    private boolean hasMoved = false;
 
     @Override
     public void actionPerformed(ActionEvent e){
@@ -353,18 +352,26 @@ public class Scene extends JPanel implements MouseListener, MouseMotionListener,
 
             }
 
-            if(moveOne)
-                moveOne=false;
-            else
-                moveOne=true;
+            moveOne = !moveOne;
 
             if (queue[0].getX() == chosenTile.getLeftX() && queue[0].getY() == chosenTile.getTopY()) {
                 inTurn = false;
                 moveOne = false;
                 queue[0].setDirection("Right");
-                canAttack = SceneFunctions.enemyInRange(queue);
-                if(!canAttack)
-                    SceneFunctions.updateQueue(queue);
+                enemiesInRange = SceneFunctions.enemyInRange(queue);
+                canAttack = false;
+                hasMoved = true;
+                for (boolean inRange : enemiesInRange) {
+                    if (inRange) {
+                        canAttack = true;
+                        break;
+                    }
+                }
+                if (!canAttack) {
+                    queue = SceneFunctions.updateQueue(queue);
+                    enemiesInRange = SceneFunctions.enemyInRange(queue);
+                    hasMoved = false;
+                }
             }
             repaint();
         }
