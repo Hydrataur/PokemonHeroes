@@ -1,19 +1,30 @@
 package pokemonHeroes;
 
+import java.io.File;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+
 @SuppressWarnings("WeakerAccess")
 
 public class Unit {
 
     private int maxHealth;
     private int currentHealth;
-    private Move[] moves = new Move[4];
+    private int attack;
     private int defense;
     private int movement;  //Amount of tiles a Pokemon can move during its turn
     private int initiative; //Affects the Pokemon's spot in Queue. Higher initiative means it'll be higher in the queue.
-    private int currentShots;  //If the Pokemon is ranged, then this counts how many shots it has left before it must resort to melee combat
+    private int PP;  //Tells how many times the Pokemon can use their special attack
+
+    private Move move; //Special ability each Pokemon has
 
     private boolean team; //Tells which team this unit belongs to
     private boolean large;  //True if a Pokemon is large (takes up four spaces) or false if small (takes up one space)
+    private boolean ranged; //Tells if the Pokemon can attack from afar
     private boolean flying; //Tells if a Pokemon is able to fly and ignore hazards while moving
 
     private int unitsInStack;  //Number of units currently in a stack. Might need to move somewhere else
@@ -71,8 +82,8 @@ public class Unit {
         this.currentHealth = currentHealth;
     }
 
-    public void setCurrentShots(int currentShots) {
-        this.currentShots = currentShots;
+    public void setPP(int PP) {
+        this.PP = PP;
     }
 
     public void setUnitsInStack(int unitsInStack) {
@@ -91,7 +102,9 @@ public class Unit {
         return currentHealth;
     }
 
-    public Move[] getMoves() { return moves; }
+    public int getAttack() {
+        return attack;
+    }
 
     public int getDefense() {
         return defense;
@@ -101,8 +114,8 @@ public class Unit {
         return movement;
     }
 
-    public int getCurrentShots() {
-        return currentShots;
+    public int getPP() {
+        return PP;
     }
 
     public boolean isLarge() {
@@ -125,23 +138,72 @@ public class Unit {
         return flying;
     }
 
-    public Unit(int maxHealth, int currentHealth, Move[] moves, int defense, int movement, int currentShots, boolean large, boolean flying, int unitsInStack, String unitName, int initiative, boolean team){
-        this.maxHealth=maxHealth;
-        this.currentHealth=currentHealth;
-        this.moves=moves;
-        this.defense=defense;
-        this.movement=movement;
-        this.currentShots=currentShots;
-        this.large=large;
+    public boolean isRanged() {
+        return ranged;
+    }
+
+    public void setRanged(boolean ranged) {
+        this.ranged = ranged;
+    }
+
+    public Unit(String unitName, int unitsInStack, boolean team){
         this.unitsInStack=unitsInStack;
         this.unitName=unitName;
-        this.initiative=initiative;
         this.team=team;
 
         if (team) //Make sure the units on each team are facing the correct direction
             setDirection("Right");
         else
             setDirection("Left");
+    }
+
+    public static void fillStats(Unit[] queue){
+        try {
+            File inputFile = new File("src/pokemonHeroes/unitInventory.txt");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(inputFile);
+            doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("Unit");
+
+            for (Unit unit : queue) {
+                for (int j = 0; j < nList.getLength(); j++) {
+                    Node nNode = nList.item(j);
+
+                    if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                        Element eElement = (Element) nNode;
+                        if (unit.getUnitName().equals(eElement.getElementsByTagName("unitName").item(0).getTextContent())){
+                            System.out.println("\nCurrent Element :" + nNode.getNodeName());
+                            System.out.println("Unit Name : " + eElement.getElementsByTagName("unitName").item(0).getTextContent());
+                            System.out.println("Max HP : " + eElement.getElementsByTagName("MaxHP").item(0).getTextContent());
+                            System.out.println("Attack : " + eElement.getElementsByTagName("Attack").item(0).getTextContent());
+                            System.out.println("Defense : " + eElement.getElementsByTagName("Defense").item(0).getTextContent());
+                            System.out.println("Movement : " + eElement.getElementsByTagName("Movement").item(0).getTextContent());
+                            System.out.println("Initiative : " + eElement.getElementsByTagName("Initiative").item(0).getTextContent());
+                            System.out.println("PP : " + eElement.getElementsByTagName("PP").item(0).getTextContent());
+                            System.out.println("Large : " + eElement.getElementsByTagName("Large").item(0).getTextContent());
+                            System.out.println("Flying : " + eElement.getElementsByTagName("Flying").item(0).getTextContent());
+                            System.out.println("Ranged : " + eElement.getElementsByTagName("Ranged").item(0).getTextContent());
+                            System.out.println("Move : " + eElement.getElementsByTagName("Move").item(0).getTextContent());
+                            unit.maxHealth = Integer.parseInt(eElement.getElementsByTagName("MaxHP").item(0).getTextContent());
+                            unit.attack = Integer.parseInt(eElement.getElementsByTagName("Attack").item(0).getTextContent());
+                            unit.defense = Integer.parseInt(eElement.getElementsByTagName("Defense").item(0).getTextContent());
+                            unit.movement = Integer.parseInt(eElement.getElementsByTagName("Movement").item(0).getTextContent());
+                            unit.initiative = Integer.parseInt(eElement.getElementsByTagName("Initiative").item(0).getTextContent());
+                            unit.PP = Integer.parseInt(eElement.getElementsByTagName("PP").item(0).getTextContent());
+                            unit.large = Boolean.parseBoolean(eElement.getElementsByTagName("MaxHP").item(0).getTextContent());
+                            unit.flying = Boolean.parseBoolean(eElement.getElementsByTagName("MaxHP").item(0).getTextContent());
+                            unit.ranged = Boolean.parseBoolean(eElement.getElementsByTagName("MaxHP").item(0).getTextContent());
+                            unit.currentHealth = unit.maxHealth;
+                            //queue[i].move = Integer.parseInt(eElement.getElementsByTagName("MaxHP").item(0).getTextContent());
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

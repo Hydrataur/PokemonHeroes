@@ -18,6 +18,9 @@ public class SceneFunctions {
             else
                 queue[i+7] = null;
         }
+
+        Unit.fillStats(queue);
+
         Unit temp;
         for (int i = 0; i < queue.length; i++) {
             for (int j = 1; j < queue.length - i; j++) {
@@ -36,6 +39,8 @@ public class SceneFunctions {
 
     public static Unit[] updateQueue(Unit[] queue){
 
+        System.out.println(queue[0].getUnitName());
+
         int numAlive = 0; //To tell how long the new queue needs to be
 
         for (Unit unit : queue)
@@ -43,7 +48,7 @@ public class SceneFunctions {
                 numAlive++;
 
         Unit[] newQueue = new Unit[numAlive]; //New queue to contain only those who are still alive
-
+        System.out.println(numAlive);
         int counter = 0; //Skips over dead units
 
         for (int i = 0; i<newQueue.length; i++){
@@ -110,7 +115,7 @@ public class SceneFunctions {
     }
 
     public static void Attack(Unit attacker, Unit defender){
-        takeDamage(defender, attacker.getMoves()[0].getDamage());
+        takeDamage(defender, attacker.getAttack());
         if (defender.getCurrentHealth()<=0){
             System.out.println(defender.getUnitName() + " is dead");
         }

@@ -66,20 +66,20 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         trainerOne = new Trainer("Cynthia", true); //Creates first trainer. Temporary until player can choose
         trainerTwo = new Trainer("Cyrus", false); //Same as above
 
-        trainerOne.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Wobbuffet", 1, true));
-        trainerOne.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Xatu", 2, false));
-        trainerOne.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Yanmega", 3, true));
-        trainerOne.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Zapdos", 4, true));
-        trainerOne.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Togekiss", 5, false));
-        trainerOne.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Torterra", 6, true));
-        trainerOne.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Toxicroak", 7, false));
-        trainerTwo.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Gyarados", 8, false));
-        trainerTwo.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Tyranitar", 9, false));
-        trainerTwo.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Ursaring", 10, true));
-        trainerTwo.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Vespiquen", 11, false));
-        trainerTwo.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Grumpig", 12, false));
-        trainerTwo.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Walrein", 13, true));
-        trainerTwo.addUnit(new Unit(10, 10, null, 0, 5, 0, false, false, 0, "Empoleon", 14, false));
+        trainerOne.addUnit(new Unit("Sceptile", 1, true));
+        trainerOne.addUnit(new Unit("Shiftry", 2, false));
+        trainerOne.addUnit(new Unit("Sceptile", 3, true));
+        trainerOne.addUnit(new Unit("Shiftry", 4, true));
+        trainerOne.addUnit(new Unit("Sceptile", 5, false));
+        trainerOne.addUnit(new Unit("Shiftry", 6, true));
+        trainerOne.addUnit(new Unit("Toxicroak", 7, false));
+        trainerTwo.addUnit(new Unit("Gyarados", 8, false));
+        trainerTwo.addUnit(new Unit("Tyranitar", 9, false));
+        trainerTwo.addUnit(new Unit("Ursaring", 10, true));
+        trainerTwo.addUnit(new Unit("Vespiquen", 11, false));
+        trainerTwo.addUnit(new Unit("Grumpig", 12, false));
+        trainerTwo.addUnit(new Unit("Walrein", 13, true));
+        trainerTwo.addUnit(new Unit("Empoleon", 14, false));
 
         queue = SceneFunctions.createQueue(trainerOne, trainerTwo); //Creates the queue according to player's teams
 
@@ -126,9 +126,14 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 //        client = new Client(this);
     }
 
+    private boolean teamsChosen=true;
+
     protected void paintComponent(Graphics g) { //Default panel function that allows us to add stuff to the panel
         super.paintComponent(g);
-        drawBattleground(g); //Functionized draw so that I can have it draw different stuff depending on the situation
+        if(teamsChosen)
+            drawBattleground(g); //Functionized draw so that I can have it draw different stuff depending on the situation
+        else
+            drawRoster(g);
     }
 
     protected void drawBattleground(Graphics g) {
@@ -251,6 +256,14 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             else
                 pokeGraphics.drawImage(pokeImage, 0, -96, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
 //            System.out.println("Down");
+        }
+    }
+
+    public void drawRoster(Graphics g){
+        for (int i = 0; i<17; i++){
+            for (int j=0; j<8; j++){
+
+            }
         }
     }
 
