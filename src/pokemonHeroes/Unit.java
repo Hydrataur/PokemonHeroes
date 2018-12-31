@@ -27,6 +27,8 @@ public class Unit {
     private boolean ranged; //Tells if the Pokemon can attack from afar
     private boolean flying; //Tells if a Pokemon is able to fly and ignore hazards while moving
 
+    private int shielded; //0-100 int value that tells how shielded the unit is. Only applied by magic.
+
     private int unitsInStack;  //Number of units currently in a stack. Might need to move somewhere else
     private String unitName;
 
@@ -44,6 +46,14 @@ public class Unit {
 
     public void setDirection(String direction) {
         this.direction = direction;
+    }
+
+    public int getShielded() {
+        return shielded;
+    }
+
+    public void setShielded(int shielded) {
+        this.shielded = shielded;
     }
 
     public int getTileX() {
@@ -157,9 +167,24 @@ public class Unit {
             setDirection("Left");
     }
 
+    public static NodeList forRoster(){
+        try {
+            File inputFile = new File("src/pokemonHeroes/unitInventory.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(inputFile);
+            doc.getDocumentElement().normalize();
+            return doc.getElementsByTagName("Unit");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void fillStats(Unit[] queue){
         try {
-            File inputFile = new File("src/pokemonHeroes/unitInventory.txt");
+            File inputFile = new File("src/pokemonHeroes/unitInventory.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);
@@ -191,9 +216,9 @@ public class Unit {
                             unit.movement = Integer.parseInt(eElement.getElementsByTagName("Movement").item(0).getTextContent());
                             unit.initiative = Integer.parseInt(eElement.getElementsByTagName("Initiative").item(0).getTextContent());
                             unit.PP = Integer.parseInt(eElement.getElementsByTagName("PP").item(0).getTextContent());
-                            unit.large = Boolean.parseBoolean(eElement.getElementsByTagName("MaxHP").item(0).getTextContent());
-                            unit.flying = Boolean.parseBoolean(eElement.getElementsByTagName("MaxHP").item(0).getTextContent());
-                            unit.ranged = Boolean.parseBoolean(eElement.getElementsByTagName("MaxHP").item(0).getTextContent());
+                            unit.large = Boolean.parseBoolean(eElement.getElementsByTagName("Large").item(0).getTextContent());
+                            unit.flying = Boolean.parseBoolean(eElement.getElementsByTagName("Flying").item(0).getTextContent());
+                            unit.ranged = Boolean.parseBoolean(eElement.getElementsByTagName("Ranged").item(0).getTextContent());
                             unit.currentHealth = unit.maxHealth;
                             //queue[i].move = Integer.parseInt(eElement.getElementsByTagName("MaxHP").item(0).getTextContent());
                             break;

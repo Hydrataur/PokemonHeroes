@@ -1,0 +1,1676 @@
+<?xml version = "1.0"?>
+<Units>
+
+    <Unit>
+        <unitName>Breloom</unitName>
+        <MaxHP>5</MaxHP>
+        <Attack>1</Attack>
+        <Defense>1</Defense>
+        <Movement>7</Movement>
+        <Initiative>50</Initiative>
+        <PP>5</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Sky Uppercut</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Sceptile</unitName>
+        <MaxHP>12</MaxHP>
+        <Attack>2</Attack>
+        <Defense>3</Defense>
+        <Movement>5</Movement>
+        <Initiative>30</Initiative>
+        <PP>2</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Leaf Blade</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Shiftry</unitName>
+        <MaxHP>6</MaxHP>
+        <Attack>5</Attack>
+        <Defense>1</Defense>
+        <Movement>18</Movement>
+        <Initiative>60</Initiative>
+        <PP>5</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Leaf Tornado</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Roserade</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Giga Drain</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Torterra</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Earthquake</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Abomasnow</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Blizzard</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Shaymin</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Seed Flare</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Sableye</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Shadow Claw</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Banette</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Shadow Claw</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Gengar</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Shadow Ball</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Mismagius</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Psychic</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Rotom</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Electro Ball</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Dusknoir</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Shadow Ball</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Giratina</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>true</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Shadow Force</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Togekiss</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Fly</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Dodrio</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Drill Peck</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Xatu</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Psychic</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Drifblim</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Shadow Ball</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Staraptor</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Brave Bird</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Tropius</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Razor Leaf</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Rayquaza</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>true</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Dragon Ascent</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Flareon</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Flamethrower</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Rapidash</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Flame Charge</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Magcargo</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Lava Plume</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Arcanine</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Flame Charge</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Magmortar</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Flamethrower</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Infernape</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Close Combat</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>HoOh</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>true</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Sacred Fire</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Gallade</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Close Combat</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Medicham</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>High Jump Kick</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Toxicroak</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Poison Jab</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Hariyama</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Arm Thrust</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Lucario</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Aura Sphere</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Hitmonlee</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Mega Kick</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Hitmonchan</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Mega Punch</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Jolteon</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Thunderbolt</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Lanturn</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Hydro Pump</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Electrode</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Explosion</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Ampharos</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Shock Wave</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Electivire</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Thunder</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Luxray</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Thunder Fang</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Zapdos</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Gigavolt Havoc</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Altaria</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Fly</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Flygon</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Dragon Pulse</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Kingdra</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Hydro Pump</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Dragonite</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Dragon Rage</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Salamence</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Draco Meteor</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Garchomp</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Dragon Claw</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Palkia</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>true</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Spacial Rend</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Houndoom</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Fire Fang</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Sharpedo</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Crunch</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Absol</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Night Slash</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Honchkrow</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Fly</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Spiritomb</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Dark Pulse</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Tyranitar</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Earthquake</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Darkrai</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Dark Void</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Ariados</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Spider Web</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Parasect</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Protect</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Yanmega</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>U-Turn</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Vespiquen</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Attack Order</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Shedinja</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>X-Scissor</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Pinsir</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Megahorn</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Armaldo</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Savage Spin Out</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Floatzel</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Aqua Jet</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Swampert</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Earthquake</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Milotic</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Ice Beam</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Wailord</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>true</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Hydro Pump</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Empoleon</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Metal Claw</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Gyarados</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Dragon Rage</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Kyogre</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>true</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Origin Pulse</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Scizor</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>X-Scissor</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Magnezone</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Thunder</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Bronzong</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Psychic</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Bastiodon</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Earthquake</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Aggron</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Metal Claw</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Metagross</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Meteor Mash</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Dialga</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>true</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Roar Of Time</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Golem</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Rock Blast</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Kabutops</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>X-Scissor</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Aerodactyl</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Fly</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Probopass</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Stone Edge</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Rhyperior</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Stone Edge</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Rampardos</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Head Smash</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Regirock</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Continental Crush</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Espeon</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Psychic</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>MrMime</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Future Sight</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Grumpig</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Zen Headbutt</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Wobbuffet</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Counter</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Gardevoir</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Psychic</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Alakazam</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Psycho Cut</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Mewtwo</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Psystrike</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Seviper</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Poison Tail</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Crobat</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Fly</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Muk</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Sludge Bomb</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Skuntank</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Sludge Bomb</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Drapion</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Cross Poison</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Nidoking</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Horn Attack</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Nidoqueen</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Poison Jab</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Bibarel</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Hydro Pump</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Tauros</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Zen Headbutt</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Lopunny</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>High Jump Kick</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Ursaring</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Hammer Arm</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Exploud</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Boomburst</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Slaking</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Rest</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Regigigas</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>true</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Crush Grip</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Glalie</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Ice Beam</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Jynx</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Psychic</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Walrein</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Blizzard</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Froslass</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Blizzard</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Weavile</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Night Slash</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Mamoswine</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Earthquake</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Regice</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Subzero Slammer</Move>
+    </Unit>
+
+    <Unit>
+        <unitName>Donphan</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Earthquake</Move>
+    </Unit>
+
+
+    <Unit>
+        <unitName>Gastrodon</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Hydro Pump</Move>
+    </Unit>
+
+
+    <Unit>
+        <unitName>Camerupt</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Lava Plume</Move>
+    </Unit>
+
+
+    <Unit>
+        <unitName>Gliscor</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>X-Scissor</Move>
+    </Unit>
+
+
+    <Unit>
+        <unitName>Hippowdon</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>false</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Earthquake</Move>
+    </Unit>
+
+
+    <Unit>
+        <unitName>Steelix</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>true</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Stone Edge</Move>
+    </Unit>
+
+
+    <Unit>
+        <unitName>Groudon</unitName>
+        <MaxHP>20</MaxHP>
+        <Attack>6</Attack>
+        <Defense>10</Defense>
+        <Movement>3</Movement>
+        <Initiative>20</Initiative>
+        <PP>1</PP>
+        <Large>true</Large>
+        <Flying>false</Flying>
+        <Ranged>false</Ranged>
+        <Move>Precipice Blades</Move>
+    </Unit>
+
+</Units>

@@ -1,5 +1,10 @@
 package pokemonHeroes;
 
+import javafx.util.Pair;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -66,20 +71,20 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         trainerOne = new Trainer("Cynthia", true); //Creates first trainer. Temporary until player can choose
         trainerTwo = new Trainer("Cyrus", false); //Same as above
 
-        trainerOne.addUnit(new Unit("Sceptile", 1, true));
-        trainerOne.addUnit(new Unit("Shiftry", 2, false));
-        trainerOne.addUnit(new Unit("Sceptile", 3, true));
-        trainerOne.addUnit(new Unit("Shiftry", 4, true));
-        trainerOne.addUnit(new Unit("Sceptile", 5, false));
-        trainerOne.addUnit(new Unit("Shiftry", 6, true));
-        trainerOne.addUnit(new Unit("Toxicroak", 7, false));
-        trainerTwo.addUnit(new Unit("Gyarados", 8, false));
-        trainerTwo.addUnit(new Unit("Tyranitar", 9, false));
-        trainerTwo.addUnit(new Unit("Ursaring", 10, true));
-        trainerTwo.addUnit(new Unit("Vespiquen", 11, false));
-        trainerTwo.addUnit(new Unit("Grumpig", 12, false));
-        trainerTwo.addUnit(new Unit("Walrein", 13, true));
-        trainerTwo.addUnit(new Unit("Empoleon", 14, false));
+        trainerOne.addUnit(new Unit("Electivire", 1, true));
+        trainerOne.addUnit(new Unit("Infernape", 2, true));
+        trainerOne.addUnit(new Unit("Shiftry", 3, true));
+        trainerOne.addUnit(new Unit("Roserade", 4, true));
+        trainerOne.addUnit(new Unit("Torterra", 5, true));
+        trainerOne.addUnit(new Unit("Staraptor", 6, true));
+        trainerOne.addUnit(new Unit("Shaymin", 7, true));
+        trainerTwo.addUnit(new Unit("Sableye", 8, false));
+        trainerTwo.addUnit(new Unit("Banette", 9, false));
+        trainerTwo.addUnit(new Unit("Gengar", 10, false));
+        trainerTwo.addUnit(new Unit("Mismagius", 11, false));
+        trainerTwo.addUnit(new Unit("Empoleon", 12, false));
+        trainerTwo.addUnit(new Unit("Dusknoir", 13, false));
+        trainerTwo.addUnit(new Unit("Mewtwo", 14, false));
 
         queue = SceneFunctions.createQueue(trainerOne, trainerTwo); //Creates the queue according to player's teams
 
@@ -122,11 +127,12 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         timer.start();
 
         inTurn=false; //Starts false by default since nobody has started moving
+        teamsChosen = false;
 
 //        client = new Client(this);
     }
 
-    private boolean teamsChosen=true;
+    private boolean teamsChosen;
 
     protected void paintComponent(Graphics g) { //Default panel function that allows us to add stuff to the panel
         super.paintComponent(g);
@@ -205,6 +211,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             drawPokeFieldImage(k);
             pokeGraphics.dispose();
             g.drawImage(pokeFieldImage, queue[k].getX(), queue[k].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
+
 //                        queue[k].setX(tileStart+j*tileLength+j*5);
 //                        queue[k].setY(50+i*tileLength+i*5);
 //                        if(k==0){
@@ -219,14 +226,57 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     }
 
     private void drawPokeFieldImage(int numInQueue){
-        if(numInQueue != 0) {
-            if (queue[numInQueue].isTeam())
-                pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-            else
-                pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+        if (!queue[numInQueue].isLarge()) {
+            if (numInQueue != 0) {
+                if (queue[numInQueue].isTeam())
+                    pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+                else
+                    pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+                return;
+            }
+            if (queue[0].getDirection().equals("Right")) {
+                if (moveOne)
+                    pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+                else
+                    pokeGraphics.drawImage(pokeImage, -32, -96, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+//            System.out.println("Right");
+                return;
+            }
+            if (queue[0].getDirection().equals("Left")) {
+                if (moveOne)
+                    pokeGraphics.drawImage(pokeImage, -32, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+                else
+                    pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+//            System.out.println("Left");
+                return;
+            }
+            if (queue[0].getDirection().equals("Up")) {
+                if (moveOne)
+                    pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+                else
+                    pokeGraphics.drawImage(pokeImage, 0, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+//            System.out.println("Up");
+                return;
+            }
+            if (queue[0].getDirection().equals("Down")) {
+                if (moveOne)
+                    pokeGraphics.drawImage(pokeImage, 0, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+                else
+                    pokeGraphics.drawImage(pokeImage, 0, -96, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+//            System.out.println("Down");
+            }
             return;
         }
-        if (queue[0].getDirection().equals("Right")){
+
+        if (numInQueue != 0) {
+            System.out.println("Large" + queue[numInQueue].getUnitName());
+            if (queue[numInQueue].isTeam())
+                pokeGraphics.drawImage(pokeImage, -pokeImage.getWidth(null)/2, -pokeImage.getWidth(null)/2, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+            else
+                pokeGraphics.drawImage(pokeImage, -0, -0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+            return;
+        }
+        if (queue[0].getDirection().equals("Right")) {
             if (moveOne)
                 pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
             else
@@ -234,7 +284,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 //            System.out.println("Right");
             return;
         }
-        if (queue[0].getDirection().equals("Left")){
+        if (queue[0].getDirection().equals("Left")) {
             if (moveOne)
                 pokeGraphics.drawImage(pokeImage, -32, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
             else
@@ -242,7 +292,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 //            System.out.println("Left");
             return;
         }
-        if (queue[0].getDirection().equals("Up")){
+        if (queue[0].getDirection().equals("Up")) {
             if (moveOne)
                 pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
             else
@@ -250,7 +300,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 //            System.out.println("Up");
             return;
         }
-        if (queue[0].getDirection().equals("Down")){
+        if (queue[0].getDirection().equals("Down")) {
             if (moveOne)
                 pokeGraphics.drawImage(pokeImage, 0, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
             else
@@ -260,9 +310,35 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     }
 
     public void drawRoster(Graphics g){
-        for (int i = 0; i<17; i++){
-            for (int j=0; j<8; j++){
 
+        Graphics2D g2d = (Graphics2D)g;
+
+        NodeList roster = Unit.forRoster();
+        ImageIcon rosterIcon;
+        Image rosterImage;
+        BufferedImage pokeRosterImage;
+        Graphics rosterGraphics;
+
+        String imageLocation;
+
+        for (int i = 0; i<17; i++){
+            Pair<Color, Image> pair = SceneFunctions.rosterColorNeeded(i);
+            g.setColor(pair.getKey());
+            g.fillRect(i*BOARDWIDTH/17, 0, BOARDWIDTH/17, BOARDHEIGHT);
+            g.drawImage(pair.getValue(), i*BOARDWIDTH/17, 0, BOARDWIDTH/17, BOARDHEIGHT/7, this);
+            for (int j=0; j<7; j++){
+                Node node = roster.item(i*7+j);
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    Element element = (Element) node;
+                    imageLocation = "Images/PokePics/Zoomed/" + element.getElementsByTagName("unitName").item(0).getTextContent() + ".png";
+                    rosterIcon = new ImageIcon(imageLocation);
+                    rosterImage = rosterIcon.getImage();
+                    pokeRosterImage = new BufferedImage(rosterImage.getWidth(null)/2, rosterImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                    rosterGraphics = pokeRosterImage.getGraphics();
+                    rosterGraphics.drawImage(rosterImage, 0, 0, rosterImage.getWidth(null), rosterImage.getHeight(null), this);
+                    rosterGraphics.dispose();
+                    g2d.drawImage(pokeRosterImage, i*BOARDWIDTH/17, (j+1)*BOARDHEIGHT/8, BOARDWIDTH/17, BOARDHEIGHT/8, this);
+                }
             }
         }
     }
@@ -285,7 +361,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
                 if (SceneFunctions.spotTaken(j, i, queue) && enemiesInRange[inSpot] && SceneFunctions.inTile(x, y, tilesArr[j][i])){
                     System.out.println(queue[0].getUnitName() + " has attacked " + queue[inSpot].getUnitName());
-                    SceneFunctions.Attack(queue[0], queue[inSpot]);
+                    if (queue[0].isTeam() == trainerOne.getTeam())
+                        SceneFunctions.Attack(queue[0], queue[inSpot], trainerOne, trainerTwo);
+                    else
+                        SceneFunctions.Attack(queue[0], queue[inSpot], trainerTwo, trainerOne);
                     queue = SceneFunctions.updateQueue(queue);
                     enemiesInRange = SceneFunctions.enemyInRange(queue);
                     hasMoved = false;

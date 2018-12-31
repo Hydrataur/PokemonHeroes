@@ -7,7 +7,51 @@ public class Trainer {
 
     private String name; //Trainer name used to get correct image
     private boolean team; //Tells which team the trainer is, right or left
+    private int level;
     private boolean attackedThisTurn; //Trainer can only attack once per round
+
+    private int archeryLevel;
+    private int meleeLevel;
+    private boolean archerySpecialty;
+    private boolean meleeSpecialty;
+    private int armorLevel;
+    private boolean armorSpecialty;
+
+    public int getLevel() {
+        return level;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getArmorLevel() {
+        return armorLevel;
+    }
+
+    public boolean isArmorSpecialty() {
+        return armorSpecialty;
+    }
+
+    public int getArcheryLevel() {
+        return archeryLevel;
+    }
+
+    public int getMeleeLevel() {
+        return meleeLevel;
+    }
+
+    public boolean isArcherySpecialty() {
+        return archerySpecialty;
+    }
+
+    public boolean isMeleeSpecialty() {
+        return meleeSpecialty;
+    }
 
     public boolean isAttackedThisTurn() {
         return attackedThisTurn;
@@ -25,7 +69,7 @@ public class Trainer {
     protected Trainer(String name, boolean team){ //Creates icon and image depending on the name
         this.name = name;
         this.team = team;
-        this.trainerIcon = new ImageIcon("TrainerPics/"+name+".png");
+        this.trainerIcon = new ImageIcon("Images/TrainerPics/"+name+".png");
         this.trainerImage = trainerIcon.getImage();
     }
 
