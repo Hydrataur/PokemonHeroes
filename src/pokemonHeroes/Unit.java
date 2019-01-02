@@ -183,6 +183,9 @@ public class Unit {
     }
 
     public static void fillStats(Unit[] queue){
+
+        System.out.println(queue[0].getUnitName());
+
         try {
             File inputFile = new File("src/pokemonHeroes/unitInventory.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

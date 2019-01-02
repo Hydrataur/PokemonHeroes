@@ -71,63 +71,64 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         trainerOne = new Trainer("Cynthia", true); //Creates first trainer. Temporary until player can choose
         trainerTwo = new Trainer("Cyrus", false); //Same as above
 
-        trainerOne.addUnit(new Unit("Electivire", 1, true));
-        trainerOne.addUnit(new Unit("Infernape", 2, true));
-        trainerOne.addUnit(new Unit("Shiftry", 3, true));
-        trainerOne.addUnit(new Unit("Roserade", 4, true));
-        trainerOne.addUnit(new Unit("Torterra", 5, true));
-        trainerOne.addUnit(new Unit("Staraptor", 6, true));
-        trainerOne.addUnit(new Unit("Shaymin", 7, true));
-        trainerTwo.addUnit(new Unit("Sableye", 8, false));
-        trainerTwo.addUnit(new Unit("Banette", 9, false));
-        trainerTwo.addUnit(new Unit("Gengar", 10, false));
-        trainerTwo.addUnit(new Unit("Mismagius", 11, false));
-        trainerTwo.addUnit(new Unit("Empoleon", 12, false));
-        trainerTwo.addUnit(new Unit("Dusknoir", 13, false));
-        trainerTwo.addUnit(new Unit("Mewtwo", 14, false));
+//        trainerOne.addUnit(new Unit("Electivire", 1, true));
+//        trainerOne.addUnit(new Unit("Infernape", 2, true));
+//        trainerOne.addUnit(new Unit("Shiftry", 3, true));
+//        trainerOne.addUnit(new Unit("Roserade", 4, true));
+//        trainerOne.addUnit(new Unit("Torterra", 5, true));
+//        trainerOne.addUnit(new Unit("Staraptor", 6, true));
+//        trainerOne.addUnit(new Unit("Shaymin", 7, true));
+//        trainerTwo.addUnit(new Unit("Sableye", 8, false));
+//        trainerTwo.addUnit(new Unit("Banette", 9, false));
+//        trainerTwo.addUnit(new Unit("Gengar", 10, false));
+//        trainerTwo.addUnit(new Unit("Mismagius", 11, false));
+//        trainerTwo.addUnit(new Unit("Empoleon", 12, false));
+//        trainerTwo.addUnit(new Unit("Dusknoir", 13, false));
+//        trainerTwo.addUnit(new Unit("Mewtwo", 14, false));
+//
+//        queue = SceneFunctions.createQueue(trainerOne, trainerTwo); //Creates the queue according to player's teams
 
-        queue = SceneFunctions.createQueue(trainerOne, trainerTwo); //Creates the queue according to player's teams
-
-        queue[0].setTileX(0);queue[0].setTileY(0);
-        queue[1].setTileX(0);queue[1].setTileY(1);
-        queue[2].setTileX(0);queue[2].setTileY(2);
-        queue[3].setTileX(0);queue[3].setTileY(3);
-        queue[4].setTileX(0);queue[4].setTileY(4);
-        queue[5].setTileX(0);queue[5].setTileY(5);
-        queue[6].setTileX(0);queue[6].setTileY(6);
-        queue[7].setTileX(9);queue[7].setTileY(0);
-        queue[8].setTileX(9);queue[8].setTileY(1);
-        queue[9].setTileX(9);queue[9].setTileY(2);
-        queue[10].setTileX(9);queue[10].setTileY(3);
-        queue[11].setTileX(9);queue[11].setTileY(4);
-        queue[12].setTileX(9);queue[12].setTileY(5);
-        queue[13].setTileX(9);queue[13].setTileY(6);
-
-        enemiesInRange = SceneFunctions.enemyInRange(queue);
-
-        int tileStart = (int) Math.round((BOARDWIDTH - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
-//        System.out.println(tileStart);
-
-        queue[0].setX(tileStart+queue[0].getTileX()*tileLength+queue[0].getTileX()*5);queue[0].setY(50+queue[0].getTileY()*tileLength+queue[0].getTileY()*5);
-        queue[1].setX(tileStart+queue[1].getTileX()*tileLength+queue[1].getTileX()*5);queue[1].setY(50+queue[1].getTileY()*tileLength+queue[1].getTileY()*5);
-        queue[2].setX(tileStart+queue[2].getTileX()*tileLength+queue[2].getTileX()*5);queue[2].setY(50+queue[2].getTileY()*tileLength+queue[2].getTileY()*5);
-        queue[3].setX(tileStart+queue[3].getTileX()*tileLength+queue[3].getTileX()*5);queue[3].setY(50+queue[3].getTileY()*tileLength+queue[3].getTileY()*5);
-        queue[4].setX(tileStart+queue[4].getTileX()*tileLength+queue[4].getTileX()*5);queue[4].setY(50+queue[4].getTileY()*tileLength+queue[4].getTileY()*5);
-        queue[5].setX(tileStart+queue[5].getTileX()*tileLength+queue[5].getTileX()*5);queue[5].setY(50+queue[5].getTileY()*tileLength+queue[5].getTileY()*5);
-        queue[6].setX(tileStart+queue[6].getTileX()*tileLength+queue[6].getTileX()*5);queue[6].setY(50+queue[6].getTileY()*tileLength+queue[6].getTileY()*5);
-        queue[7].setX(tileStart+queue[7].getTileX()*tileLength+queue[7].getTileX()*5);queue[7].setY(50+queue[7].getTileY()*tileLength+queue[7].getTileY()*5);
-        queue[8].setX(tileStart+queue[8].getTileX()*tileLength+queue[8].getTileX()*5);queue[8].setY(50+queue[8].getTileY()*tileLength+queue[8].getTileY()*5);
-        queue[9].setX(tileStart+queue[9].getTileX()*tileLength+queue[9].getTileX()*5);queue[9].setY(50+queue[9].getTileY()*tileLength+queue[9].getTileY()*5);
-        queue[10].setX(tileStart+queue[10].getTileX()*tileLength+queue[10].getTileX()*5);queue[10].setY(50+queue[10].getTileY()*tileLength+queue[10].getTileY()*5);
-        queue[11].setX(tileStart+queue[11].getTileX()*tileLength+queue[11].getTileX()*5);queue[11].setY(50+queue[11].getTileY()*tileLength+queue[11].getTileY()*5);
-        queue[12].setX(tileStart+queue[12].getTileX()*tileLength+queue[12].getTileX()*5);queue[12].setY(50+queue[12].getTileY()*tileLength+queue[12].getTileY()*5);
-        queue[13].setX(tileStart+queue[13].getTileX()*tileLength+queue[13].getTileX()*5);queue[13].setY(50+queue[13].getTileY()*tileLength+queue[13].getTileY()*5);
+//        queue[0].setTileX(0);queue[0].setTileY(0);
+//        queue[1].setTileX(0);queue[1].setTileY(1);
+//        queue[2].setTileX(0);queue[2].setTileY(2);
+//        queue[3].setTileX(0);queue[3].setTileY(3);
+//        queue[4].setTileX(0);queue[4].setTileY(4);
+//        queue[5].setTileX(0);queue[5].setTileY(5);
+//        queue[6].setTileX(0);queue[6].setTileY(6);
+//        queue[7].setTileX(9);queue[7].setTileY(0);
+//        queue[8].setTileX(9);queue[8].setTileY(1);
+//        queue[9].setTileX(9);queue[9].setTileY(2);
+//        queue[10].setTileX(9);queue[10].setTileY(3);
+//        queue[11].setTileX(9);queue[11].setTileY(4);
+//        queue[12].setTileX(9);queue[12].setTileY(5);
+//        queue[13].setTileX(9);queue[13].setTileY(6);
+//
+//        enemiesInRange = SceneFunctions.enemyInRange(queue);
+//
+//        int tileStart = (int) Math.round((BOARDWIDTH - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
+////        System.out.println(tileStart);
+//
+//        queue[0].setX(tileStart+queue[0].getTileX()*tileLength+queue[0].getTileX()*5);queue[0].setY(50+queue[0].getTileY()*tileLength+queue[0].getTileY()*5);
+//        queue[1].setX(tileStart+queue[1].getTileX()*tileLength+queue[1].getTileX()*5);queue[1].setY(50+queue[1].getTileY()*tileLength+queue[1].getTileY()*5);
+//        queue[2].setX(tileStart+queue[2].getTileX()*tileLength+queue[2].getTileX()*5);queue[2].setY(50+queue[2].getTileY()*tileLength+queue[2].getTileY()*5);
+//        queue[3].setX(tileStart+queue[3].getTileX()*tileLength+queue[3].getTileX()*5);queue[3].setY(50+queue[3].getTileY()*tileLength+queue[3].getTileY()*5);
+//        queue[4].setX(tileStart+queue[4].getTileX()*tileLength+queue[4].getTileX()*5);queue[4].setY(50+queue[4].getTileY()*tileLength+queue[4].getTileY()*5);
+//        queue[5].setX(tileStart+queue[5].getTileX()*tileLength+queue[5].getTileX()*5);queue[5].setY(50+queue[5].getTileY()*tileLength+queue[5].getTileY()*5);
+//        queue[6].setX(tileStart+queue[6].getTileX()*tileLength+queue[6].getTileX()*5);queue[6].setY(50+queue[6].getTileY()*tileLength+queue[6].getTileY()*5);
+//        queue[7].setX(tileStart+queue[7].getTileX()*tileLength+queue[7].getTileX()*5);queue[7].setY(50+queue[7].getTileY()*tileLength+queue[7].getTileY()*5);
+//        queue[8].setX(tileStart+queue[8].getTileX()*tileLength+queue[8].getTileX()*5);queue[8].setY(50+queue[8].getTileY()*tileLength+queue[8].getTileY()*5);
+//        queue[9].setX(tileStart+queue[9].getTileX()*tileLength+queue[9].getTileX()*5);queue[9].setY(50+queue[9].getTileY()*tileLength+queue[9].getTileY()*5);
+//        queue[10].setX(tileStart+queue[10].getTileX()*tileLength+queue[10].getTileX()*5);queue[10].setY(50+queue[10].getTileY()*tileLength+queue[10].getTileY()*5);
+//        queue[11].setX(tileStart+queue[11].getTileX()*tileLength+queue[11].getTileX()*5);queue[11].setY(50+queue[11].getTileY()*tileLength+queue[11].getTileY()*5);
+//        queue[12].setX(tileStart+queue[12].getTileX()*tileLength+queue[12].getTileX()*5);queue[12].setY(50+queue[12].getTileY()*tileLength+queue[12].getTileY()*5);
+//        queue[13].setX(tileStart+queue[13].getTileX()*tileLength+queue[13].getTileX()*5);queue[13].setY(50+queue[13].getTileY()*tileLength+queue[13].getTileY()*5);
 
         Timer timer = new Timer(speed, this); //Timer according to which an action will be taken during every tick
         timer.start();
 
         inTurn=false; //Starts false by default since nobody has started moving
         teamsChosen = false;
+        teamOneChosen = false;
 
 //        client = new Client(this);
     }
@@ -374,8 +375,58 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         repaint();
     }
 
+    boolean teamOneChosen;
+
     @Override
     public void mouseClicked(MouseEvent e) {
+        if(!teamsChosen){
+            if (!teamOneChosen) {
+                SceneFunctions.setTeam(trainerOne, Unit.forRoster(), e.getX(), BOARDWIDTH, true);
+                teamOneChosen = true;
+                return;
+            }
+            SceneFunctions.setTeam(trainerTwo, Unit.forRoster(), e.getX(), BOARDWIDTH, false);
+            teamsChosen = true;
+            queue = SceneFunctions.createQueue(trainerOne, trainerTwo);
+            queue[0].setTileX(0);queue[0].setTileY(0);
+            queue[1].setTileX(0);queue[1].setTileY(1);
+            queue[2].setTileX(0);queue[2].setTileY(2);
+            queue[3].setTileX(0);queue[3].setTileY(3);
+            queue[4].setTileX(0);queue[4].setTileY(4);
+            queue[5].setTileX(0);queue[5].setTileY(5);
+            queue[6].setTileX(0);queue[6].setTileY(6);
+            queue[7].setTileX(9);queue[7].setTileY(0);
+            queue[8].setTileX(9);queue[8].setTileY(1);
+            queue[9].setTileX(9);queue[9].setTileY(2);
+            queue[10].setTileX(9);queue[10].setTileY(3);
+            queue[11].setTileX(9);queue[11].setTileY(4);
+            queue[12].setTileX(9);queue[12].setTileY(5);
+            queue[13].setTileX(9);queue[13].setTileY(6);
+
+            enemiesInRange = SceneFunctions.enemyInRange(queue);
+
+            int tileStart = (int) Math.round((BOARDWIDTH - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
+//        System.out.println(tileStart);
+
+            queue[0].setX(tileStart+queue[0].getTileX()*tileLength+queue[0].getTileX()*5);queue[0].setY(50+queue[0].getTileY()*tileLength+queue[0].getTileY()*5);
+            queue[1].setX(tileStart+queue[1].getTileX()*tileLength+queue[1].getTileX()*5);queue[1].setY(50+queue[1].getTileY()*tileLength+queue[1].getTileY()*5);
+            queue[2].setX(tileStart+queue[2].getTileX()*tileLength+queue[2].getTileX()*5);queue[2].setY(50+queue[2].getTileY()*tileLength+queue[2].getTileY()*5);
+            queue[3].setX(tileStart+queue[3].getTileX()*tileLength+queue[3].getTileX()*5);queue[3].setY(50+queue[3].getTileY()*tileLength+queue[3].getTileY()*5);
+            queue[4].setX(tileStart+queue[4].getTileX()*tileLength+queue[4].getTileX()*5);queue[4].setY(50+queue[4].getTileY()*tileLength+queue[4].getTileY()*5);
+            queue[5].setX(tileStart+queue[5].getTileX()*tileLength+queue[5].getTileX()*5);queue[5].setY(50+queue[5].getTileY()*tileLength+queue[5].getTileY()*5);
+            queue[6].setX(tileStart+queue[6].getTileX()*tileLength+queue[6].getTileX()*5);queue[6].setY(50+queue[6].getTileY()*tileLength+queue[6].getTileY()*5);
+            queue[7].setX(tileStart+queue[7].getTileX()*tileLength+queue[7].getTileX()*5);queue[7].setY(50+queue[7].getTileY()*tileLength+queue[7].getTileY()*5);
+            queue[8].setX(tileStart+queue[8].getTileX()*tileLength+queue[8].getTileX()*5);queue[8].setY(50+queue[8].getTileY()*tileLength+queue[8].getTileY()*5);
+            queue[9].setX(tileStart+queue[9].getTileX()*tileLength+queue[9].getTileX()*5);queue[9].setY(50+queue[9].getTileY()*tileLength+queue[9].getTileY()*5);
+            queue[10].setX(tileStart+queue[10].getTileX()*tileLength+queue[10].getTileX()*5);queue[10].setY(50+queue[10].getTileY()*tileLength+queue[10].getTileY()*5);
+            queue[11].setX(tileStart+queue[11].getTileX()*tileLength+queue[11].getTileX()*5);queue[11].setY(50+queue[11].getTileY()*tileLength+queue[11].getTileY()*5);
+            queue[12].setX(tileStart+queue[12].getTileX()*tileLength+queue[12].getTileX()*5);queue[12].setY(50+queue[12].getTileY()*tileLength+queue[12].getTileY()*5);
+            queue[13].setX(tileStart+queue[13].getTileX()*tileLength+queue[13].getTileX()*5);queue[13].setY(50+queue[13].getTileY()*tileLength+queue[13].getTileY()*5);
+
+            repaint();
+            return;
+        }
+
         if (!inTurn)
             turn(e.getX(), e.getY());
     }

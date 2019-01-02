@@ -1,6 +1,9 @@
 package pokemonHeroes;
 
 import javafx.util.Pair;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.swing.*;
 import java.awt.*;
@@ -222,6 +225,20 @@ public class SceneFunctions {
 
         System.out.println(defender.getUnitName() + " has " + defender.getUnitsInStack() + " units");
         System.out.println(defender.getUnitName() + " has " + defender.getCurrentHealth() + " current health");
+
+    }
+
+    public static void setTeam(Trainer trainer, NodeList roster, int x, int BOARDWIDTH, boolean teamB){
+        int column = x/(BOARDWIDTH/17);
+        Node node;
+        Element element;
+        for (int i = 0; i<7; i++){
+            node = roster.item(column*7+i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                element = (Element) node;
+                trainer.addUnit(new Unit(element.getElementsByTagName("unitName").item(0).getTextContent(), 10, teamB));
+            }
+        }
 
     }
 
