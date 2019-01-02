@@ -143,7 +143,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             drawRoster(g);
     }
 
-    protected void drawBattleground(Graphics g) {
+    private void drawBattleground(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         int tileStart = (int) Math.round((getWidth() - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
 //        System.out.println(tileStart);
@@ -212,7 +212,6 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             drawPokeFieldImage(k);
             pokeGraphics.dispose();
             g.drawImage(pokeFieldImage, queue[k].getX(), queue[k].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
-
 //                        queue[k].setX(tileStart+j*tileLength+j*5);
 //                        queue[k].setY(50+i*tileLength+i*5);
 //                        if(k==0){
@@ -222,6 +221,17 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             if (enemiesInRange[k])
                 g.drawImage(target, queue[k].getX(), queue[k].getY(), tileLength, tileLength, this);
 
+            if (queue[k].isTeam())
+                g.setColor(Color.BLUE);
+            else
+                g.setColor(Color.RED);
+
+            g.fillRect(queue[k].getX(), queue[k].getY(), 30, 10);
+
+            g.setColor(Color.BLACK);
+            g.drawRect(queue[k].getX(), queue[k].getY(), 30, 10);
+
+            g.drawString(Integer.toString(queue[k].getUnitsInStack()), queue[k].getX(), queue[k].getY()+g.getFont().getSize()-2);
         }
 
     }
@@ -310,7 +320,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         }
     }
 
-    public void drawRoster(Graphics g){
+    private void drawRoster(Graphics g){
 
         Graphics2D g2d = (Graphics2D)g;
 
@@ -328,17 +338,22 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             g.fillRect(i*BOARDWIDTH/17, 0, BOARDWIDTH/17, BOARDHEIGHT);
             g.drawImage(pair.getValue(), i*BOARDWIDTH/17, 0, BOARDWIDTH/17, BOARDHEIGHT/7, this);
             for (int j=0; j<7; j++){
-                Node node = roster.item(i*7+j);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element element = (Element) node;
-                    imageLocation = "Images/PokePics/Zoomed/" + element.getElementsByTagName("unitName").item(0).getTextContent() + ".png";
-                    rosterIcon = new ImageIcon(imageLocation);
-                    rosterImage = rosterIcon.getImage();
-                    pokeRosterImage = new BufferedImage(rosterImage.getWidth(null)/2, rosterImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-                    rosterGraphics = pokeRosterImage.getGraphics();
-                    rosterGraphics.drawImage(rosterImage, 0, 0, rosterImage.getWidth(null), rosterImage.getHeight(null), this);
-                    rosterGraphics.dispose();
-                    g2d.drawImage(pokeRosterImage, i*BOARDWIDTH/17, (j+1)*BOARDHEIGHT/8, BOARDWIDTH/17, BOARDHEIGHT/8, this);
+                try {
+                    Node node = roster.item(i * 7 + j);
+                    if (node.getNodeType() == Node.ELEMENT_NODE) {
+                        Element element = (Element) node;
+                        imageLocation = "Images/PokePics/Zoomed/" + element.getElementsByTagName("unitName").item(0).getTextContent() + ".png";
+                        rosterIcon = new ImageIcon(imageLocation);
+                        rosterImage = rosterIcon.getImage();
+                        pokeRosterImage = new BufferedImage(rosterImage.getWidth(null) / 2, rosterImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                        rosterGraphics = pokeRosterImage.getGraphics();
+                        rosterGraphics.drawImage(rosterImage, 0, 0, rosterImage.getWidth(null), rosterImage.getHeight(null), this);
+                        rosterGraphics.dispose();
+                        g2d.drawImage(pokeRosterImage, i * BOARDWIDTH / 17, (j + 1) * BOARDHEIGHT / 8, BOARDWIDTH / 17, BOARDHEIGHT / 8, this);
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
                 }
             }
         }
@@ -346,7 +361,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     private Tile chosenTile;
 
-    public void turn(int x, int y){
+    private void turn(int x, int y){
         for (int i=0; i<tilesArr.length; i++){
             for (int j=0; j<tilesArr.length; j++){
                 //System.out.println(e.getX()+" "+e.getY()+" "+ tilesArr[j][i].toString());
@@ -375,7 +390,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         repaint();
     }
 
-    boolean teamOneChosen;
+    private boolean teamOneChosen;
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -500,7 +515,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             if (queue[0].getX() == chosenTile.getLeftX() && queue[0].getY() == chosenTile.getTopY()) {
                 inTurn = false;
                 moveOne = false;
-                queue[0].setDirection("Right");
+                if (queue[0].isTeam())
+                    queue[0].setDirection("Right");
+                else
+                    queue[0].setDirection("Left");
                 enemiesInRange = SceneFunctions.enemyInRange(queue);
                 canAttack = false;
                 hasMoved = true;
