@@ -8,11 +8,11 @@
         <Defense>1</Defense>
         <Movement>7</Movement>
         <Initiative>50</Initiative>
-        <PP>5</PP>
-        <Large>false</Large>
+        <CD>5</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
-        <Move>Sky Uppercut</Move>
+        <Move>Sky UCDercut</Move>
     </Unit>
 
     <Unit>
@@ -22,8 +22,8 @@
         <Defense>3</Defense>
         <Movement>5</Movement>
         <Initiative>30</Initiative>
-        <PP>2</PP>
-        <Large>false</Large>
+        <CD>2</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Leaf Blade</Move>
@@ -36,8 +36,8 @@
         <Defense>1</Defense>
         <Movement>18</Movement>
         <Initiative>60</Initiative>
-        <PP>5</PP>
-        <Large>false</Large>
+        <CD>5</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Leaf Tornado</Move>
@@ -50,8 +50,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Giga Drain</Move>
@@ -64,8 +64,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Earthquake</Move>
@@ -78,8 +78,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Blizzard</Move>
@@ -92,8 +92,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Seed Flare</Move>
@@ -106,8 +106,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Shadow Claw</Move>
@@ -120,8 +120,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Shadow Claw</Move>
@@ -134,8 +134,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Shadow Ball</Move>
@@ -148,8 +148,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Psychic</Move>
@@ -162,8 +162,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Electro Ball</Move>
@@ -176,8 +176,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Shadow Ball</Move>
@@ -190,8 +190,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>true</Large>
+        <CD>1</CD>
+        <SpecialPic>Horizontal</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Shadow Force</Move>
@@ -204,8 +204,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Fly</Move>
@@ -218,8 +218,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Drill Peck</Move>
@@ -232,8 +232,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Psychic</Move>
@@ -246,8 +246,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Shadow Ball</Move>
@@ -260,8 +260,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Brave Bird</Move>
@@ -274,8 +274,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Razor Leaf</Move>
@@ -288,8 +288,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>true</Large>
+        <CD>1</CD>
+        <SpecialPic>Vertical</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Dragon Ascent</Move>
@@ -302,8 +302,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Flamethrower</Move>
@@ -316,8 +316,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Flame Charge</Move>
@@ -330,8 +330,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Lava Plume</Move>
@@ -344,8 +344,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Flame Charge</Move>
@@ -358,8 +358,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Flamethrower</Move>
@@ -372,8 +372,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Close Combat</Move>
@@ -386,8 +386,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>true</Large>
+        <CD>1</CD>
+        <SpecialPic>Horizontal</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Sacred Fire</Move>
@@ -400,8 +400,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Close Combat</Move>
@@ -414,8 +414,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>High Jump Kick</Move>
@@ -428,8 +428,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Poison Jab</Move>
@@ -442,8 +442,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Arm Thrust</Move>
@@ -456,8 +456,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Aura Sphere</Move>
@@ -470,8 +470,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Mega Kick</Move>
@@ -484,8 +484,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Mega Punch</Move>
@@ -498,8 +498,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Thunderbolt</Move>
@@ -512,8 +512,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Hydro Pump</Move>
@@ -526,8 +526,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Explosion</Move>
@@ -540,8 +540,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Shock Wave</Move>
@@ -554,8 +554,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Thunder</Move>
@@ -568,8 +568,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Thunder Fang</Move>
@@ -582,8 +582,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Gigavolt Havoc</Move>
@@ -596,8 +596,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Fly</Move>
@@ -610,8 +610,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Dragon Pulse</Move>
@@ -624,8 +624,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Hydro Pump</Move>
@@ -638,8 +638,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Dragon Rage</Move>
@@ -652,8 +652,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Draco Meteor</Move>
@@ -666,8 +666,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Dragon Claw</Move>
@@ -680,8 +680,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>true</Large>
+        <CD>1</CD>
+        <SpecialPic>Horizontal</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Spacial Rend</Move>
@@ -694,8 +694,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Fire Fang</Move>
@@ -708,8 +708,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Crunch</Move>
@@ -722,8 +722,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Night Slash</Move>
@@ -736,8 +736,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Fly</Move>
@@ -750,8 +750,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Dark Pulse</Move>
@@ -764,8 +764,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Earthquake</Move>
@@ -778,8 +778,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Dark Void</Move>
@@ -792,8 +792,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Spider Web</Move>
@@ -806,8 +806,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Protect</Move>
@@ -820,8 +820,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>U-Turn</Move>
@@ -834,8 +834,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Attack Order</Move>
@@ -848,8 +848,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>X-Scissor</Move>
@@ -862,8 +862,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Megahorn</Move>
@@ -876,8 +876,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Savage Spin Out</Move>
@@ -890,8 +890,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Aqua Jet</Move>
@@ -904,8 +904,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Earthquake</Move>
@@ -918,8 +918,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Ice Beam</Move>
@@ -932,8 +932,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>true</Large>
+        <CD>1</CD>
+        <SpecialPic>Horizontal</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Hydro Pump</Move>
@@ -946,8 +946,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Metal Claw</Move>
@@ -960,8 +960,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Dragon Rage</Move>
@@ -974,8 +974,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>true</Large>
+        <CD>1</CD>
+        <SpecialPic>Vertical</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Origin Pulse</Move>
@@ -988,8 +988,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>X-Scissor</Move>
@@ -1002,8 +1002,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Thunder</Move>
@@ -1016,8 +1016,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Psychic</Move>
@@ -1030,8 +1030,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Earthquake</Move>
@@ -1044,8 +1044,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Metal Claw</Move>
@@ -1058,8 +1058,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Meteor Mash</Move>
@@ -1072,8 +1072,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>true</Large>
+        <CD>1</CD>
+        <SpecialPic>Horizontal</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Roar Of Time</Move>
@@ -1086,8 +1086,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Rock Blast</Move>
@@ -1100,8 +1100,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>X-Scissor</Move>
@@ -1114,8 +1114,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Fly</Move>
@@ -1128,8 +1128,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Stone Edge</Move>
@@ -1142,8 +1142,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Stone Edge</Move>
@@ -1156,8 +1156,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Head Smash</Move>
@@ -1170,8 +1170,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Continental Crush</Move>
@@ -1184,8 +1184,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Psychic</Move>
@@ -1198,8 +1198,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Future Sight</Move>
@@ -1212,8 +1212,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Zen Headbutt</Move>
@@ -1226,8 +1226,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Counter</Move>
@@ -1240,8 +1240,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Psychic</Move>
@@ -1254,8 +1254,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Psycho Cut</Move>
@@ -1268,8 +1268,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Psystrike</Move>
@@ -1282,8 +1282,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Poison Tail</Move>
@@ -1296,8 +1296,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Fly</Move>
@@ -1310,8 +1310,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Sludge Bomb</Move>
@@ -1324,8 +1324,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Sludge Bomb</Move>
@@ -1338,8 +1338,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Cross Poison</Move>
@@ -1352,8 +1352,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Horn Attack</Move>
@@ -1366,8 +1366,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Poison Jab</Move>
@@ -1380,8 +1380,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Hydro Pump</Move>
@@ -1394,8 +1394,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Zen Headbutt</Move>
@@ -1408,8 +1408,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>High Jump Kick</Move>
@@ -1422,8 +1422,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Hammer Arm</Move>
@@ -1436,8 +1436,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Boomburst</Move>
@@ -1450,8 +1450,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Rest</Move>
@@ -1464,8 +1464,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>true</Large>
+        <CD>1</CD>
+        <SpecialPic>Regi</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Crush Grip</Move>
@@ -1478,8 +1478,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Ice Beam</Move>
@@ -1492,8 +1492,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Psychic</Move>
@@ -1506,8 +1506,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Blizzard</Move>
@@ -1520,8 +1520,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Blizzard</Move>
@@ -1534,8 +1534,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Night Slash</Move>
@@ -1548,8 +1548,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Earthquake</Move>
@@ -1562,8 +1562,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Subzero Slammer</Move>
@@ -1576,8 +1576,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Earthquake</Move>
@@ -1591,8 +1591,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Hydro Pump</Move>
@@ -1606,8 +1606,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Lava Plume</Move>
@@ -1621,8 +1621,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>X-Scissor</Move>
@@ -1636,8 +1636,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>false</Large>
+        <CD>1</CD>
+        <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Earthquake</Move>
@@ -1651,8 +1651,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>true</Large>
+        <CD>1</CD>
+        <SpecialPic>Horizontal</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Stone Edge</Move>
@@ -1666,8 +1666,8 @@
         <Defense>10</Defense>
         <Movement>3</Movement>
         <Initiative>20</Initiative>
-        <PP>1</PP>
-        <Large>true</Large>
+        <CD>1</CD>
+        <SpecialPic>Vertical</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Precipice Blades</Move>

@@ -129,6 +129,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         inTurn=false; //Starts false by default since nobody has started moving
         teamsChosen = false;
         teamOneChosen = false;
+        unitsPlaced = false;
 
 //        client = new Client(this);
     }
@@ -191,18 +192,48 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             }
         }
 
-        for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
-            for (int j = 0; j < Math.sqrt(tiles); j++) {
-                tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
-                if (SceneFunctions.inRange(j, i, queue[0]) && !inTurn && !SceneFunctions.spotTaken(j, i, queue) && !hasMoved) {
-                    g.setColor(new Color(0, 100, 0, 100));
-                    g.fillRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
-                    g.setColor(new Color(0, 100, 0, 255));
-                    g.drawRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
-//                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+        if (unitsPlaced)
+            for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
+                for (int j = 0; j < Math.sqrt(tiles); j++) {
+                    tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
+                    if (SceneFunctions.inRange(j, i, queue[0]) && !inTurn && !SceneFunctions.spotTaken(j, i, queue) && !hasMoved) {
+                        g.setColor(new Color(0, 100, 0, 100));
+                        g.fillRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+                        g.setColor(new Color(0, 100, 0, 255));
+                        g.drawRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+    //                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+                    }
                 }
             }
-        }
+        else
+            if (queue[0].isTeam()){
+                for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
+                    for (int j = 0; j < Math.sqrt(tiles); j++) {
+                        tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
+                        if (j<2 && !SceneFunctions.spotTaken(j, i, queue)) {
+                            g.setColor(new Color(0, 100, 0, 100));
+                            g.fillRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+                            g.setColor(new Color(0, 100, 0, 255));
+                            g.drawRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+                            //                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+                        }
+                    }
+                }
+            }
+            else{
+                for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
+                    for (int j = 0; j < Math.sqrt(tiles); j++) {
+                        tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
+                        if (j>7 && !SceneFunctions.spotTaken(j, i, queue)) {
+                            g.setColor(new Color(0, 100, 0, 100));
+                            g.fillRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+                            g.setColor(new Color(0, 100, 0, 255));
+                            g.drawRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+                            //                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+                        }
+                    }
+                }
+            }
 
         for (int k = 0; k < queue.length; k++) {
             pokeIcon = new ImageIcon("Images/PokePics/Combat/" + queue[k].getUnitName() + ".png");
@@ -218,8 +249,9 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 //                            System.out.println("X "+queue[k].getX()+" "+ (tileStart+j*tileLength+j*5));
 //                            System.out.println("Y "+queue[k].getY()+" "+(50+i*tileLength+i*5));
 //                        }
-            if (enemiesInRange[k])
-                g.drawImage(target, queue[k].getX(), queue[k].getY(), tileLength, tileLength, this);
+            if (unitsPlaced)
+                if (enemiesInRange[k])
+                    g.drawImage(target, queue[k].getX(), queue[k].getY(), tileLength, tileLength, this);
 
             if (queue[k].isTeam())
                 g.setColor(Color.BLUE);
@@ -236,88 +268,62 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     }
 
+    private static final int IMAGE_SIZE = 32;
+    private static final int IMAGE_SIZE_NEG = - IMAGE_SIZE;
+
     private void drawPokeFieldImage(int numInQueue){
-        if (!queue[numInQueue].isLarge()) {
-            if (numInQueue != 0) {
-                if (queue[numInQueue].isTeam())
-                    pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-                else
-                    pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-                return;
-            }
-            if (queue[0].getDirection().equals("Right")) {
-                if (moveOne)
-                    pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-                else
-                    pokeGraphics.drawImage(pokeImage, -32, -96, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-//            System.out.println("Right");
-                return;
-            }
-            if (queue[0].getDirection().equals("Left")) {
-                if (moveOne)
-                    pokeGraphics.drawImage(pokeImage, -32, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-                else
-                    pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-//            System.out.println("Left");
-                return;
-            }
-            if (queue[0].getDirection().equals("Up")) {
-                if (moveOne)
-                    pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-                else
-                    pokeGraphics.drawImage(pokeImage, 0, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-//            System.out.println("Up");
-                return;
-            }
-            if (queue[0].getDirection().equals("Down")) {
-                if (moveOne)
-                    pokeGraphics.drawImage(pokeImage, 0, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-                else
-                    pokeGraphics.drawImage(pokeImage, 0, -96, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-//            System.out.println("Down");
-            }
+        if (numInQueue != 0) {
+            if (queue[numInQueue].isTeam())
+                pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+            else
+                pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
             return;
         }
 
-        if (numInQueue != 0) {
-            System.out.println("Large" + queue[numInQueue].getUnitName());
-            if (queue[numInQueue].isTeam())
-                pokeGraphics.drawImage(pokeImage, -pokeImage.getWidth(null)/2, -pokeImage.getWidth(null)/2, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-            else
-                pokeGraphics.drawImage(pokeImage, -0, -0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-            return;
-        }
-        if (queue[0].getDirection().equals("Right")) {
-            if (moveOne)
-                pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-            else
-                pokeGraphics.drawImage(pokeImage, -32, -96, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-//            System.out.println("Right");
-            return;
-        }
-        if (queue[0].getDirection().equals("Left")) {
-            if (moveOne)
-                pokeGraphics.drawImage(pokeImage, -32, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-            else
-                pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-//            System.out.println("Left");
-            return;
-        }
-        if (queue[0].getDirection().equals("Up")) {
-            if (moveOne)
-                pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-            else
-                pokeGraphics.drawImage(pokeImage, 0, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-//            System.out.println("Up");
-            return;
-        }
-        if (queue[0].getDirection().equals("Down")) {
-            if (moveOne)
-                pokeGraphics.drawImage(pokeImage, 0, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-            else
-                pokeGraphics.drawImage(pokeImage, 0, -96, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-//            System.out.println("Down");
-        }
+        Unit unit = queue[0];
+
+        int xPos = 0;
+        int yPos = 0;
+
+        if (unit.getDirection().equals("Right") || unit.getDirection().equals("Left"))
+            xPos = -32;
+        if (unit.getDirection().equals("Right") || unit.getDirection().equals("Down"))
+            yPos = -64;
+        if(!moveOne)
+            yPos -=32;
+        pokeGraphics.drawImage(pokeImage, xPos, yPos, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+//        if (queue[0].getDirection().equals("Right")) {
+//            if (moveOne)
+//                pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+//            else
+//                pokeGraphics.drawImage(pokeImage, -32, -96, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+////            System.out.println("Right");
+//            return;
+//        }
+//        if (queue[0].getDirection().equals("Left")) {
+//            if (moveOne)
+//                pokeGraphics.drawImage(pokeImage, -32, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+//            else
+//                pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+////            System.out.println("Left");
+//            return;
+//        }
+//        if (queue[0].getDirection().equals("Up")) {
+//            if (moveOne)
+//                pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+//            else
+//                pokeGraphics.drawImage(pokeImage, 0, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+////            System.out.println("Up");
+//            return;
+//        }
+//        if (queue[0].getDirection().equals("Down")) {
+//            if (moveOne)
+//                pokeGraphics.drawImage(pokeImage, 0, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+//            else
+//                pokeGraphics.drawImage(pokeImage, 0, -96, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+////            System.out.println("Down");
+//        }
+//        return;
     }
 
     private void drawRoster(Graphics g){
@@ -392,6 +398,8 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     private boolean teamOneChosen;
 
+    private boolean unitsPlaced;
+
     @Override
     public void mouseClicked(MouseEvent e) {
         if(!teamsChosen){
@@ -403,42 +411,41 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             SceneFunctions.setTeam(trainerTwo, Unit.forRoster(), e.getX(), BOARDWIDTH, false);
             teamsChosen = true;
             queue = SceneFunctions.createQueue(trainerOne, trainerTwo);
-            queue[0].setTileX(0);queue[0].setTileY(0);
-            queue[1].setTileX(0);queue[1].setTileY(1);
-            queue[2].setTileX(0);queue[2].setTileY(2);
-            queue[3].setTileX(0);queue[3].setTileY(3);
-            queue[4].setTileX(0);queue[4].setTileY(4);
-            queue[5].setTileX(0);queue[5].setTileY(5);
-            queue[6].setTileX(0);queue[6].setTileY(6);
-            queue[7].setTileX(9);queue[7].setTileY(0);
-            queue[8].setTileX(9);queue[8].setTileY(1);
-            queue[9].setTileX(9);queue[9].setTileY(2);
-            queue[10].setTileX(9);queue[10].setTileY(3);
-            queue[11].setTileX(9);queue[11].setTileY(4);
-            queue[12].setTileX(9);queue[12].setTileY(5);
-            queue[13].setTileX(9);queue[13].setTileY(6);
-
-            enemiesInRange = SceneFunctions.enemyInRange(queue);
-
-            int tileStart = (int) Math.round((BOARDWIDTH - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
-//        System.out.println(tileStart);
-
-            queue[0].setX(tileStart+queue[0].getTileX()*tileLength+queue[0].getTileX()*5);queue[0].setY(50+queue[0].getTileY()*tileLength+queue[0].getTileY()*5);
-            queue[1].setX(tileStart+queue[1].getTileX()*tileLength+queue[1].getTileX()*5);queue[1].setY(50+queue[1].getTileY()*tileLength+queue[1].getTileY()*5);
-            queue[2].setX(tileStart+queue[2].getTileX()*tileLength+queue[2].getTileX()*5);queue[2].setY(50+queue[2].getTileY()*tileLength+queue[2].getTileY()*5);
-            queue[3].setX(tileStart+queue[3].getTileX()*tileLength+queue[3].getTileX()*5);queue[3].setY(50+queue[3].getTileY()*tileLength+queue[3].getTileY()*5);
-            queue[4].setX(tileStart+queue[4].getTileX()*tileLength+queue[4].getTileX()*5);queue[4].setY(50+queue[4].getTileY()*tileLength+queue[4].getTileY()*5);
-            queue[5].setX(tileStart+queue[5].getTileX()*tileLength+queue[5].getTileX()*5);queue[5].setY(50+queue[5].getTileY()*tileLength+queue[5].getTileY()*5);
-            queue[6].setX(tileStart+queue[6].getTileX()*tileLength+queue[6].getTileX()*5);queue[6].setY(50+queue[6].getTileY()*tileLength+queue[6].getTileY()*5);
-            queue[7].setX(tileStart+queue[7].getTileX()*tileLength+queue[7].getTileX()*5);queue[7].setY(50+queue[7].getTileY()*tileLength+queue[7].getTileY()*5);
-            queue[8].setX(tileStart+queue[8].getTileX()*tileLength+queue[8].getTileX()*5);queue[8].setY(50+queue[8].getTileY()*tileLength+queue[8].getTileY()*5);
-            queue[9].setX(tileStart+queue[9].getTileX()*tileLength+queue[9].getTileX()*5);queue[9].setY(50+queue[9].getTileY()*tileLength+queue[9].getTileY()*5);
-            queue[10].setX(tileStart+queue[10].getTileX()*tileLength+queue[10].getTileX()*5);queue[10].setY(50+queue[10].getTileY()*tileLength+queue[10].getTileY()*5);
-            queue[11].setX(tileStart+queue[11].getTileX()*tileLength+queue[11].getTileX()*5);queue[11].setY(50+queue[11].getTileY()*tileLength+queue[11].getTileY()*5);
-            queue[12].setX(tileStart+queue[12].getTileX()*tileLength+queue[12].getTileX()*5);queue[12].setY(50+queue[12].getTileY()*tileLength+queue[12].getTileY()*5);
-            queue[13].setX(tileStart+queue[13].getTileX()*tileLength+queue[13].getTileX()*5);queue[13].setY(50+queue[13].getTileY()*tileLength+queue[13].getTileY()*5);
 
             repaint();
+            return;
+        }
+
+        if (!unitsPlaced){
+            chosenTile = SceneFunctions.chosenTile(e.getX(), e.getY(), tilesArr);
+            int tileStart = (int) Math.round((BOARDWIDTH - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
+            Unit unit = queue[0];
+            if (queue[1].getTileX() != -1)
+                unitsPlaced = true;
+            if (unit.getTileY() == -1 && unit.getTileX() == -1 && !SceneFunctions.spotTaken(chosenTile.getX(), chosenTile.getY(), queue) && chosenTile != null){
+                if (unit.isTeam()){
+                    if (chosenTile.getX()<2) {
+                        unit.setTileX(chosenTile.getX());
+                        unit.setTileY(chosenTile.getY());
+                    }
+                    else
+                        return;
+                }
+                else{
+                    if(chosenTile.getX()>7){
+                        unit.setTileX(chosenTile.getX());
+                        unit.setTileY(chosenTile.getY());
+                    }
+                    else
+                        return;
+                }
+                unit.setX(tileStart+unit.getTileX()*tileLength+unit.getTileX()*5);
+                unit.setY(50+unit.getTileY()*tileLength+unit.getTileY()*5);
+                queue = SceneFunctions.updateQueue(queue);
+                enemiesInRange = SceneFunctions.enemyInRange(queue);
+                repaint();
+                return;
+            }
             return;
         }
 

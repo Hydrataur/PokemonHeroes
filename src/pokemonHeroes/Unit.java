@@ -18,12 +18,12 @@ public class Unit {
     private int defense;
     private int movement;  //Amount of tiles a Pokemon can move during its turn
     private int initiative; //Affects the Pokemon's spot in Queue. Higher initiative means it'll be higher in the queue.
-    private int PP;  //Tells how many times the Pokemon can use their special attack
+    private int CD;  //How long unit must wait between uses of special
 
     private Move move; //Special ability each Pokemon has
 
     private boolean team; //Tells which team this unit belongs to
-    private boolean large;  //True if a Pokemon is large (takes up four spaces) or false if small (takes up one space)
+    private String specialPic;  //Some Pokemon images have special dimensions. This is here to tell me how to deal with those special images.
     private boolean ranged; //Tells if the Pokemon can attack from afar
     private boolean flying; //Tells if a Pokemon is able to fly and ignore hazards while moving
 
@@ -92,8 +92,8 @@ public class Unit {
         this.currentHealth = currentHealth;
     }
 
-    public void setPP(int PP) {
-        this.PP = PP;
+    public void setCD(int CD) {
+        this.CD = CD;
     }
 
     public void setUnitsInStack(int unitsInStack) {
@@ -124,12 +124,12 @@ public class Unit {
         return movement;
     }
 
-    public int getPP() {
-        return PP;
+    public int getCD() {
+        return CD;
     }
 
-    public boolean isLarge() {
-        return large;
+    public String getSpecialPic() {
+        return specialPic;
     }
 
     public boolean isTeam() { return team; }
@@ -169,7 +169,7 @@ public class Unit {
 
     public static NodeList forRoster(){
         try {
-            File inputFile = new File("src/pokemonHeroes/unitInventory.xml");
+            File inputFile = new File("Resources/unitInventory.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);
@@ -187,7 +187,7 @@ public class Unit {
         System.out.println(queue[0].getUnitName());
 
         try {
-            File inputFile = new File("src/pokemonHeroes/unitInventory.xml");
+            File inputFile = new File("Resources/unitInventory.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);
@@ -208,8 +208,8 @@ public class Unit {
                             System.out.println("Defense : " + eElement.getElementsByTagName("Defense").item(0).getTextContent());
                             System.out.println("Movement : " + eElement.getElementsByTagName("Movement").item(0).getTextContent());
                             System.out.println("Initiative : " + eElement.getElementsByTagName("Initiative").item(0).getTextContent());
-                            System.out.println("PP : " + eElement.getElementsByTagName("PP").item(0).getTextContent());
-                            System.out.println("Large : " + eElement.getElementsByTagName("Large").item(0).getTextContent());
+                            System.out.println("CD : " + eElement.getElementsByTagName("CD").item(0).getTextContent());
+                            System.out.println("SpecialPic : " + eElement.getElementsByTagName("SpecialPic").item(0).getTextContent());
                             System.out.println("Flying : " + eElement.getElementsByTagName("Flying").item(0).getTextContent());
                             System.out.println("Ranged : " + eElement.getElementsByTagName("Ranged").item(0).getTextContent());
                             System.out.println("Move : " + eElement.getElementsByTagName("Move").item(0).getTextContent());
@@ -218,8 +218,8 @@ public class Unit {
                             unit.defense = Integer.parseInt(eElement.getElementsByTagName("Defense").item(0).getTextContent());
                             unit.movement = Integer.parseInt(eElement.getElementsByTagName("Movement").item(0).getTextContent());
                             unit.initiative = Integer.parseInt(eElement.getElementsByTagName("Initiative").item(0).getTextContent());
-                            unit.PP = Integer.parseInt(eElement.getElementsByTagName("PP").item(0).getTextContent());
-                            unit.large = Boolean.parseBoolean(eElement.getElementsByTagName("Large").item(0).getTextContent());
+                            unit.CD = Integer.parseInt(eElement.getElementsByTagName("CD").item(0).getTextContent());
+                            unit.specialPic = eElement.getElementsByTagName("SpecialPic").item(0).getTextContent();
                             unit.flying = Boolean.parseBoolean(eElement.getElementsByTagName("Flying").item(0).getTextContent());
                             unit.ranged = Boolean.parseBoolean(eElement.getElementsByTagName("Ranged").item(0).getTextContent());
                             unit.currentHealth = unit.maxHealth;

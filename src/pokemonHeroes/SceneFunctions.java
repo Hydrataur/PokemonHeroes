@@ -29,6 +29,9 @@ public class SceneFunctions {
 
         Unit temp;
         for (int i = 0; i < queue.length; i++) {
+            queue[i].setTileX(-1);
+            queue[i].setTileY(-1);
+            queue[i].setX(-200);
             for (int j = 1; j < queue.length - i; j++) {
                 if (queue[j-1]!=null && queue[j]!=null)
                     if (queue[j - 1].getInitiative() < queue[j].getInitiative()) {
@@ -85,6 +88,15 @@ public class SceneFunctions {
         if (tile.getLeftX()<x && x<tile.getRightX() && tile.getTopY()<y && y<tile.getBottomY())
             return true;
         return false;
+    }
+
+    public static Tile chosenTile(int x, int y, Tile[][] tilesDouble){
+        for (Tile[] tiles : tilesDouble)
+            for (Tile tile : tiles)
+                if (tile.getLeftX()<x && x<tile.getRightX() && tile.getTopY()<y && y<tile.getBottomY())
+                    return tile;
+
+        return null;
     }
 
     public static boolean inRange(int x, int y, Unit poke){ //Returns true if tile is within movement range
@@ -191,7 +203,7 @@ public class SceneFunctions {
         else
             R3 = 0;
 
-        R4 = defender.getShielded()/100; //If defender has a magic shield then reduces damage
+        R4 = defender.getShielded()%100; //If defender has a magic shield then reduces damage
 
         System.out.println("Base Damage=" + dmgB +" I1=" + I1 +" I2=" + I2 +" I3=" + I3 +" I4=" + I4 + " R1=" + R1 + " R2=" + R2 + " R3=" + R3 + " R4=" + R4);
 

@@ -1,5 +1,7 @@
 package pokemonHeroes;
 
+import java.awt.*;
+
 @SuppressWarnings("WeakerAccess")
 
 public class Tile {
