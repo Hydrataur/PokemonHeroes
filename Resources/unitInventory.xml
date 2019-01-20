@@ -12,7 +12,7 @@
         <SpecialPic>false</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
-        <Move>Sky UCDercut</Move>
+        <Move>Sky Uppercut</Move>
     </Unit>
 
     <Unit>
@@ -191,7 +191,7 @@
         <Movement>3</Movement>
         <Initiative>20</Initiative>
         <CD>1</CD>
-        <SpecialPic>Horizontal</SpecialPic>
+        <SpecialPic>G4</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Shadow Force</Move>
@@ -387,7 +387,7 @@
         <Movement>3</Movement>
         <Initiative>20</Initiative>
         <CD>1</CD>
-        <SpecialPic>Horizontal</SpecialPic>
+        <SpecialPic>G4</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Sacred Fire</Move>
@@ -681,7 +681,7 @@
         <Movement>3</Movement>
         <Initiative>20</Initiative>
         <CD>1</CD>
-        <SpecialPic>Horizontal</SpecialPic>
+        <SpecialPic>G4</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Spacial Rend</Move>
@@ -1073,7 +1073,7 @@
         <Movement>3</Movement>
         <Initiative>20</Initiative>
         <CD>1</CD>
-        <SpecialPic>Horizontal</SpecialPic>
+        <SpecialPic>G4</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Roar Of Time</Move>
@@ -1652,7 +1652,7 @@
         <Movement>3</Movement>
         <Initiative>20</Initiative>
         <CD>1</CD>
-        <SpecialPic>Horizontal</SpecialPic>
+        <SpecialPic>G4</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Stone Edge</Move>

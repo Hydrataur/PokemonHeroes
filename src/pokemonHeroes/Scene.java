@@ -144,6 +144,21 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             drawRoster(g);
     }
 
+    private void delet(Graphics g){
+        ImageIcon icon = new ImageIcon("Images/PokePics/Combat/Dialga.png");
+        Image img = icon.getImage();
+        BufferedImage bimg = new BufferedImage(img.getWidth(null)/4, img.getHeight(null)/2, BufferedImage.TYPE_INT_ARGB);
+        Graphics g2 = bimg.getGraphics();
+        g2.drawImage(img, -130, -64, img.getWidth(null), img.getHeight(null), this);
+        g2.dispose();
+        g.drawImage(bimg, 0, 0, tileLength, tileLength, this);
+//        pokeIcon = new ImageIcon("Images/PokePics/Zoomed/" + queue[0].getUnitName() + ".png");
+//        pokeImage = pokeIcon.getImage();
+//        pokeQueueImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+//        pokeGraphics = pokeQueueImage.getGraphics();
+//        pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+    }
+
     private void drawBattleground(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         int tileStart = (int) Math.round((getWidth() - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
@@ -236,13 +251,13 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             }
 
         for (int k = 0; k < queue.length; k++) {
-            pokeIcon = new ImageIcon("Images/PokePics/Combat/" + queue[k].getUnitName() + ".png");
-            pokeImage = pokeIcon.getImage();
-            pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
-            pokeGraphics = pokeFieldImage.getGraphics();
-            drawPokeFieldImage(k);
-            pokeGraphics.dispose();
-            g.drawImage(pokeFieldImage, queue[k].getX(), queue[k].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
+//            pokeIcon = new ImageIcon("Images/PokePics/Combat/" + queue[k].getUnitName() + ".png");
+//            pokeImage = pokeIcon.getImage();
+//            pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
+//            pokeGraphics = pokeFieldImage.getGraphics();
+            drawPokeFieldImage(k, g);
+//            pokeGraphics.dispose();
+//            g.drawImage(pokeFieldImage, queue[k].getX(), queue[k].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
 //                        queue[k].setX(tileStart+j*tileLength+j*5);
 //                        queue[k].setY(50+i*tileLength+i*5);
 //                        if(k==0){
@@ -268,15 +283,17 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     }
 
-    private static final int IMAGE_SIZE = 32;
-    private static final int IMAGE_SIZE_NEG = - IMAGE_SIZE;
-
-    private void drawPokeFieldImage(int numInQueue){
+    private void drawPokeFieldImage(int numInQueue, Graphics g){
+        pokeIcon = new ImageIcon("Images/PokePics/Combat/" + queue[numInQueue].getUnitName() + ".png");
+        pokeImage = pokeIcon.getImage();
+        pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
+        pokeGraphics = pokeFieldImage.getGraphics();
         if (numInQueue != 0) {
             if (queue[numInQueue].isTeam())
                 pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
             else
                 pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+            g.drawImage(pokeFieldImage, queue[numInQueue].getX(), queue[numInQueue].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
             return;
         }
 
@@ -285,45 +302,46 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         int xPos = 0;
         int yPos = 0;
 
-        if (unit.getDirection().equals("Right") || unit.getDirection().equals("Left"))
-            xPos = -32;
-        if (unit.getDirection().equals("Right") || unit.getDirection().equals("Down"))
-            yPos = -64;
-        if(!moveOne)
-            yPos -=32;
-        pokeGraphics.drawImage(pokeImage, xPos, yPos, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-//        if (queue[0].getDirection().equals("Right")) {
-//            if (moveOne)
-//                pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-//            else
-//                pokeGraphics.drawImage(pokeImage, -32, -96, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-////            System.out.println("Right");
-//            return;
-//        }
-//        if (queue[0].getDirection().equals("Left")) {
-//            if (moveOne)
-//                pokeGraphics.drawImage(pokeImage, -32, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-//            else
-//                pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-////            System.out.println("Left");
-//            return;
-//        }
-//        if (queue[0].getDirection().equals("Up")) {
-//            if (moveOne)
-//                pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-//            else
-//                pokeGraphics.drawImage(pokeImage, 0, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-////            System.out.println("Up");
-//            return;
-//        }
-//        if (queue[0].getDirection().equals("Down")) {
-//            if (moveOne)
-//                pokeGraphics.drawImage(pokeImage, 0, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-//            else
-//                pokeGraphics.drawImage(pokeImage, 0, -96, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-////            System.out.println("Down");
-//        }
-//        return;
+        switch (unit.getSpecialPic()) {
+            case "G4":
+                System.out.println("Ding");
+                switch (unit.getDirection()) {
+                    case "Up":
+                        xPos = 0;
+                        break;
+                    case "Down":
+                        xPos = -65;
+                        break;
+                    case "Left":
+                        xPos = -130;
+                        break;
+                    default:
+                        xPos = -195;
+                        break;
+                }
+                if (moveOne)
+                    yPos = 0;
+                else
+                    yPos = -64;
+                pokeFieldImage = new BufferedImage(pokeImage.getWidth(null)/4, pokeImage.getHeight(null)/2, BufferedImage.TYPE_INT_ARGB);
+                pokeGraphics = pokeFieldImage.getGraphics();
+                pokeGraphics.drawImage(pokeImage, xPos, yPos, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+                pokeGraphics.dispose();
+                g.drawImage(pokeFieldImage, unit.getX()-tileLength/3, unit.getY()-tileLength/2, (int)(pokeFieldImage.getWidth()*1.5), (int)(pokeFieldImage.getHeight()*1.5), this);
+                break;
+
+            default:
+                if (unit.getDirection().equals("Right") || unit.getDirection().equals("Left"))
+                    xPos = -32;
+                if (unit.getDirection().equals("Right") || unit.getDirection().equals("Down"))
+                    yPos = -64;
+                if (!moveOne)
+                    yPos -= 32;
+                pokeGraphics.drawImage(pokeImage, xPos, yPos, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+                g.drawImage(pokeFieldImage, unit.getX(), unit.getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
+                break;
+        }
+
     }
 
     private void drawRoster(Graphics g){
@@ -422,30 +440,31 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             Unit unit = queue[0];
             if (queue[1].getTileX() != -1)
                 unitsPlaced = true;
-            if (unit.getTileY() == -1 && unit.getTileX() == -1 && !SceneFunctions.spotTaken(chosenTile.getX(), chosenTile.getY(), queue) && chosenTile != null){
-                if (unit.isTeam()){
-                    if (chosenTile.getX()<2) {
-                        unit.setTileX(chosenTile.getX());
-                        unit.setTileY(chosenTile.getY());
+            if (chosenTile != null)
+                if (unit.getTileY() == -1 && unit.getTileX() == -1 && !SceneFunctions.spotTaken(chosenTile.getX(), chosenTile.getY(), queue)){
+                    if (unit.isTeam()){
+                        if (chosenTile.getX()<2) {
+                            unit.setTileX(chosenTile.getX());
+                            unit.setTileY(chosenTile.getY());
+                        }
+                        else
+                            return;
                     }
-                    else
-                        return;
-                }
-                else{
-                    if(chosenTile.getX()>7){
-                        unit.setTileX(chosenTile.getX());
-                        unit.setTileY(chosenTile.getY());
+                    else{
+                        if(chosenTile.getX()>7){
+                            unit.setTileX(chosenTile.getX());
+                            unit.setTileY(chosenTile.getY());
+                        }
+                        else
+                            return;
                     }
-                    else
-                        return;
+                    unit.setX(tileStart+unit.getTileX()*tileLength+unit.getTileX()*5);
+                    unit.setY(50+unit.getTileY()*tileLength+unit.getTileY()*5);
+                    queue = SceneFunctions.updateQueue(queue);
+                    enemiesInRange = SceneFunctions.enemyInRange(queue);
+                    repaint();
+                    return;
                 }
-                unit.setX(tileStart+unit.getTileX()*tileLength+unit.getTileX()*5);
-                unit.setY(50+unit.getTileY()*tileLength+unit.getTileY()*5);
-                queue = SceneFunctions.updateQueue(queue);
-                enemiesInRange = SceneFunctions.enemyInRange(queue);
-                repaint();
-                return;
-            }
             return;
         }
 

@@ -7,6 +7,7 @@ import org.w3c.dom.NodeList;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class SceneFunctions {
 
@@ -134,7 +135,7 @@ public class SceneFunctions {
 
         double dmgB, I1, I2, I3, I4, R1, R2, R3, R4; //Variables that influence the final damage. I for increase, R for reduce
 
-        dmgB = attacker.getUnitsInStack() * attacker.getAttack();
+        dmgB = ThreadLocalRandom.current().nextInt(attacker.getMinDamage(), attacker.getMaxDamage()+1) * attacker.getUnitsInStack();
 
         if (attacker.getAttack()>defender.getDefense()) { //Attack bonus if attack>defense, Defense bonus if defense>attack
             I1 = 0.05 * (attacker.getAttack() - defender.getDefense());
@@ -265,87 +266,87 @@ public class SceneFunctions {
         if (i==0) {
             clr = new Color(122, 199, 76);
             icon = new ImageIcon(fileLoc + "Grass.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
         if (i==1) {
             clr =  new Color(115, 87, 151);
             icon = new ImageIcon(fileLoc + "Ghost.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
         if (i==2) {
             clr =  new Color(169, 143, 243);
             icon = new ImageIcon(fileLoc + "Flying.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
         if (i==3) {
             clr =  new Color(238, 129, 48);
             icon = new ImageIcon(fileLoc + "Fire.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
         if (i==4){
             clr =  new Color(194, 46, 40);
             icon = new ImageIcon(fileLoc + "Fighting.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
         if (i==5) {
             clr =  new Color(247, 208, 44);
             icon = new ImageIcon(fileLoc + "Electric.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
         if (i==6) {
             clr =  new Color(111, 53, 252);
             icon = new ImageIcon(fileLoc + "Dragon.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
         if (i==7){
             clr =  new Color(112, 87, 70);
             icon = new ImageIcon(fileLoc + "Dark.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
         if (i==8) {
             clr =  new Color(166, 185, 26);
             icon = new ImageIcon(fileLoc + "Bug.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
         if (i==9) {
             clr =  new Color(99, 144, 240);
             icon = new ImageIcon(fileLoc + "Water.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
         if (i==10) {
             clr =  new Color(183, 183, 206);
             icon = new ImageIcon(fileLoc + "Steel.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
         if (i==11){
             clr =  new Color(182, 161, 54);
             icon = new ImageIcon(fileLoc + "Rock.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
         if (i==12) {
             clr =  new Color(249, 85, 135);
             icon = new ImageIcon(fileLoc + "Psychic.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
         if (i==13) {
             clr =  new Color(163, 62, 161);
             icon = new ImageIcon(fileLoc + "Poison.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
         if (i==14) {
             clr =  new Color(168, 167, 122);
             icon = new ImageIcon(fileLoc + "Normal.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
         if (i==15) {
             clr =  new Color(150, 217, 214);
             icon = new ImageIcon(fileLoc + "Ice.png");
-            return new Pair<Color, Image>(clr, icon.getImage());
+            return new Pair<>(clr, icon.getImage());
         }
 
         clr =  new Color(226, 191, 101);
         icon = new ImageIcon(fileLoc + "Ground.png");
-        return new Pair<Color, Image>(clr, icon.getImage());
+        return new Pair<>(clr, icon.getImage());
     }
 
     public static Cursor makeCursor(boolean canAttack, boolean canFly){ //Changes cursor according to situation.

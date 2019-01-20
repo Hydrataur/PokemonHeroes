@@ -1,5 +1,6 @@
 package pokemonHeroes;
 
+import org.json.*;
 import java.io.File;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -20,6 +21,9 @@ public class Unit {
     private int initiative; //Affects the Pokemon's spot in Queue. Higher initiative means it'll be higher in the queue.
     private int CD;  //How long unit must wait between uses of special
 
+    private int minDamage; //The minimum amount of damage a unit can deal
+    private int maxDamage; //The maximum amount of damage a unit can deal
+
     private Move move; //Special ability each Pokemon has
 
     private boolean team; //Tells which team this unit belongs to
@@ -39,6 +43,19 @@ public class Unit {
     private int tileY;
 
     private String direction;
+
+    public static void fillStat(Unit[] queue){
+        try{
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public int getMinDamage() {
+        return minDamage;
+    }
 
     public String getDirection() {
         return direction;
@@ -182,9 +199,11 @@ public class Unit {
         return null;
     }
 
-    public static void fillStats(Unit[] queue){
+    public int getMaxDamage() {
+        return maxDamage;
+    }
 
-        System.out.println(queue[0].getUnitName());
+    public static void fillStats(Unit[] queue){
 
         try {
             File inputFile = new File("Resources/unitInventory.xml");
