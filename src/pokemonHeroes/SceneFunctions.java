@@ -68,6 +68,11 @@ public class SceneFunctions {
 
         Unit temp = newQueue[0];
 
+        if (temp.isTeam())
+            temp.setDirection("Right");
+        else
+            temp.setDirection("Left");
+
         for (int i=1; i<newQueue.length; i++) //Move entire queue by 1
             newQueue[i-1] = newQueue[i];
         newQueue[newQueue.length-1] = temp;

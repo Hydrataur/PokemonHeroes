@@ -289,7 +289,7 @@
         <Movement>3</Movement>
         <Initiative>20</Initiative>
         <CD>1</CD>
-        <SpecialPic>Vertical</SpecialPic>
+        <SpecialPic>G3B</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Dragon Ascent</Move>
@@ -933,7 +933,7 @@
         <Movement>3</Movement>
         <Initiative>20</Initiative>
         <CD>1</CD>
-        <SpecialPic>Horizontal</SpecialPic>
+        <SpecialPic>G3</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Hydro Pump</Move>
@@ -975,7 +975,7 @@
         <Movement>3</Movement>
         <Initiative>20</Initiative>
         <CD>1</CD>
-        <SpecialPic>Vertical</SpecialPic>
+        <SpecialPic>G3</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Origin Pulse</Move>
@@ -1667,7 +1667,7 @@
         <Movement>3</Movement>
         <Initiative>20</Initiative>
         <CD>1</CD>
-        <SpecialPic>Vertical</SpecialPic>
+        <SpecialPic>G3B</SpecialPic>
         <Flying>false</Flying>
         <Ranged>false</Ranged>
         <Move>Precipice Blades</Move>

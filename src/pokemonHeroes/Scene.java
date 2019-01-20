@@ -288,23 +288,22 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         pokeImage = pokeIcon.getImage();
         pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
         pokeGraphics = pokeFieldImage.getGraphics();
-        if (numInQueue != 0) {
-            if (queue[numInQueue].isTeam())
-                pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-            else
-                pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-            g.drawImage(pokeFieldImage, queue[numInQueue].getX(), queue[numInQueue].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
-            return;
-        }
-
-        Unit unit = queue[0];
+        Unit unit = queue[numInQueue];
+//        if (numInQueue != 0) {
+//            switch (unit.getSpecialPic())
+//            if (unit.isTeam())
+//                pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+//            else
+//                pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+//            g.drawImage(pokeFieldImage, queue[numInQueue].getX(), queue[numInQueue].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
+//            return;
+//        }
 
         int xPos = 0;
         int yPos = 0;
 
         switch (unit.getSpecialPic()) {
             case "G4":
-                System.out.println("Ding");
                 switch (unit.getDirection()) {
                     case "Up":
                         xPos = 0;
@@ -319,7 +318,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
                         xPos = -195;
                         break;
                 }
-                if (moveOne)
+                if (moveOne && numInQueue == 0)
                     yPos = 0;
                 else
                     yPos = -64;
@@ -330,12 +329,38 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
                 g.drawImage(pokeFieldImage, unit.getX()-tileLength/3, unit.getY()-tileLength/2, (int)(pokeFieldImage.getWidth()*1.5), (int)(pokeFieldImage.getHeight()*1.5), this);
                 break;
 
+            case "G3":
+                switch (unit.getDirection()) {
+                    case "Up":
+                        yPos = -33;
+                        break;
+                    case "Down":
+                        yPos = 0;
+                        break;
+                    case "Left":
+                        yPos = -68;
+                        break;
+                    default:
+                        yPos = -101;
+                        break;
+                }
+                if (moveOne && numInQueue == 0)
+                    xPos = 0;
+                else
+                    xPos = -64;
+                pokeFieldImage = new BufferedImage(pokeImage.getWidth(null)/2, pokeImage.getHeight(null)/4, BufferedImage.TYPE_INT_ARGB);
+                pokeGraphics = pokeFieldImage.getGraphics();
+                pokeGraphics.drawImage(pokeImage, xPos, yPos, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+                pokeGraphics.dispose();
+                g.drawImage(pokeFieldImage, unit.getX(), unit.getY()+5, (int)(pokeFieldImage.getWidth()*1.5), (int)(pokeFieldImage.getHeight()*1.5), this);
+                break;
+
             default:
                 if (unit.getDirection().equals("Right") || unit.getDirection().equals("Left"))
                     xPos = -32;
                 if (unit.getDirection().equals("Right") || unit.getDirection().equals("Down"))
                     yPos = -64;
-                if (!moveOne)
+                if (!moveOne && numInQueue == 0)
                     yPos -= 32;
                 pokeGraphics.drawImage(pokeImage, xPos, yPos, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
                 g.drawImage(pokeFieldImage, unit.getX(), unit.getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
