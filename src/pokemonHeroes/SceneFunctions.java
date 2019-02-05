@@ -74,6 +74,8 @@ public class SceneFunctions {
             newQueue[i-1] = newQueue[i];
         newQueue[newQueue.length-1] = temp;
 
+        newQueue[0].setDefended(false);
+
         return newQueue;
     }
 
@@ -139,13 +141,19 @@ public class SceneFunctions {
 
         dmgB = ThreadLocalRandom.current().nextInt(attacker.getMinDamage(), attacker.getMaxDamage()+1) * attacker.getUnitsInStack();
 
-        if (attacker.getAttack()>defender.getDefense()) { //Attack bonus if attack>defense, Defense bonus if defense>attack
-            I1 = 0.05 * (attacker.getAttack() - defender.getDefense());
+        double defense = defender.getDefense();
+        if (defender.isDefended())
+            defense *= 1.2;
+
+        System.out.println(defense + " " + defender.getDefense());
+
+        if (attacker.getAttack()>defense) { //Attack bonus if attack>defense, Defense bonus if defense>attack
+            I1 = 0.05 * (attacker.getAttack() - defense);
             R1 = 0;
         }
         else{
             I1 = 0;
-            R1 = 0.025*(defender.getDefense() - attacker.getAttack());
+            R1 = 0.025*(defense - attacker.getAttack());
         }
 
         if (attacker.isRanged()){ //Bonus damage according to trainer proficiencies. Ranged/Melee bonuses
@@ -206,7 +214,7 @@ public class SceneFunctions {
         else
             R3 = 0;
 
-        R4 = defender.getShielded()%100; //If defender has a magic shield then reduces damage
+        R4 = defender.getShielded(); //If defender has a magic shield then reduces damage
 
         System.out.println("Base Damage=" + dmgB +" I1=" + I1 +" I2=" + I2 +" I3=" + I3 +" I4=" + I4 + " R1=" + R1 + " R2=" + R2 + " R3=" + R3 + " R4=" + R4);
 
@@ -241,6 +249,12 @@ public class SceneFunctions {
         System.out.println(defender.getUnitName() + " has " + defender.getUnitsInStack() + " units");
         System.out.println(defender.getUnitName() + " has " + defender.getCurrentHealth() + " current health");
 
+    }
+
+    public static boolean defendButtonPressed(int x, int y, int BOARDWIDTH){
+        if (BOARDWIDTH-x<210 && BOARDWIDTH-x>10 && y>10 && y<60)
+            return true;
+        return false;
     }
 
     public static void setTeam(Trainer trainer, NodeList roster, int x, int BOARDWIDTH, boolean teamB){

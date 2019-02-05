@@ -283,7 +283,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
             g.drawString(Integer.toString(queue[k].getUnitsInStack()), queue[k].getX(), queue[k].getY()+g.getFont().getSize()-2);
 
-            g.drawImage(shieldImage, BOARDWIDTH/2-100, 0, 200, 50, this);
+            g.drawImage(shieldImage, BOARDWIDTH-210, 10, 200, 50, this);
         }
 
     }
@@ -451,6 +451,14 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     private Tile chosenTile;
 
     private void turn(int x, int y){
+
+        if (SceneFunctions.defendButtonPressed(x, y, BOARDWIDTH) && !hasMoved) {
+            queue[0].setDefended(true);
+            queue = SceneFunctions.updateQueue(queue);
+            repaint();
+            return;
+        }
+
         for (int i=0; i<tilesArr.length; i++){
             for (int j=0; j<tilesArr.length; j++){
                 //System.out.println(e.getX()+" "+e.getY()+" "+ tilesArr[j][i].toString());

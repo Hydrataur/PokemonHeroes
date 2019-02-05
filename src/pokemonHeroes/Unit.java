@@ -32,6 +32,7 @@ public class Unit {
     private boolean flying; //Tells if a Pokemon is able to fly and ignore hazards while moving
 
     private int shielded; //0-100 int value that tells how shielded the unit is. Only applied by magic.
+    private boolean defended; //True if unit defended during turn, otherwise false.
 
     private int unitsInStack;  //Number of units currently in a stack. Might need to move somewhere else
     private String unitName;
@@ -172,6 +173,15 @@ public class Unit {
     public void setRanged(boolean ranged) {
         this.ranged = ranged;
     }
+
+    public boolean isDefended() {
+        return defended;
+    }
+
+    public void setDefended(boolean defended) {
+        this.defended = defended;
+    }
+
 
     public Unit(String unitName, int unitsInStack, boolean team){
         this.unitsInStack=unitsInStack;
