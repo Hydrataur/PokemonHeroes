@@ -13,7 +13,7 @@ public class SceneFunctions {
 
     @SuppressWarnings("WeakerAccess")
 
-    protected static Unit[] createQueue(Trainer trainer1, Trainer trainer2) { //Creates the queue according to unit initiative
+    protected static Unit[] createQueue(Trainer trainer1, Trainer trainer2) { //Creates the queue according to unit movement
         Unit[] queue = new Unit[14];
         for (int i = 0; i < 7; i++) {
             if (trainer1.getUnits()[i] != null)
@@ -30,12 +30,9 @@ public class SceneFunctions {
 
         Unit temp;
         for (int i = 0; i < queue.length; i++) {
-            queue[i].setTileX(-1);
-            queue[i].setTileY(-1);
-            queue[i].setX(-200);
             for (int j = 1; j < queue.length - i; j++) {
                 if (queue[j-1]!=null && queue[j]!=null)
-                    if (queue[j - 1].getInitiative() < queue[j].getInitiative()) {
+                    if (queue[j - 1].getMovement() < queue[j].getMovement()) {
                         temp = queue[j - 1];
                         queue[j - 1] = queue[j];
                         queue[j] = temp;

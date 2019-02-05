@@ -214,6 +214,9 @@ public class Unit {
             NodeList nList = doc.getElementsByTagName("Unit");
 
             for (Unit unit : queue) {
+                unit.tileX = -1;
+                unit.tileY = -1;
+                unit.x = -200;
                 for (int j = 0; j < nList.getLength(); j++) {
                     Node nNode = nList.item(j);
 
@@ -225,8 +228,9 @@ public class Unit {
                             System.out.println("Max HP : " + eElement.getElementsByTagName("MaxHP").item(0).getTextContent());
                             System.out.println("Attack : " + eElement.getElementsByTagName("Attack").item(0).getTextContent());
                             System.out.println("Defense : " + eElement.getElementsByTagName("Defense").item(0).getTextContent());
+                            System.out.println("Min Damage : " + eElement.getElementsByTagName("MinDamage").item(0).getTextContent());
+                            System.out.println("Max Damage : " + eElement.getElementsByTagName("MaxDamage").item(0).getTextContent());
                             System.out.println("Movement : " + eElement.getElementsByTagName("Movement").item(0).getTextContent());
-                            System.out.println("Initiative : " + eElement.getElementsByTagName("Initiative").item(0).getTextContent());
                             System.out.println("CD : " + eElement.getElementsByTagName("CD").item(0).getTextContent());
                             System.out.println("SpecialPic : " + eElement.getElementsByTagName("SpecialPic").item(0).getTextContent());
                             System.out.println("Flying : " + eElement.getElementsByTagName("Flying").item(0).getTextContent());
@@ -235,8 +239,9 @@ public class Unit {
                             unit.maxHealth = Integer.parseInt(eElement.getElementsByTagName("MaxHP").item(0).getTextContent());
                             unit.attack = Integer.parseInt(eElement.getElementsByTagName("Attack").item(0).getTextContent());
                             unit.defense = Integer.parseInt(eElement.getElementsByTagName("Defense").item(0).getTextContent());
+                            unit.minDamage = Integer.parseInt(eElement.getElementsByTagName("MinDamage").item(0).getTextContent());
+                            unit.maxDamage = Integer.parseInt(eElement.getElementsByTagName("MaxDamage").item(0).getTextContent());
                             unit.movement = Integer.parseInt(eElement.getElementsByTagName("Movement").item(0).getTextContent());
-                            unit.initiative = Integer.parseInt(eElement.getElementsByTagName("Initiative").item(0).getTextContent());
                             unit.CD = Integer.parseInt(eElement.getElementsByTagName("CD").item(0).getTextContent());
                             unit.specialPic = eElement.getElementsByTagName("SpecialPic").item(0).getTextContent();
                             unit.flying = Boolean.parseBoolean(eElement.getElementsByTagName("Flying").item(0).getTextContent());

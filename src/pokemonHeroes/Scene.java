@@ -30,6 +30,8 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     private ImageIcon bgIcon = new ImageIcon("Images/Maps/CmBkBch.png"); //Background image
     private Image bgImage = bgIcon.getImage();
+    private ImageIcon shieldIcon = new ImageIcon("Images/ScreenIcons/Defense.png");
+    private Image shieldImage = shieldIcon.getImage();
 
     private Unit[] queue; //Turn queue
 
@@ -142,16 +144,17 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             drawBattleground(g); //Functionized draw so that I can have it draw different stuff depending on the situation
         else
             drawRoster(g);
+//        delet(g);
     }
 
     private void delet(Graphics g){
-        ImageIcon icon = new ImageIcon("Images/PokePics/Combat/Dialga.png");
+        ImageIcon icon = new ImageIcon("Images/PokePics/Combat/Wailord.png");
         Image img = icon.getImage();
-        BufferedImage bimg = new BufferedImage(img.getWidth(null)/4, img.getHeight(null)/2, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage bimg = new BufferedImage(img.getWidth(null)/2, (int)(img.getHeight(null)/5), BufferedImage.TYPE_INT_ARGB);
         Graphics g2 = bimg.getGraphics();
-        g2.drawImage(img, -130, -64, img.getWidth(null), img.getHeight(null), this);
+        g2.drawImage(img, -50, -76, img.getWidth(null), img.getHeight(null), this);
         g2.dispose();
-        g.drawImage(bimg, 0, 0, tileLength, tileLength, this);
+        g.drawImage(bimg, 0, 0, (int) (bimg.getWidth()*1.5), (int)(bimg.getHeight()*1.5), this);
 //        pokeIcon = new ImageIcon("Images/PokePics/Zoomed/" + queue[0].getUnitName() + ".png");
 //        pokeImage = pokeIcon.getImage();
 //        pokeQueueImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
@@ -279,6 +282,8 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             g.drawRect(queue[k].getX(), queue[k].getY(), 30, 10);
 
             g.drawString(Integer.toString(queue[k].getUnitsInStack()), queue[k].getX(), queue[k].getY()+g.getFont().getSize()-2);
+
+            g.drawImage(shieldImage, BOARDWIDTH/2-100, 0, 200, 50, this);
         }
 
     }
@@ -329,10 +334,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
                 g.drawImage(pokeFieldImage, unit.getX()-tileLength/3, unit.getY()-tileLength/2, (int)(pokeFieldImage.getWidth()*1.5), (int)(pokeFieldImage.getHeight()*1.5), this);
                 break;
 
-            case "G3":
+            case "Kyo":
                 switch (unit.getDirection()) {
                     case "Up":
-                        yPos = -33;
+                        yPos = -36;
                         break;
                     case "Down":
                         yPos = 0;
@@ -341,14 +346,49 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
                         yPos = -68;
                         break;
                     default:
-                        yPos = -101;
+                        yPos = -100;
                         break;
                 }
                 if (moveOne && numInQueue == 0)
                     xPos = 0;
                 else
-                    xPos = -64;
+                    xPos = -50;
                 pokeFieldImage = new BufferedImage(pokeImage.getWidth(null)/2, pokeImage.getHeight(null)/4, BufferedImage.TYPE_INT_ARGB);
+                pokeGraphics = pokeFieldImage.getGraphics();
+                pokeGraphics.drawImage(pokeImage, xPos, yPos, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+                pokeGraphics.dispose();
+                g.drawImage(pokeFieldImage, unit.getX(), unit.getY()+5, (int)(pokeFieldImage.getWidth()*1.5), (int)(pokeFieldImage.getHeight()*1.5), this);
+                break;
+
+            case "Wail":
+                boolean upDown = false;
+                switch (unit.getDirection()) {
+                    case "Up":
+                        yPos = -38;
+                        upDown = true;
+                        break;
+                    case "Down":
+                        yPos = 0;
+                        upDown = true;
+                        break;
+                    case "Left":
+                        yPos = -76;
+                        break;
+                    default:
+                        yPos = -100;
+                        break;
+                }
+                if (moveOne && numInQueue == 0)
+                    if (!upDown)
+                        xPos = 0;
+                    else
+                        xPos = 10;
+                else
+                    xPos = -50;
+                if(upDown)
+                    pokeFieldImage = new BufferedImage(pokeImage.getWidth(null)/2, (int)(pokeImage.getHeight(null)/3.15), BufferedImage.TYPE_INT_ARGB);
+                else
+                    pokeFieldImage = new BufferedImage(pokeImage.getWidth(null)/2, pokeImage.getHeight(null)/4, BufferedImage.TYPE_INT_ARGB);
                 pokeGraphics = pokeFieldImage.getGraphics();
                 pokeGraphics.drawImage(pokeImage, xPos, yPos, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
                 pokeGraphics.dispose();
