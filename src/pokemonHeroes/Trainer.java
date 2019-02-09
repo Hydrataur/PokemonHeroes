@@ -10,6 +10,8 @@ public class Trainer {
     private int level;
     private boolean attackedThisTurn; //Trainer can only attack once per round
 
+    private String friendPoke;
+
     private int archeryLevel;
     private int meleeLevel;
     private boolean archerySpecialty;
@@ -52,6 +54,8 @@ public class Trainer {
     public boolean isMeleeSpecialty() {
         return meleeSpecialty;
     }
+
+    public String getFriendPoke() { return friendPoke; }
 
     public boolean isAttackedThisTurn() {
         return attackedThisTurn;

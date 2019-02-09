@@ -452,12 +452,9 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     private void turn(int x, int y){
 
-        if (SceneFunctions.defendButtonPressed(x, y, BOARDWIDTH) && !hasMoved) {
-            queue[0].setDefended(true);
-            queue = SceneFunctions.updateQueue(queue);
-            repaint();
-            return;
-        }
+        if (!hasMoved)
+            queue = SceneFunctions.defendButtonPressed(x, y, BOARDWIDTH, queue);
+
 
         for (int i=0; i<tilesArr.length; i++){
             for (int j=0; j<tilesArr.length; j++){

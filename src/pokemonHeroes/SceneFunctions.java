@@ -251,10 +251,12 @@ public class SceneFunctions {
 
     }
 
-    public static boolean defendButtonPressed(int x, int y, int BOARDWIDTH){
-        if (BOARDWIDTH-x<210 && BOARDWIDTH-x>10 && y>10 && y<60)
-            return true;
-        return false;
+    public static Unit[] defendButtonPressed(int x, int y, int BOARDWIDTH, Unit[] queue){
+        if (BOARDWIDTH-x<210 && BOARDWIDTH-x>10 && y>10 && y<60){
+            queue[0].setDefended(true);
+            queue = SceneFunctions.updateQueue(queue);
+        }
+        return queue;
     }
 
     public static void setTeam(Trainer trainer, NodeList roster, int x, int BOARDWIDTH, boolean teamB){
