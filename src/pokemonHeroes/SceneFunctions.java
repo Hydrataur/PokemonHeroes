@@ -145,8 +145,6 @@ public class SceneFunctions {
         if (defender.isDefended())
             defense *= 1.2;
 
-        System.out.println(defense + " " + defender.getDefense());
-
         if (attacker.getAttack()>defense) { //Attack bonus if attack>defense, Defense bonus if defense>attack
             I1 = 0.05 * (attacker.getAttack() - defense);
             R1 = 0;

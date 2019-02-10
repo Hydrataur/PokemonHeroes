@@ -56,6 +56,12 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     private int mouseX, mouseY;
 
+    private NodeList roster;
+    private ImageIcon rosterIcon;
+    private Image rosterImage;
+    private String imageLocation;
+    private boolean teamsChosen, trainersChosen;
+    private boolean teamOneChosen, trainerOneChosen;
     public Scene(){
 
         try { //Sound related code. Starts music when opening the app
@@ -70,8 +76,8 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         }
         this.addMouseListener(this); //Adds ability to change things with mouse
 
-        trainerOne = new Trainer("Cynthia", true); //Creates first trainer. Temporary until player can choose
-        trainerTwo = new Trainer("Cyrus", false); //Same as above
+//        trainerOne = new Trainer("Cynthia", true); //Creates first trainer. Temporary until player can choose
+//        trainerTwo = new Trainer("Cyrus", false); //Same as above
 
 //        trainerOne.addUnit(new Unit("Electivire", 1, true));
 //        trainerOne.addUnit(new Unit("Infernape", 2, true));
@@ -134,158 +140,6 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         unitsPlaced = false;
 
 //        client = new Client(this);
-    }
-
-    private boolean teamsChosen;
-
-    protected void paintComponent(Graphics g) { //Default panel function that allows us to add stuff to the panel
-        super.paintComponent(g);
-        if(teamsChosen)
-            drawBattleground(g); //Functionized draw so that I can have it draw different stuff depending on the situation
-        else
-            drawRoster(g);
-//        delet(g);
-    }
-
-    private void delet(Graphics g){
-        ImageIcon icon = new ImageIcon("Images/PokePics/Combat/Wailord.png");
-        Image img = icon.getImage();
-        BufferedImage bimg = new BufferedImage(img.getWidth(null)/2, (int)(img.getHeight(null)/5), BufferedImage.TYPE_INT_ARGB);
-        Graphics g2 = bimg.getGraphics();
-        g2.drawImage(img, -50, -76, img.getWidth(null), img.getHeight(null), this);
-        g2.dispose();
-        g.drawImage(bimg, 0, 0, (int) (bimg.getWidth()*1.5), (int)(bimg.getHeight()*1.5), this);
-//        pokeIcon = new ImageIcon("Images/PokePics/Zoomed/" + queue[0].getUnitName() + ".png");
-//        pokeImage = pokeIcon.getImage();
-//        pokeQueueImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-//        pokeGraphics = pokeQueueImage.getGraphics();
-//        pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-    }
-
-    private void drawBattleground(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        int tileStart = (int) Math.round((getWidth() - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
-//        System.out.println(tileStart);
-        g.drawImage(bgImage, 0, 0, getWidth(), getHeight(), this); //Draw background
-
-        AffineTransform tx = AffineTransform.getScaleInstance(-1, 1); //All trainer pictures are by default facing left. This flips them.
-        tx.translate(-trainerOne.getTrainerImage().getWidth(null), 0);
-        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-
-        BufferedImage trainerOneImage = new BufferedImage(trainerOne.getTrainerImage().getWidth(null), trainerOne.getTrainerImage().getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-        Graphics trainerGraphics = trainerOneImage.getGraphics();
-        trainerGraphics.drawImage(trainerOne.getTrainerImage(), 0, 0, trainerOne.getTrainerImage().getWidth(null), trainerOne.getTrainerImage().getHeight(null), this);
-        trainerOneImage = op.filter(trainerOneImage, null); //Flips image
-        trainerGraphics.dispose();
-
-        g2d.drawImage(trainerOneImage, 200, getHeight() / 2, 100, 200, this); //Draw first trainer
-        g2d.drawImage(trainerTwo.getTrainerImage(), getWidth() - 200, getHeight() / 2, 100, 200, this); //Draw second trainer
-
-        g.setColor(Color.ORANGE);
-        g.fillRect(20, getHeight() - (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength));
-        pokeIcon = new ImageIcon("Images/PokePics/Zoomed/" + queue[0].getUnitName() + ".png");
-        pokeImage = pokeIcon.getImage();
-        pokeQueueImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        pokeGraphics = pokeQueueImage.getGraphics();
-        pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-        pokeGraphics.dispose();
-        g2d.drawImage(pokeQueueImage, 20, getHeight() - (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength), this);
-        for (int i = 1; i < queue.length; i++) {
-            if (queue[i] != null) {
-                if (queue[i].isTeam())
-                    g.setColor(Color.BLUE);
-                else
-                    g.setColor(Color.RED);
-                g.fillRect((i + 1) * queueTileLength, getHeight() - queueTileLength, queueTileLength, queueTileLength);
-                pokeIcon = new ImageIcon("Images/PokePics/Zoomed/" + queue[i].getUnitName() + ".png");
-                pokeImage = pokeIcon.getImage();
-                pokeQueueImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-                pokeGraphics = pokeQueueImage.getGraphics();
-                pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-                pokeGraphics.dispose();
-                g2d.drawImage(pokeQueueImage, (i + 1) * queueTileLength, getHeight() - queueTileLength, queueTileLength, queueTileLength, this);
-
-
-            }
-        }
-
-        if (unitsPlaced)
-            for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
-                for (int j = 0; j < Math.sqrt(tiles); j++) {
-                    tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
-                    if (SceneFunctions.inRange(j, i, queue[0]) && !inTurn && !SceneFunctions.spotTaken(j, i, queue) && !hasMoved) {
-                        g.setColor(new Color(0, 100, 0, 100));
-                        g.fillRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
-                        g.setColor(new Color(0, 100, 0, 255));
-                        g.drawRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
-    //                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
-                    }
-                }
-            }
-        else
-            if (queue[0].isTeam()){
-                for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
-                    for (int j = 0; j < Math.sqrt(tiles); j++) {
-                        tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
-                        if (j<2 && !SceneFunctions.spotTaken(j, i, queue)) {
-                            g.setColor(new Color(0, 100, 0, 100));
-                            g.fillRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
-                            g.setColor(new Color(0, 100, 0, 255));
-                            g.drawRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
-                            //                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
-                        }
-                    }
-                }
-            }
-            else{
-                for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
-                    for (int j = 0; j < Math.sqrt(tiles); j++) {
-                        tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
-                        if (j>7 && !SceneFunctions.spotTaken(j, i, queue)) {
-                            g.setColor(new Color(0, 100, 0, 100));
-                            g.fillRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
-                            g.setColor(new Color(0, 100, 0, 255));
-                            g.drawRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
-                            //                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
-                        }
-                    }
-                }
-            }
-
-        for (int k = 0; k < queue.length; k++) {
-//            pokeIcon = new ImageIcon("Images/PokePics/Combat/" + queue[k].getUnitName() + ".png");
-//            pokeImage = pokeIcon.getImage();
-//            pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
-//            pokeGraphics = pokeFieldImage.getGraphics();
-            drawPokeFieldImage(k, g);
-//            pokeGraphics.dispose();
-//            g.drawImage(pokeFieldImage, queue[k].getX(), queue[k].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
-//                        queue[k].setX(tileStart+j*tileLength+j*5);
-//                        queue[k].setY(50+i*tileLength+i*5);
-//                        if(k==0){
-//                            System.out.println("X "+queue[k].getX()+" "+ (tileStart+j*tileLength+j*5));
-//                            System.out.println("Y "+queue[k].getY()+" "+(50+i*tileLength+i*5));
-//                        }
-            if (unitsPlaced)
-                if (enemiesInRange[k])
-                    g.drawImage(target, queue[k].getX(), queue[k].getY(), tileLength, tileLength, this);
-
-            if (queue[k].isTeam())
-                g.setColor(Color.BLUE);
-            else
-                g.setColor(Color.RED);
-
-            g.fillRect(queue[k].getX(), queue[k].getY(), 30, 10);
-
-            g.setColor(Color.BLACK);
-            g.drawRect(queue[k].getX(), queue[k].getY(), 30, 10);
-
-            g.drawString(Integer.toString(queue[k].getUnitsInStack()), queue[k].getX(), queue[k].getY()+g.getFont().getSize()-2);
-
-            g.drawImage(shieldImage, BOARDWIDTH-210, 10, 200, 50, this);
-        }
-
     }
 
     private void drawPokeFieldImage(int numInQueue, Graphics g){
@@ -409,17 +263,172 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     }
 
+    protected void paintComponent(Graphics g) { //Default panel function that allows us to add stuff to the panel
+        super.paintComponent(g); //Functionized draw so that I can have it draw different stuff depending on the situation
+        if(teamsChosen) {
+            drawBattleground(g);
+            return;
+        }
+        if (trainersChosen) {
+            drawRoster(g);
+            return;
+        }
+        drawTrainerRoster(g);
+//        delet(g);
+    }
+
+    private void delet(Graphics g){
+        Trainer t = new Trainer("Roark", true);
+        g.drawImage(t.getTrainerImage(), 50, 50, t.getTrainerImage().getWidth(null), t.getTrainerImage().getHeight(null), this);
+    }
+
+    private void drawBattleground(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        int tileStart = (int) Math.round((getWidth() - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
+//        System.out.println(tileStart);
+        g.drawImage(bgImage, 0, 0, getWidth(), getHeight(), this); //Draw background
+
+        AffineTransform tx = AffineTransform.getScaleInstance(-1, 1); //All trainer pictures are by default facing left. This flips them.
+        tx.translate(-trainerOne.getTrainerImage().getWidth(null), 0);
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+
+        BufferedImage trainerOneImage = new BufferedImage(trainerOne.getTrainerImage().getWidth(null), trainerOne.getTrainerImage().getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+        Graphics trainerGraphics = trainerOneImage.getGraphics();
+        trainerGraphics.drawImage(trainerOne.getTrainerImage(), 0, 0, trainerOne.getTrainerImage().getWidth(null), trainerOne.getTrainerImage().getHeight(null), this);
+        trainerOneImage = op.filter(trainerOneImage, null); //Flips image
+        trainerGraphics.dispose();
+
+        g2d.drawImage(trainerOneImage, 200, getHeight() / 2, 2*trainerOneImage.getWidth(), 2*trainerOneImage.getHeight(), this); //Draw first trainer
+        g2d.drawImage(trainerTwo.getTrainerImage(), getWidth() - 250, getHeight() / 2, 2*trainerTwo.getTrainerImage().getWidth(null), 2*trainerTwo.getTrainerImage().getHeight(null), this); //Draw second trainer
+
+        tx = AffineTransform.getScaleInstance(-1, 1);
+        tx.translate(-trainerOne.getFriendImage().getWidth(null), 0);
+        op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+
+        BufferedImage friendOneImage = new BufferedImage(trainerOne.getFriendImage().getWidth(null), trainerOne.getFriendImage().getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+        Graphics friendGraphics = friendOneImage.getGraphics();
+        friendGraphics.drawImage(trainerOne.getFriendImage(), 0, 0, trainerOne.getFriendImage().getWidth(null), trainerOne.getFriendImage().getHeight(null), this);
+        friendOneImage = op.filter(friendOneImage, null);
+        friendGraphics.dispose();
+
+        g2d.drawImage(friendOneImage, 200-2*friendOneImage.getWidth(), getHeight()/2, 2*friendOneImage.getWidth(), 2*friendOneImage.getHeight(), this);
+        g2d.drawImage(trainerTwo.getFriendImage(), getWidth() - 250 + 2*trainerTwo.getTrainerImage().getWidth(null), getHeight() / 2, 2*trainerTwo.getFriendImage().getWidth(null), 2*trainerTwo.getFriendImage().getHeight(null), this);
+
+        g.setColor(Color.ORANGE);
+        g.fillRect(20, getHeight() - (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength));
+        pokeIcon = new ImageIcon("Images/PokePics/Zoomed/" + queue[0].getUnitName() + ".png");
+        pokeImage = pokeIcon.getImage();
+        pokeQueueImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        pokeGraphics = pokeQueueImage.getGraphics();
+        pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+        pokeGraphics.dispose();
+        g2d.drawImage(pokeQueueImage, 20, getHeight() - (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength), (int) (1.5 * queueTileLength), this);
+        for (int i = 1; i < queue.length; i++) {
+            if (queue[i] != null) {
+                if (queue[i].isTeam())
+                    g.setColor(Color.BLUE);
+                else
+                    g.setColor(Color.RED);
+                g.fillRect((i + 1) * queueTileLength, getHeight() - queueTileLength, queueTileLength, queueTileLength);
+                pokeIcon = new ImageIcon("Images/PokePics/Zoomed/" + queue[i].getUnitName() + ".png");
+                pokeImage = pokeIcon.getImage();
+                pokeQueueImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                pokeGraphics = pokeQueueImage.getGraphics();
+                pokeGraphics.drawImage(pokeImage, 0, 0, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
+                pokeGraphics.dispose();
+                g2d.drawImage(pokeQueueImage, (i + 1) * queueTileLength, getHeight() - queueTileLength, queueTileLength, queueTileLength, this);
+
+
+            }
+        }
+
+        if (unitsPlaced)
+            for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
+                for (int j = 0; j < Math.sqrt(tiles); j++) {
+                    tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
+                    if (SceneFunctions.inRange(j, i, queue[0]) && !inTurn && !SceneFunctions.spotTaken(j, i, queue) && !hasMoved) {
+                        g.setColor(new Color(0, 100, 0, 100));
+                        g.fillRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+                        g.setColor(new Color(0, 100, 0, 255));
+                        g.drawRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+    //                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+                    }
+                }
+            }
+        else
+            if (queue[0].isTeam()){
+                for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
+                    for (int j = 0; j < Math.sqrt(tiles); j++) {
+                        tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
+                        if (j<2 && !SceneFunctions.spotTaken(j, i, queue)) {
+                            g.setColor(new Color(0, 100, 0, 100));
+                            g.fillRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+                            g.setColor(new Color(0, 100, 0, 255));
+                            g.drawRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+                            //                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+                        }
+                    }
+                }
+            }
+            else{
+                for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
+                    for (int j = 0; j < Math.sqrt(tiles); j++) {
+                        tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
+                        if (j>7 && !SceneFunctions.spotTaken(j, i, queue)) {
+                            g.setColor(new Color(0, 100, 0, 100));
+                            g.fillRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+                            g.setColor(new Color(0, 100, 0, 255));
+                            g.drawRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+                            //                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+                        }
+                    }
+                }
+            }
+
+        for (int k = 0; k < queue.length; k++) {
+//            pokeIcon = new ImageIcon("Images/PokePics/Combat/" + queue[k].getUnitName() + ".png");
+//            pokeImage = pokeIcon.getImage();
+//            pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
+//            pokeGraphics = pokeFieldImage.getGraphics();
+            drawPokeFieldImage(k, g);
+//            pokeGraphics.dispose();
+//            g.drawImage(pokeFieldImage, queue[k].getX(), queue[k].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
+//                        queue[k].setX(tileStart+j*tileLength+j*5);
+//                        queue[k].setY(50+i*tileLength+i*5);
+//                        if(k==0){
+//                            System.out.println("X "+queue[k].getX()+" "+ (tileStart+j*tileLength+j*5));
+//                            System.out.println("Y "+queue[k].getY()+" "+(50+i*tileLength+i*5));
+//                        }
+            if (unitsPlaced)
+                if (enemiesInRange[k])
+                    g.drawImage(target, queue[k].getX(), queue[k].getY(), tileLength, tileLength, this);
+
+            if (queue[k].isTeam())
+                g.setColor(Color.BLUE);
+            else
+                g.setColor(Color.RED);
+
+            g.fillRect(queue[k].getX(), queue[k].getY(), 30, 10);
+
+            g.setColor(Color.BLACK);
+            g.drawRect(queue[k].getX(), queue[k].getY(), 30, 10);
+
+            g.drawString(Integer.toString(queue[k].getUnitsInStack()), queue[k].getX(), queue[k].getY()+g.getFont().getSize()-2);
+
+            g.drawImage(shieldImage, BOARDWIDTH-210, 10, 200, 50, this);
+        }
+
+    }
+
     private void drawRoster(Graphics g){
 
         Graphics2D g2d = (Graphics2D)g;
 
-        NodeList roster = Unit.forRoster();
-        ImageIcon rosterIcon;
-        Image rosterImage;
+        roster = Unit.forRoster();
         BufferedImage pokeRosterImage;
         Graphics rosterGraphics;
-
-        String imageLocation;
 
         for (int i = 0; i<17; i++){
             Pair<Color, Image> pair = SceneFunctions.rosterColorNeeded(i);
@@ -484,12 +493,55 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         repaint();
     }
 
-    private boolean teamOneChosen;
+    private void drawTrainerRoster(Graphics g){
+
+        roster = Trainer.forRoster();
+        String pokeImageLocation;
+
+        for (int i=0; i<6; i++){
+            for (int j=0; j<4; j++){
+                try{
+                    Node node = roster.item(i*4+j);
+                    if (node.getNodeType() == Node.ELEMENT_NODE){
+                        Element element = (Element) node;
+                        imageLocation = "Images/TrainerPics/" + element.getElementsByTagName("Name").item(0).getTextContent() + ".png";
+                        pokeImageLocation = "Images/TrainerPics/FriendPoke/" + element.getElementsByTagName("friendPoke").item(0).getTextContent() + ".png";
+                        rosterIcon = new ImageIcon(imageLocation);
+                        rosterImage = rosterIcon.getImage();
+                        int wid = rosterImage.getWidth(null), hei = rosterImage.getHeight(null);
+                        g.drawImage(rosterImage, i*BOARDWIDTH/6 + wid/2, j*BOARDHEIGHT/4 + hei/2, wid, hei, this);
+                        rosterIcon = new ImageIcon(pokeImageLocation);
+                        rosterImage = rosterIcon.getImage();
+                        g.drawImage(rosterImage, i*BOARDWIDTH/6 + wid + wid/2, j*BOARDHEIGHT/4 + hei/2, rosterImage.getWidth(null), rosterImage.getHeight(null), this);
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     private boolean unitsPlaced;
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        if (!trainersChosen){
+            int rectWidth = BOARDWIDTH/6, rectHeight = BOARDHEIGHT/4;
+            int i = 5-(BOARDWIDTH - e.getX())/rectWidth, j = 3-(BOARDHEIGHT - e.getY())/rectHeight;
+            int z = i*4+j;
+            if (!trainerOneChosen){
+                trainerOne = new Trainer(z, true, 1);
+                trainerOneChosen = true;
+                return;
+            }
+            trainerTwo = new Trainer(z, false, 1);
+            trainersChosen = true;
+
+            repaint();
+            return;
+        }
+
         if(!teamsChosen){
             if (!teamOneChosen) {
                 SceneFunctions.setTeam(trainerOne, Unit.forRoster(), e.getX(), BOARDWIDTH, true);
