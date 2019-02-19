@@ -44,7 +44,12 @@ public class SceneFunctions {
         return queue;
     }
 
-    public static Unit[] updateQueue(Unit[] queue){
+    public static Unit[] updateQueue(Unit[] queue, Trainer t1, Trainer t2){
+
+        if (queue[0].getMovement() < queue[1].getMovement()){
+            t1.setAttackedThisTurn(false);
+            t2.setAttackedThisTurn(false);
+        }
 
         int numAlive = 0; //To tell how long the new queue needs to be
 
@@ -89,25 +94,17 @@ public class SceneFunctions {
 
     }
 
-    public static boolean inTile(int x, int y, Tile tile){ //Checks which tile was clicked
-        if (tile.getLeftX()<x && x<tile.getRightX() && tile.getTopY()<y && y<tile.getBottomY())
-            return true;
-        return false;
-    }
-
     public static Tile chosenTile(int x, int y, Tile[][] tilesDouble){
         for (Tile[] tiles : tilesDouble)
             for (Tile tile : tiles)
-                if (tile.getLeftX()<x && x<tile.getRightX() && tile.getTopY()<y && y<tile.getBottomY())
+                if (tile.hasBeenClicked(x, y))
                     return tile;
 
         return null;
     }
 
     public static boolean inRange(int x, int y, Unit poke){ //Returns true if tile is within movement range
-        if(Math.abs(poke.getTileX()-x)+Math.abs(poke.getTileY()-y)<=poke.getMovement())
-            return true;
-        return false;
+        return Math.abs(poke.getTileX() - x) + Math.abs(poke.getTileY() - y) <= poke.getMovement();
     }
 
     public static boolean[] enemyInRange(Unit[] units){ //Returns true if enemy is in attack range
@@ -249,12 +246,19 @@ public class SceneFunctions {
 
     }
 
-    public static Unit[] defendButtonPressed(int x, int y, int BOARDWIDTH, Unit[] queue){
-        if (BOARDWIDTH-x<210 && BOARDWIDTH-x>10 && y>10 && y<60){
+    public static Unit[] defendButtonPressed(Rectangle dTile, int x, int y, Unit[] queue, Trainer t1, Trainer t2){
+        if (dTile.hasBeenClicked(x, y)){
             queue[0].setDefended(true);
-            queue = SceneFunctions.updateQueue(queue);
+            queue = SceneFunctions.updateQueue(queue, t1, t2);
         }
         return queue;
+    }
+
+    public static void trainerAttack(int x, int y, int BOARDWIDTH, Trainer trainer, Unit[] queue){
+        if(trainer.isAttackedThisTurn())
+            return;
+        if (trainer.isReadyToAttack())
+            trainer.setReadyToAttack(false);
     }
 
     public static void setTeam(Trainer trainer, NodeList roster, int x, int BOARDWIDTH, boolean teamB){

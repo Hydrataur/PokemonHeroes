@@ -4,74 +4,18 @@ import java.awt.*;
 
 @SuppressWarnings("WeakerAccess")
 
-public class Tile {
+public class Tile extends Rectangle{
 
-    private int X, Y, leftX, rightX, topY, bottomY; //X, Y in the tile arry, and actual X, Y coords
+    private int tileX, tileY; //X, Y in the tile arry, and actual X, Y coords
 
-    public int getLeftX() {
-        return leftX;
+    public Tile(int tileX, int tileY, int x, int y, int width, int height) {
+        super(x, y, width, height);
+        this.tileX = tileX;
+        this.tileY = tileY;
     }
 
-    public int getX() {
-        return X;
-    }
+    public int getTileX() { return tileX; }
 
-    public void setX(int x) {
-        X = x;
-    }
+    public int getTileY() { return tileY; }
 
-    public int getY() {
-        return Y;
-    }
-
-    public void setY(int y) {
-        Y = y;
-    }
-
-    public Tile(int X, int Y, int leftX, int rightX, int topY, int bottomY) {
-        this.X=X;
-        this.Y=Y;
-        this.leftX = leftX;
-        this.rightX = rightX;
-        this.topY = topY;
-        this.bottomY = bottomY;
-    }
-
-    public void setLeftX(int leftX) {
-        this.leftX = leftX;
-    }
-
-    public int getRightX() {
-        return rightX;
-    }
-
-    public void setRightX(int rightX) {
-        this.rightX = rightX;
-    }
-
-    public int getTopY() {
-        return topY;
-    }
-
-    public void setTopY(int topY) {
-        this.topY = topY;
-    }
-
-    public int getBottomY() {
-        return bottomY;
-    }
-
-    public void setBottomY(int bottomY) {
-        this.bottomY = bottomY;
-    }
-
-    @Override
-    public String toString() {
-        return "Tile{" +
-                "leftX=" + leftX +
-                ", rightX=" + rightX +
-                ", topY=" + topY +
-                ", bottomY=" + bottomY +
-                '}';
-    }
 }

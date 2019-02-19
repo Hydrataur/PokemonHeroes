@@ -17,6 +17,7 @@ public class Trainer {
     private boolean team; //Tells which team the trainer is, right or left
     private int level;
     private boolean attackedThisTurn; //Trainer can only attack once per round
+    private boolean readyToAttack;
 
     private String friendPoke;
 
@@ -71,6 +72,10 @@ public class Trainer {
         this.attackedThisTurn = attackedThisTurn;
     }
 
+    public boolean isReadyToAttack() { return readyToAttack; }
+
+    public void setReadyToAttack(boolean readyToAttack) { this.readyToAttack = readyToAttack; }
+
     private ImageIcon trainerIcon;
     private Image trainerImage;
     private Image friendImage;
@@ -79,7 +84,6 @@ public class Trainer {
         this.level = level;
 
         NodeList roster = forRoster();
-        System.out.println(roster.getLength() + " " + numInRoster);
         Node node = roster.item(numInRoster);
         if (node.getNodeType() == Node.ELEMENT_NODE){
             Element element = (Element) node;

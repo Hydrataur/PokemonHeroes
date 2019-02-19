@@ -32,6 +32,8 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     private Image bgImage = bgIcon.getImage();
     private ImageIcon shieldIcon = new ImageIcon("Images/ScreenIcons/Defense.png");
     private Image shieldImage = shieldIcon.getImage();
+    private ImageIcon trainerAttackIcon = new ImageIcon("Images/ScreenIcons/TrainerAttack.png");
+    private Image trainerAttackImage = trainerAttackIcon.getImage();
 
     private Unit[] queue; //Turn queue
 
@@ -62,6 +64,9 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     private String imageLocation;
     private boolean teamsChosen, trainersChosen;
     private boolean teamOneChosen, trainerOneChosen;
+
+    private Rectangle defenseTile, trainerAttackTile;
+
     public Scene(){
 
         try { //Sound related code. Starts music when opening the app
@@ -133,6 +138,9 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
         Timer timer = new Timer(speed, this); //Timer according to which an action will be taken during every tick
         timer.start();
+
+        defenseTile = new Rectangle(BOARDWIDTH-210, 10, 200, 50);
+        trainerAttackTile = new Rectangle(BOARDWIDTH - 210, 70, 200, 50);
 
         inTurn=false; //Starts false by default since nobody has started moving
         teamsChosen = false;
@@ -347,12 +355,12 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         if (unitsPlaced)
             for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
                 for (int j = 0; j < Math.sqrt(tiles); j++) {
-                    tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
-                    if (SceneFunctions.inRange(j, i, queue[0]) && !inTurn && !SceneFunctions.spotTaken(j, i, queue) && !hasMoved) {
+                    tilesArr[i][j] = new Tile(i, j, tileStart + i * tileLength + i * 5, j * tileLength + j * 5 + tileLength - 5, tileLength, tileLength);
+                    if (SceneFunctions.inRange(i, j, queue[0]) && !inTurn && !SceneFunctions.spotTaken(i, j, queue) && !hasMoved) {
                         g.setColor(new Color(0, 100, 0, 100));
-                        g.fillRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+                        g.fillRect(tilesArr[i][j].getX(), tilesArr[i][j].getY(), tileLength, tileLength);
                         g.setColor(new Color(0, 100, 0, 255));
-                        g.drawRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+                        g.drawRect(tilesArr[i][j].getX(), tilesArr[i][j].getY(), tileLength, tileLength);
     //                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
                     }
                 }
@@ -361,13 +369,12 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             if (queue[0].isTeam()){
                 for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
                     for (int j = 0; j < Math.sqrt(tiles); j++) {
-                        tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
-                        if (j<2 && !SceneFunctions.spotTaken(j, i, queue)) {
+                        tilesArr[i][j] = new Tile(i, j, tileStart + i * tileLength + i * 5,  j * tileLength + j * 5 + tileLength - 5, tileLength, tileLength);
+                        if (i < 2 && !SceneFunctions.spotTaken(i, j, queue)) {
                             g.setColor(new Color(0, 100, 0, 100));
-                            g.fillRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+                            g.fillRect(tilesArr[i][j].getX(), tilesArr[i][j].getY(), tileLength, tileLength);
                             g.setColor(new Color(0, 100, 0, 255));
-                            g.drawRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
-                            //                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+                            g.drawRect(tilesArr[i][j].getX(), tilesArr[i][j].getY(), tileLength, tileLength);
                         }
                     }
                 }
@@ -375,13 +382,12 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             else{
                 for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
                     for (int j = 0; j < Math.sqrt(tiles); j++) {
-                        tilesArr[j][i] = new Tile(j, i, tileStart + j * tileLength + j * 5, tileStart + j * tileLength + j * 5 + tileLength, 50 + i * tileLength + i * 5, 50 + i * tileLength + i * 5 + tileLength);
-                        if (j>7 && !SceneFunctions.spotTaken(j, i, queue)) {
+                        tilesArr[i][j] = new Tile(i, j, tileStart + i * tileLength + i * 5, j * tileLength + j * 5 + tileLength - 5, tileLength, tileLength);
+                        if (i>7 && !SceneFunctions.spotTaken(i, j, queue)) {
                             g.setColor(new Color(0, 100, 0, 100));
-                            g.fillRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
+                            g.fillRect(tilesArr[i][j].getX(), tilesArr[i][j].getY(), tileLength, tileLength);
                             g.setColor(new Color(0, 100, 0, 255));
-                            g.drawRect(tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength);
-                            //                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+                            g.drawRect(tilesArr[i][j].getX(), tilesArr[i][j].getY(), tileLength, tileLength);
                         }
                     }
                 }
@@ -417,7 +423,8 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
             g.drawString(Integer.toString(queue[k].getUnitsInStack()), queue[k].getX(), queue[k].getY()+g.getFont().getSize()-2);
 
-            g.drawImage(shieldImage, BOARDWIDTH-210, 10, 200, 50, this);
+            g.drawImage(shieldImage, defenseTile.getX(), defenseTile.getY(), defenseTile.getWidth(), defenseTile.getHeight(), this);
+            g.drawImage(trainerAttackImage, trainerAttackTile.getX(), trainerAttackTile.getY(), trainerAttackTile.getWidth(), trainerAttackTile.getHeight(), this);
         }
 
     }
@@ -462,29 +469,29 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     private void turn(int x, int y){
 
         if (!hasMoved)
-            queue = SceneFunctions.defendButtonPressed(x, y, BOARDWIDTH, queue);
+            queue = SceneFunctions.defendButtonPressed(defenseTile, x, y, queue, trainerOne, trainerTwo);
 
 
         for (int i=0; i<tilesArr.length; i++){
             for (int j=0; j<tilesArr.length; j++){
                 //System.out.println(e.getX()+" "+e.getY()+" "+ tilesArr[j][i].toString());
-                if(!hasMoved && SceneFunctions.inTile(x, y, tilesArr[j][i]) && !SceneFunctions.spotTaken(j, i, queue) && SceneFunctions.inRange(j, i, queue[0])) {
+                if(!hasMoved && tilesArr[i][j].hasBeenClicked(x, y) && !SceneFunctions.spotTaken(i, j, queue) && SceneFunctions.inRange(i, j, queue[0])) {
                     //System.out.println(tilesArr[j][i].getX() + " " + tilesArr[j][i].getY());
-                    queue[0].setTileX(j);
-                    queue[0].setTileY(i);
-                    chosenTile = tilesArr[j][i];
+                    queue[0].setTileX(i);
+                    queue[0].setTileY(j);
+                    chosenTile = tilesArr[i][j];
                     inTurn=true;
                 }
 
-                int inSpot = SceneFunctions.unitInSpot(queue, j, i);
+                int inSpot = SceneFunctions.unitInSpot(queue, i, j);
 
-                if (SceneFunctions.spotTaken(j, i, queue) && enemiesInRange[inSpot] && SceneFunctions.inTile(x, y, tilesArr[j][i])){
+                if (SceneFunctions.spotTaken(i, j, queue) && enemiesInRange[inSpot] && tilesArr[i][j].hasBeenClicked(x, y)){
                     System.out.println(queue[0].getUnitName() + " has attacked " + queue[inSpot].getUnitName());
                     if (queue[0].isTeam() == trainerOne.getTeam())
                         SceneFunctions.Attack(queue[0], queue[inSpot], trainerOne, trainerTwo);
                     else
                         SceneFunctions.Attack(queue[0], queue[inSpot], trainerTwo, trainerOne);
-                    queue = SceneFunctions.updateQueue(queue);
+                    queue = SceneFunctions.updateQueue(queue, trainerOne, trainerTwo);
                     enemiesInRange = SceneFunctions.enemyInRange(queue);
                     hasMoved = false;
                 }
@@ -560,33 +567,31 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             chosenTile = SceneFunctions.chosenTile(e.getX(), e.getY(), tilesArr);
             int tileStart = (int) Math.round((BOARDWIDTH - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
             Unit unit = queue[0];
-            if (queue[1].getTileX() != -1)
+            if (queue[1].getTileX() != -1) //Queue moves so when it reaches the end, queue[1] will be the first unit meaning everybody has been placed
                 unitsPlaced = true;
-            if (chosenTile != null)
-                if (unit.getTileY() == -1 && unit.getTileX() == -1 && !SceneFunctions.spotTaken(chosenTile.getX(), chosenTile.getY(), queue)){
-                    if (unit.isTeam()){
-                        if (chosenTile.getX()<2) {
-                            unit.setTileX(chosenTile.getX());
-                            unit.setTileY(chosenTile.getY());
-                        }
-                        else
+            if (chosenTile != null) {
+                if (unit.getTileY() == -1 && unit.getTileX() == -1 && !SceneFunctions.spotTaken(chosenTile.getX(), chosenTile.getY(), queue)) {
+                    if (unit.isTeam()) {
+                        if (chosenTile.getTileX() < 2) {
+                            unit.setTileX(chosenTile.getTileX());
+                            unit.setTileY(chosenTile.getTileY());
+                        } else
+                            return;
+                    } else {
+                        if (chosenTile.getTileX() > 7) {
+                            unit.setTileX(chosenTile.getTileX());
+                            unit.setTileY(chosenTile.getTileY());
+                        } else
                             return;
                     }
-                    else{
-                        if(chosenTile.getX()>7){
-                            unit.setTileX(chosenTile.getX());
-                            unit.setTileY(chosenTile.getY());
-                        }
-                        else
-                            return;
-                    }
-                    unit.setX(tileStart+unit.getTileX()*tileLength+unit.getTileX()*5);
-                    unit.setY(50+unit.getTileY()*tileLength+unit.getTileY()*5);
-                    queue = SceneFunctions.updateQueue(queue);
+                    unit.setX(tileStart + unit.getTileX() * tileLength + unit.getTileX() * 5);
+                    unit.setY(50 + unit.getTileY() * tileLength + unit.getTileY() * 5);
+                    queue = SceneFunctions.updateQueue(queue, trainerOne, trainerTwo);
                     enemiesInRange = SceneFunctions.enemyInRange(queue);
                     repaint();
                     return;
                 }
+            }
             return;
         }
 
@@ -620,39 +625,39 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e){
         if(inTurn) {
-            if (queue[0].getX() < chosenTile.getLeftX()) {
+            if (queue[0].getX() < chosenTile.getX()) {
                 queue[0].setX(queue[0].getX() + 10);
                 queue[0].setDirection("Right");
-                if(queue[0].getX() >= chosenTile.getLeftX()){
-                    queue[0].setX(chosenTile.getLeftX());
+                if(queue[0].getX() >= chosenTile.getX()){
+                    queue[0].setX(chosenTile.getX());
                 }
             }
 
-            if (queue[0].getX() > chosenTile.getLeftX()) {
+            if (queue[0].getX() > chosenTile.getX()) {
                 queue[0].setX(queue[0].getX() - 10);
                 queue[0].setDirection("Left");
-                if(queue[0].getX() <= chosenTile.getLeftX()){
-                    queue[0].setX(chosenTile.getLeftX());
+                if(queue[0].getX() <= chosenTile.getX()){
+                    queue[0].setX(chosenTile.getX());
                 }
             }
 
-            if(queue[0].getX() == chosenTile.getLeftX()) {
+            if(queue[0].getX() == chosenTile.getX()) {
 
-                if (queue[0].getY() < chosenTile.getTopY()) {
+                if (queue[0].getY() < chosenTile.getY()) {
                     queue[0].setY(queue[0].getY() + 10);
                     queue[0].setDirection("Down");
-                    if (queue[0].getY() >= chosenTile.getTopY()) {
-                        queue[0].setY(chosenTile.getTopY());
+                    if (queue[0].getY() >= chosenTile.getY()) {
+                        queue[0].setY(chosenTile.getY());
 
                     }
                 }
 
 
-                if (queue[0].getY() > chosenTile.getTopY()) {
+                if (queue[0].getY() > chosenTile.getY()) {
                     queue[0].setY(queue[0].getY() - 10);
                     queue[0].setDirection("Up");
-                    if (queue[0].getY() <= chosenTile.getTopY()) {
-                        queue[0].setY(chosenTile.getTopY());
+                    if (queue[0].getY() <= chosenTile.getY()) {
+                        queue[0].setY(chosenTile.getY());
                     }
                 }
 
@@ -660,7 +665,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
             moveOne = !moveOne;
 
-            if (queue[0].getX() == chosenTile.getLeftX() && queue[0].getY() == chosenTile.getTopY()) {
+            if (queue[0].getX() == chosenTile.getX() && queue[0].getY() == chosenTile.getY()) {
                 inTurn = false;
                 moveOne = false;
                 if (queue[0].isTeam())
@@ -677,7 +682,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
                     }
                 }
                 if (!canAttack) {
-                    queue = SceneFunctions.updateQueue(queue);
+                    queue = SceneFunctions.updateQueue(queue, trainerOne, trainerTwo);
                     enemiesInRange = SceneFunctions.enemyInRange(queue);
                     hasMoved = false;
                 }
