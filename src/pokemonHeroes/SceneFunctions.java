@@ -214,35 +214,40 @@ public class SceneFunctions {
         System.out.println("Base Damage=" + dmgB +" I1=" + I1 +" I2=" + I2 +" I3=" + I3 +" I4=" + I4 + " R1=" + R1 + " R2=" + R2 + " R3=" + R3 + " R4=" + R4);
 
         double damage = dmgB*(1+I1+I2+I3+I4)*(1-R1)*(1-R2-R3)*(1-R4); //Damage to be dealt
-        int totalHealth = defender.getCurrentHealth() + defender.getMaxHealth()*(defender.getUnitsInStack()-1); //Total health a unit stack has
 
-        System.out.println("Damage " + damage);
+        dealDamage(defender, damage);
+    }
+
+    public static void dealDamage(Unit unit, double dmg){
+        int totalHealth = unit.getCurrentHealth() + unit.getMaxHealth()*(unit.getUnitsInStack()-1); //Total health a unit stack has
+
+        System.out.println("Damage " + dmg);
         System.out.println("Total Health " + totalHealth);
 
-        if (damage == 0) { //Minimal damage is one in case the attack is weak or the enemy has a lot of defense
-            damage = 1;
+        if (dmg == 0) { //Minimal damage is one in case the attack is weak or the enemy has a lot of defense
+            dmg = 1;
             System.out.println("Damage set to 1");
         }
 
-        totalHealth -= damage; //Remove damage from totalHealth
+        totalHealth -= dmg; //Remove damage from totalHealth
 
         if (totalHealth <= 0){ //If totalHealth is a negative or 0 then the unit is dead.
-            System.out.println(defender.getUnitName() + " is dead");
-            defender.setUnitsInStack(0);
-            defender.setCurrentHealth(0);
+            System.out.println(unit.getUnitName() + " is dead");
+            unit.setUnitsInStack(0);
+            unit.setCurrentHealth(0);
             return;
         }
 
-        defender.setUnitsInStack(totalHealth/defender.getMaxHealth()+1); //Units left in stack
-        defender.setCurrentHealth(totalHealth%defender.getMaxHealth()); //Current health of top unit
+        unit.setUnitsInStack(totalHealth/unit.getMaxHealth()+1); //Units left in stack
+        unit.setCurrentHealth(totalHealth%unit.getMaxHealth()); //Current health of top unit
 
-        if (defender.getCurrentHealth() == 0){ //Handle if the defender takes exactly the amount of damage left in the top unit
-            defender.setUnitsInStack(defender.getUnitsInStack()-1);
-            defender.setCurrentHealth(defender.getMaxHealth());
+        if (unit.getCurrentHealth() == 0){ //Handle if the defender takes exactly the amount of damage left in the top unit
+            unit.setUnitsInStack(unit.getUnitsInStack()-1);
+            unit.setCurrentHealth(unit.getMaxHealth());
         }
 
-        System.out.println(defender.getUnitName() + " has " + defender.getUnitsInStack() + " units");
-        System.out.println(defender.getUnitName() + " has " + defender.getCurrentHealth() + " current health");
+        System.out.println(unit.getUnitName() + " has " + unit.getUnitsInStack() + " units");
+        System.out.println(unit.getUnitName() + " has " + unit.getCurrentHealth() + " current health");
 
     }
 
@@ -254,11 +259,48 @@ public class SceneFunctions {
         return queue;
     }
 
-    public static void trainerAttack(int x, int y, int BOARDWIDTH, Trainer trainer, Unit[] queue){
-        if(trainer.isAttackedThisTurn())
-            return;
-        if (trainer.isReadyToAttack())
-            trainer.setReadyToAttack(false);
+    public static void trainerAttack(Trainer attackingTrainer, Trainer defendingTrainer, Unit unit){
+        int unitRank = 0;
+        for (int i = 0; i < defendingTrainer.getUnits().length; i++) {
+            if (defendingTrainer.getUnits()[i].getUnitName().equals(unit.getUnitName())) {
+                unitRank = i + 1;
+                break;
+            }
+        }
+
+        double damage = 0;
+        switch (unitRank){
+            case 1:
+                damage = 2.0 + (attackingTrainer.getLevel() - 1) * 0.333;
+                break;
+            case 2:
+                damage = 1.0 + (attackingTrainer.getLevel() - 1) * 0.267;
+                break;
+            case 3:
+                damage = 0.8 + (attackingTrainer.getLevel() - 1) * 0.190;
+                break;
+            case 4:
+                damage = 0.5 + (attackingTrainer.getLevel() - 1) * 0.133;
+                break;
+            case 5:
+                damage = 0.3 + (attackingTrainer.getLevel() - 1) * 0.09;
+                break;
+            case 6:
+                damage = 0.2 + (attackingTrainer.getLevel() - 1) / 0.06;
+                break;
+            case 7:
+                damage = 0.1 + (attackingTrainer.getLevel() - 1) / 0.047;
+                break;
+        }
+
+        System.out.println("_________Trainer Attack________");
+        System.out.println("Unit: " + unit.getUnitName());
+        System.out.println("unitRank: " + unitRank);
+        System.out.println("damage: " + damage);
+        System.out.println("Trainer level: " + attackingTrainer.getLevel());
+        System.out.println("_________________");
+
+        dealDamage(unit, damage);
     }
 
     public static void setTeam(Trainer trainer, NodeList roster, int x, int BOARDWIDTH, boolean teamB){
@@ -283,93 +325,95 @@ public class SceneFunctions {
         String fileLoc = "Images/TypeSymbols/";
         ImageIcon icon;
 
-        if (i==0) {
-            clr = new Color(122, 199, 76);
-            icon = new ImageIcon(fileLoc + "Grass.png");
-            return new Pair<>(clr, icon.getImage());
-        }
-        if (i==1) {
-            clr =  new Color(115, 87, 151);
-            icon = new ImageIcon(fileLoc + "Ghost.png");
-            return new Pair<>(clr, icon.getImage());
-        }
-        if (i==2) {
-            clr =  new Color(169, 143, 243);
-            icon = new ImageIcon(fileLoc + "Flying.png");
-            return new Pair<>(clr, icon.getImage());
-        }
-        if (i==3) {
-            clr =  new Color(238, 129, 48);
-            icon = new ImageIcon(fileLoc + "Fire.png");
-            return new Pair<>(clr, icon.getImage());
-        }
-        if (i==4){
-            clr =  new Color(194, 46, 40);
-            icon = new ImageIcon(fileLoc + "Fighting.png");
-            return new Pair<>(clr, icon.getImage());
-        }
-        if (i==5) {
-            clr =  new Color(247, 208, 44);
-            icon = new ImageIcon(fileLoc + "Electric.png");
-            return new Pair<>(clr, icon.getImage());
-        }
-        if (i==6) {
-            clr =  new Color(111, 53, 252);
-            icon = new ImageIcon(fileLoc + "Dragon.png");
-            return new Pair<>(clr, icon.getImage());
-        }
-        if (i==7){
-            clr =  new Color(112, 87, 70);
-            icon = new ImageIcon(fileLoc + "Dark.png");
-            return new Pair<>(clr, icon.getImage());
-        }
-        if (i==8) {
-            clr =  new Color(166, 185, 26);
-            icon = new ImageIcon(fileLoc + "Bug.png");
-            return new Pair<>(clr, icon.getImage());
-        }
-        if (i==9) {
-            clr =  new Color(99, 144, 240);
-            icon = new ImageIcon(fileLoc + "Water.png");
-            return new Pair<>(clr, icon.getImage());
-        }
-        if (i==10) {
-            clr =  new Color(183, 183, 206);
-            icon = new ImageIcon(fileLoc + "Steel.png");
-            return new Pair<>(clr, icon.getImage());
-        }
-        if (i==11){
-            clr =  new Color(182, 161, 54);
-            icon = new ImageIcon(fileLoc + "Rock.png");
-            return new Pair<>(clr, icon.getImage());
-        }
-        if (i==12) {
-            clr =  new Color(249, 85, 135);
-            icon = new ImageIcon(fileLoc + "Psychic.png");
-            return new Pair<>(clr, icon.getImage());
-        }
-        if (i==13) {
-            clr =  new Color(163, 62, 161);
-            icon = new ImageIcon(fileLoc + "Poison.png");
-            return new Pair<>(clr, icon.getImage());
-        }
-        if (i==14) {
-            clr =  new Color(168, 167, 122);
-            icon = new ImageIcon(fileLoc + "Normal.png");
-            return new Pair<>(clr, icon.getImage());
-        }
-        if (i==15) {
-            clr =  new Color(150, 217, 214);
-            icon = new ImageIcon(fileLoc + "Ice.png");
-            return new Pair<>(clr, icon.getImage());
-        }
+        switch (i) {
+            case 0 :
+                clr = new Color(122, 199, 76);
+                icon = new ImageIcon(fileLoc + "Grass.png");
+                break;
 
-        clr =  new Color(226, 191, 101);
-        icon = new ImageIcon(fileLoc + "Ground.png");
+            case 1 :
+                clr = new Color(115, 87, 151);
+                icon = new ImageIcon(fileLoc + "Ghost.png");
+                break;
+
+            case 2 :
+                clr = new Color(169, 143, 243);
+                icon = new ImageIcon(fileLoc + "Flying.png");
+                break;
+
+            case 3 :
+                clr = new Color(238, 129, 48);
+                icon = new ImageIcon(fileLoc + "Fire.png");
+                break;
+
+            case 4 :
+                clr = new Color(194, 46, 40);
+                icon = new ImageIcon(fileLoc + "Fighting.png");
+                break;
+
+            case 5 :
+                clr = new Color(247, 208, 44);
+                icon = new ImageIcon(fileLoc + "Electric.png");
+                break;
+
+            case 6 :
+                clr = new Color(111, 53, 252);
+                icon = new ImageIcon(fileLoc + "Dragon.png");
+                break;
+
+            case 7 :
+                clr = new Color(112, 87, 70);
+                icon = new ImageIcon(fileLoc + "Dark.png");
+                break;
+
+            case 8 :
+                clr = new Color(166, 185, 26);
+                icon = new ImageIcon(fileLoc + "Bug.png");
+                break;
+
+            case 9 :
+                clr = new Color(99, 144, 240);
+                icon = new ImageIcon(fileLoc + "Water.png");
+                break;
+
+            case 10 :
+                clr = new Color(183, 183, 206);
+                icon = new ImageIcon(fileLoc + "Steel.png");
+                break;
+
+            case 11 :
+                clr = new Color(182, 161, 54);
+                icon = new ImageIcon(fileLoc + "Rock.png");
+                break;
+
+            case 12 :
+                clr = new Color(249, 85, 135);
+                icon = new ImageIcon(fileLoc + "Psychic.png");
+                break;
+
+            case 13 :
+                clr = new Color(163, 62, 161);
+                icon = new ImageIcon(fileLoc + "Poison.png");
+                break;
+
+            case 14 :
+                clr = new Color(168, 167, 122);
+                icon = new ImageIcon(fileLoc + "Normal.png");
+                break;
+
+            case 15 :
+                clr = new Color(150, 217, 214);
+                icon = new ImageIcon(fileLoc + "Ice.png");
+                break;
+            default :
+                clr = new Color(226, 191, 101);
+                icon = new ImageIcon(fileLoc + "Ground.png");
+                break;
+        }
         return new Pair<>(clr, icon.getImage());
     }
 
-    public static Cursor makeCursor(boolean canAttack, boolean canFly){ //Changes cursor according to situation.
+    public static Cursor makeCursor(boolean canAttack, boolean canFly, boolean isRanged, boolean defend){ //Changes cursor according to situation.
         Cursor c = null;
         
         return c;

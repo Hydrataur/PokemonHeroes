@@ -28,6 +28,9 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     private int tileLength = 64; //Length of each tile
     private int queueTileLength = 100; //Length of each tile in the queue
 
+    boolean trainerAttackReady;
+    private ImageIcon trainerSelectBGIcon = new ImageIcon("Images/TrainerSelectBG.jpg");
+
     private ImageIcon bgIcon = new ImageIcon("Images/Maps/CmBkBch.png"); //Background image
     private Image bgImage = bgIcon.getImage();
     private ImageIcon shieldIcon = new ImageIcon("Images/ScreenIcons/Defense.png");
@@ -465,35 +468,68 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     }
 
     private Tile chosenTile;
+    private Image trainerSelectBGImage = trainerSelectBGIcon.getImage();
 
     private void turn(int x, int y){
 
-        if (!hasMoved)
-            queue = SceneFunctions.defendButtonPressed(defenseTile, x, y, queue, trainerOne, trainerTwo);
+        if (trainerAttackReady){
+            if(trainerAttackTile.hasBeenClicked(x, y))
+                trainerAttackReady = false;
 
-
-        for (int i=0; i<tilesArr.length; i++){
-            for (int j=0; j<tilesArr.length; j++){
-                //System.out.println(e.getX()+" "+e.getY()+" "+ tilesArr[j][i].toString());
-                if(!hasMoved && tilesArr[i][j].hasBeenClicked(x, y) && !SceneFunctions.spotTaken(i, j, queue) && SceneFunctions.inRange(i, j, queue[0])) {
-                    //System.out.println(tilesArr[j][i].getX() + " " + tilesArr[j][i].getY());
-                    queue[0].setTileX(i);
-                    queue[0].setTileY(j);
-                    chosenTile = tilesArr[i][j];
-                    inTurn=true;
+            for (int i = 0; i < tilesArr.length; i++){
+                for (int j = 0; j < tilesArr.length; j++){
+                    if (tilesArr[i][j].hasBeenClicked(x, y) && SceneFunctions.spotTaken(i, j, queue)) {
+                        int inSpot = SceneFunctions.unitInSpot(queue, i, j);
+                        if (queue[inSpot].isTeam() != queue[0].isTeam()){
+                            if (queue[0].isTeam() == trainerOne.getTeam()) {
+                                SceneFunctions.trainerAttack(trainerOne, trainerTwo, queue[inSpot]);
+                                trainerOne.setAttackedThisTurn(true);
+                            }
+                            else {
+                                SceneFunctions.trainerAttack(trainerTwo, trainerOne, queue[inSpot]);
+                                trainerTwo.setAttackedThisTurn(true);
+                            }
+                            trainerAttackReady = false;
+                        }
+                    }
                 }
+            }
+        }
+        else {
 
-                int inSpot = SceneFunctions.unitInSpot(queue, i, j);
+            if (!hasMoved) {
+                queue = SceneFunctions.defendButtonPressed(defenseTile, x, y, queue, trainerOne, trainerTwo);
+                if (queue[0].isTeam() == trainerOne.getTeam()) {
+                    if (trainerAttackTile.hasBeenClicked(x, y) && !trainerOne.isAttackedThisTurn())
+                        trainerAttackReady = true;
+                }
+                else
+                    if (trainerAttackTile.hasBeenClicked(x, y) && !trainerTwo.isAttackedThisTurn())
+                        trainerAttackReady = true;
+            }
+            for (int i = 0; i < tilesArr.length; i++) {
+                for (int j = 0; j < tilesArr.length; j++) {
+                    //System.out.println(e.getX()+" "+e.getY()+" "+ tilesArr[j][i].toString());
+                    if (!hasMoved && tilesArr[i][j].hasBeenClicked(x, y) && !SceneFunctions.spotTaken(i, j, queue) && SceneFunctions.inRange(i, j, queue[0])) {
+                        //System.out.println(tilesArr[j][i].getX() + " " + tilesArr[j][i].getY());
+                        queue[0].setTileX(i);
+                        queue[0].setTileY(j);
+                        chosenTile = tilesArr[i][j];
+                        inTurn = true;
+                    }
 
-                if (SceneFunctions.spotTaken(i, j, queue) && enemiesInRange[inSpot] && tilesArr[i][j].hasBeenClicked(x, y)){
-                    System.out.println(queue[0].getUnitName() + " has attacked " + queue[inSpot].getUnitName());
-                    if (queue[0].isTeam() == trainerOne.getTeam())
-                        SceneFunctions.Attack(queue[0], queue[inSpot], trainerOne, trainerTwo);
-                    else
-                        SceneFunctions.Attack(queue[0], queue[inSpot], trainerTwo, trainerOne);
-                    queue = SceneFunctions.updateQueue(queue, trainerOne, trainerTwo);
-                    enemiesInRange = SceneFunctions.enemyInRange(queue);
-                    hasMoved = false;
+                    int inSpot = SceneFunctions.unitInSpot(queue, i, j);
+
+                    if (SceneFunctions.spotTaken(i, j, queue) && enemiesInRange[inSpot] && tilesArr[i][j].hasBeenClicked(x, y)) {
+                        System.out.println(queue[0].getUnitName() + " has attacked " + queue[inSpot].getUnitName());
+                        if (queue[0].isTeam() == trainerOne.getTeam())
+                            SceneFunctions.Attack(queue[0], queue[inSpot], trainerOne, trainerTwo);
+                        else
+                            SceneFunctions.Attack(queue[0], queue[inSpot], trainerTwo, trainerOne);
+                        queue = SceneFunctions.updateQueue(queue, trainerOne, trainerTwo);
+                        enemiesInRange = SceneFunctions.enemyInRange(queue);
+                        hasMoved = false;
+                    }
                 }
             }
         }
@@ -504,6 +540,8 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
         roster = Trainer.forRoster();
         String pokeImageLocation;
+
+        g.drawImage(trainerSelectBGImage, 0, 0, BOARDWIDTH, BOARDHEIGHT, this);
 
         for (int i=0; i<6; i++){
             for (int j=0; j<4; j++){
