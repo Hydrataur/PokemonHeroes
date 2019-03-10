@@ -17,7 +17,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class Scene extends JPanel implements MouseListener, ActionListener {
+public class Scene extends JPanel implements MouseListener, ActionListener, MouseMotionListener {
 
 //    private Client client;
 
@@ -28,7 +28,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     private int tileLength = 64; //Length of each tile
     private int queueTileLength = 100; //Length of each tile in the queue
 
-    boolean trainerAttackReady;
+    private boolean trainerAttackReady;
     private ImageIcon trainerSelectBGIcon = new ImageIcon("Images/TrainerSelectBG.jpg");
 
     private ImageIcon bgIcon = new ImageIcon("Images/Maps/CmBkBch.png"); //Background image
@@ -37,6 +37,8 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     private Image shieldImage = shieldIcon.getImage();
     private ImageIcon trainerAttackIcon = new ImageIcon("Images/ScreenIcons/TrainerAttack.png");
     private Image trainerAttackImage = trainerAttackIcon.getImage();
+    private ImageIcon trainerAttackReadyIcon = new ImageIcon("Images/ScreenIcons/TrainerAttackChosen.png");
+    private Image trainerAttackReadyImage = trainerAttackReadyIcon.getImage();
 
     private Unit[] queue; //Turn queue
 
@@ -58,8 +60,6 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     private boolean canAttack; //Checks if there are enemies in range of the pokemon
     private boolean[] enemiesInRange;
-
-    private int mouseX, mouseY;
 
     private NodeList roster;
     private ImageIcon rosterIcon;
@@ -83,6 +83,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             e.printStackTrace();
         }
         this.addMouseListener(this); //Adds ability to change things with mouse
+        this.addMouseMotionListener(this); //For dynamic cursor
 
 //        trainerOne = new Trainer("Cynthia", true); //Creates first trainer. Temporary until player can choose
 //        trainerTwo = new Trainer("Cyrus", false); //Same as above
@@ -355,19 +356,22 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             }
         }
 
-        if (unitsPlaced)
-            for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
-                for (int j = 0; j < Math.sqrt(tiles); j++) {
-                    tilesArr[i][j] = new Tile(i, j, tileStart + i * tileLength + i * 5, j * tileLength + j * 5 + tileLength - 5, tileLength, tileLength);
-                    if (SceneFunctions.inRange(i, j, queue[0]) && !inTurn && !SceneFunctions.spotTaken(i, j, queue) && !hasMoved) {
-                        g.setColor(new Color(0, 100, 0, 100));
-                        g.fillRect(tilesArr[i][j].getX(), tilesArr[i][j].getY(), tileLength, tileLength);
-                        g.setColor(new Color(0, 100, 0, 255));
-                        g.drawRect(tilesArr[i][j].getX(), tilesArr[i][j].getY(), tileLength, tileLength);
-    //                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+        if (unitsPlaced) {
+            if (!trainerAttackReady) {
+                for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
+                    for (int j = 0; j < Math.sqrt(tiles); j++) {
+                        tilesArr[i][j] = new Tile(i, j, tileStart + i * tileLength + i * 5, j * tileLength + j * 5 + tileLength - 5, tileLength, tileLength);
+                        if (SceneFunctions.inRange(i, j, queue[0]) && !inTurn && !SceneFunctions.spotTaken(i, j, queue) && !hasMoved) {
+                            g.setColor(new Color(0, 100, 0, 100));
+                            g.fillRect(tilesArr[i][j].getX(), tilesArr[i][j].getY(), tileLength, tileLength);
+                            g.setColor(new Color(0, 100, 0, 255));
+                            g.drawRect(tilesArr[i][j].getX(), tilesArr[i][j].getY(), tileLength, tileLength);
+                            //                    g.drawImage(tileImage, tilesArr[j][i].getLeftX(), tilesArr[j][i].getTopY(), tileLength, tileLength, this);
+                        }
                     }
                 }
             }
+        }
         else
             if (queue[0].isTeam()){
                 for (int i = 0; i < Math.sqrt(tiles); i++) { //Draw tiles
@@ -410,8 +414,12 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 //                            System.out.println("X "+queue[k].getX()+" "+ (tileStart+j*tileLength+j*5));
 //                            System.out.println("Y "+queue[k].getY()+" "+(50+i*tileLength+i*5));
 //                        }
-            if (unitsPlaced)
+            if (unitsPlaced && !trainerAttackReady)
                 if (enemiesInRange[k])
+                    g.drawImage(target, queue[k].getX(), queue[k].getY(), tileLength, tileLength, this);
+
+            if(trainerAttackReady)
+                if(queue[0].isTeam() != queue[k].isTeam())
                     g.drawImage(target, queue[k].getX(), queue[k].getY(), tileLength, tileLength, this);
 
             if (queue[k].isTeam())
@@ -427,7 +435,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
             g.drawString(Integer.toString(queue[k].getUnitsInStack()), queue[k].getX(), queue[k].getY()+g.getFont().getSize()-2);
 
             g.drawImage(shieldImage, defenseTile.getX(), defenseTile.getY(), defenseTile.getWidth(), defenseTile.getHeight(), this);
-            g.drawImage(trainerAttackImage, trainerAttackTile.getX(), trainerAttackTile.getY(), trainerAttackTile.getWidth(), trainerAttackTile.getHeight(), this);
+            if(trainerAttackReady)
+                g.drawImage(trainerAttackReadyImage, trainerAttackTile.getX(), trainerAttackTile.getY(), trainerAttackTile.getWidth(), trainerAttackTile.getHeight(), this);
+            else
+                g.drawImage(trainerAttackImage, trainerAttackTile.getX(), trainerAttackTile.getY(), trainerAttackTile.getWidth(), trainerAttackTile.getHeight(), this);
         }
 
     }
@@ -655,6 +666,35 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        if (inTurn)
+            return;
+
+        Tile t = null;
+        if (unitsPlaced) {
+            boolean foundTile = false;
+            for (Tile[] tileArr : tilesArr){
+                for (Tile tile : tileArr) {
+                    if (tile.hasBeenClicked(e.getX(), e.getY())) {
+                        t = tile;
+                        foundTile = true;
+                        break;
+                    }
+                }
+                if (foundTile)
+                    break;
+            }
+        }
+
+        setCursor(SceneFunctions.makeCursor(e.getX(), e.getY(), t, queue, enemiesInRange, defenseTile, trainerAttackReady));
     }
 
     private boolean moveOne = false; //Used to know which part of the animation should be played

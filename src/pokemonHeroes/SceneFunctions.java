@@ -6,6 +6,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.swing.*;
+import javax.tools.Tool;
 import java.awt.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -413,9 +414,43 @@ public class SceneFunctions {
         return new Pair<>(clr, icon.getImage());
     }
 
-    public static Cursor makeCursor(boolean canAttack, boolean canFly, boolean isRanged, boolean defend){ //Changes cursor according to situation.
-        Cursor c = null;
-        
+    public static Cursor makeCursor(int x, int y, Tile tile, Unit[] queue, boolean[] inAttackRange, Rectangle defendButton, boolean trainerAttack){ //Changes cursor according to situation.
+        Cursor c;
+        Image img;
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        String status = "Default";
+
+        if(defendButton.hasBeenClicked(x, y))
+            status = "Shield";
+        if (trainerAttack)
+            status = "Attack";
+
+        boolean unitInPlace;
+
+        if (tile != null && !trainerAttack){
+            if (spotTaken(tile.getTileX(), tile.getTileY(), queue)){
+                int spot = unitInSpot(queue, tile.getTileX(), tile.getTileY());
+                if (inAttackRange[spot] && queue[0].isTeam() != queue[spot].isTeam()) {
+                    if (queue[0].isRanged())
+                        status = "Shoot";
+                    else
+                        status = "Attack";
+                }
+                else
+                    status = "Cant";
+            }
+            else{
+                if (inRange(tile.getTileX(), tile.getTileY(), queue[0])){
+                    if (queue[0].isFlying())
+                        status = "Fly";
+                    else
+                        status = "Move";
+                }
+            }
+        }
+
+        img = toolkit.getImage("Images/Cursors/" + status + ".png");
+        c = toolkit.createCustomCursor(img, new Point(0, 0), "img");
         return c;
     }
 
