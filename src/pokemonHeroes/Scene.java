@@ -582,26 +582,32 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     private boolean unitsPlaced;
 
+    public void callSend(int x, int y){
+        if (myTurn)
+            client.send(x, y, false);
+        myTurn = !myTurn;
+    }
+
     public void findStartupOperation(int x, int y){
 
         if (!trainersChosen) {
             chooseTrainers(x, y);
-            myTurn = !myTurn;
+            callSend(x, y);
             return;
         }
         if (!teamsChosen){
             chooseTeams(x, y);
-            myTurn = !myTurn;
+            callSend(x, y);
             return;
         }
         if (!unitsPlaced){
             placeUnits(x, y);
-            myTurn = !myTurn;
+            callSend(x, y);
             return;
         }
         if (!inTurn) {
             turn(x, y);
-            myTurn = !myTurn;
+            callSend(x, y);
         }
     }
 
@@ -795,7 +801,22 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         }
     }
 
-    public void update(String fromServer){
+    public void update(String fromServer) {
+
+        if (fromServer.startsWith("Wait")){
+            if (fromServer.contains("0"))
+                myTurn = true;
+            else
+                myTurn = false;
+            return;
+        }
+        if (fromServer.startsWith("start")) {
+            return;
+        }
+        if(fromServer.equals("Bye")) {
+            endGame();
+            return;
+        }
 
         String[] parts = fromServer.split("&&");
 

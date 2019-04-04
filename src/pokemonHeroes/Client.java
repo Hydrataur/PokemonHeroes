@@ -29,7 +29,13 @@ public class Client {
     }
 
 
-    public void send(String line) {
+    public void send(int x, int y, boolean quit) {
+        String line;
+        if (quit)
+            line = "Bye";
+        else
+            line = x + "&&" + y;
+        System.out.println("ding");
         try {
             out.write(line + "\n");
             out.flush();
