@@ -6,8 +6,8 @@ import java.net.*;
 import javax.swing.JOptionPane;
 
 public class Client {
-    Socket socket;
-    BufferedWriter out;
+    private Socket socket;
+    private BufferedWriter out;
 
     public Client(Scene scene) {
         try {
@@ -29,12 +29,12 @@ public class Client {
     }
 
 
-    public void send(int x, int y, boolean quit) {
+    public void send(int id, int x, int y, boolean quit) {
         String line;
         if (quit)
             line = "Bye";
         else
-            line = x + "&&" + y;
+            line = id + "&&" + x + "&&" + y;
         System.out.println("ding");
         try {
             out.write(line + "\n");

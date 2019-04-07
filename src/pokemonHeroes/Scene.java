@@ -22,6 +22,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
     private Client client;
 
     private boolean myTurn;
+    private int id;
 
     private final static int BOARDWIDTH = 1533; //Width of screen in pixels
     private final static int BOARDHEIGHT = 845; //Height of screen in pixels
@@ -279,15 +280,19 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     protected void paintComponent(Graphics g) { //Default panel function that allows us to add stuff to the panel
         super.paintComponent(g); //Functionized draw so that I can have it draw different stuff depending on the situation
+        g.setFont(new Font("Calibri", 10, 50));
         if(teamsChosen) {
             drawBattleground(g);
+            g.drawString(Boolean.toString(myTurn), 10, 50);
             return;
         }
         if (trainersChosen) {
             drawRoster(g);
+            g.drawString(Boolean.toString(myTurn), 10, 50);
             return;
         }
         drawTrainerRoster(g);
+        g.drawString(Boolean.toString(myTurn), 10, 50);
 //        delet(g);
     }
 
@@ -582,32 +587,41 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     private boolean unitsPlaced;
 
+    public void callSendSetup(int x, int y){
+        if (myTurn)
+            client.send(id, x, y, false);
+        myTurn = !myTurn;
+    }
+
     public void callSend(int x, int y){
         if (myTurn)
-            client.send(x, y, false);
-        myTurn = !myTurn;
+            client.send(id, x, y, false);
+        myTurn = queue[0].isTeam() && id == 0 || !queue[0].isTeam() && id == 1;
     }
 
     public void findStartupOperation(int x, int y){
 
         if (!trainersChosen) {
             chooseTrainers(x, y);
-            callSend(x, y);
+            callSendSetup(x, y);
+            repaint();
             return;
         }
         if (!teamsChosen){
             chooseTeams(x, y);
-            callSend(x, y);
+            repaint();
             return;
         }
         if (!unitsPlaced){
             placeUnits(x, y);
             callSend(x, y);
+            repaint();
             return;
         }
         if (!inTurn) {
             turn(x, y);
             callSend(x, y);
+            repaint();
         }
     }
 
@@ -624,7 +638,6 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         trainersChosen = true;
 
         repaint();
-        return;
 
     }
 
@@ -632,14 +645,15 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         if (!teamOneChosen) {
             SceneFunctions.setTeam(trainerOne, Unit.forRoster(), x, BOARDWIDTH, true);
             teamOneChosen = true;
+            callSendSetup(x, y);
             return;
         }
         SceneFunctions.setTeam(trainerTwo, Unit.forRoster(), x, BOARDWIDTH, false);
         teamsChosen = true;
         queue = SceneFunctions.createQueue(trainerOne, trainerTwo);
 
+        callSend(x, y);
         repaint();
-        return;
     }
 
     public void placeUnits(int x, int y){
@@ -668,7 +682,6 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
                 queue = SceneFunctions.updateQueue(queue, trainerOne, trainerTwo);
                 enemiesInRange = SceneFunctions.enemyInRange(queue);
                 repaint();
-                return;
             }
         }
 
@@ -804,10 +817,15 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
     public void update(String fromServer) {
 
         if (fromServer.startsWith("Wait")){
-            if (fromServer.contains("0"))
+            if (fromServer.contains("0")) {
                 myTurn = true;
-            else
+                id = 0;
+            }
+            else {
                 myTurn = false;
+                id = 1;
+            }
+            Game.setTitle(id);
             return;
         }
         if (fromServer.startsWith("start")) {
@@ -819,12 +837,14 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         }
 
         String[] parts = fromServer.split("&&");
+        int senderID = Integer.parseInt(parts[0]);
 
-        int x = Integer.parseInt(parts[0]);
-        int y = Integer.parseInt(parts[1]);
+        if (senderID != id){
+            int x = Integer.parseInt(parts[1]);
+            int y = Integer.parseInt(parts[2]);
 
-        findStartupOperation(x, y);
-
+            findStartupOperation(x, y);
+        }
     }
 
     public void endGame(){

@@ -88,19 +88,28 @@ public class SceneFunctions {
     public static boolean spotTaken(int X, int Y, Unit[] queue){ //Checks if the spot a unit wants to move to is taken
 
         for (Unit unit : queue)
-            if (unit.getTileX()==X && unit.getTileY()==Y)
+            if (unit.getTileX() == X && unit.getTileY() == Y){
+                System.out.println("x="+X);
+                System.out.println("tileX="+unit.getTileX());
+                System.out.println("y="+Y);
+                System.out.println("tileY="+unit.getTileY());
+                System.out.println(unit.getUnitName());
                 return true;
+            }
 
         return false;
 
     }
 
     public static Tile chosenTile(int x, int y, Tile[][] tilesDouble){
-        for (Tile[] tiles : tilesDouble)
-            for (Tile tile : tiles)
-                if (tile.hasBeenClicked(x, y))
-                    return tile;
-
+        try {
+            for (Tile[] tiles : tilesDouble)
+                for (Tile tile : tiles)
+                    if (tile.hasBeenClicked(x, y))
+                        return tile;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return null;
     }
 
