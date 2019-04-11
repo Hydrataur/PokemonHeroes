@@ -87,18 +87,12 @@ public class SceneFunctions {
 
     public static boolean spotTaken(int X, int Y, Unit[] queue){ //Checks if the spot a unit wants to move to is taken
 
-        for (Unit unit : queue)
-            if (unit.getTileX() == X && unit.getTileY() == Y){
-                System.out.println("x="+X);
-                System.out.println("tileX="+unit.getTileX());
-                System.out.println("y="+Y);
-                System.out.println("tileY="+unit.getTileY());
-                System.out.println(unit.getUnitName());
+        for (Unit unit : queue) {
+            if (unit.getTileX() == X && unit.getTileY() == Y)
                 return true;
-            }
+        }
 
         return false;
-
     }
 
     public static Tile chosenTile(int x, int y, Tile[][] tilesDouble){
@@ -228,7 +222,7 @@ public class SceneFunctions {
         dealDamage(defender, damage);
     }
 
-    public static void dealDamage(Unit unit, double dmg){
+    private static void dealDamage(Unit unit, double dmg){
         int totalHealth = unit.getCurrentHealth() + unit.getMaxHealth()*(unit.getUnitsInStack()-1); //Total health a unit stack has
 
         System.out.println("Damage " + dmg);

@@ -587,19 +587,19 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     private boolean unitsPlaced;
 
-    public void callSendSetup(int x, int y){
+    private void callSendSetup(int x, int y){
         if (myTurn)
             client.send(id, x, y, false);
         myTurn = !myTurn;
     }
 
-    public void callSend(int x, int y){
+    private void callSend(int x, int y){
         if (myTurn)
             client.send(id, x, y, false);
         myTurn = queue[0].isTeam() && id == 0 || !queue[0].isTeam() && id == 1;
     }
 
-    public void findStartupOperation(int x, int y){
+    private void findStartupOperation(int x, int y){
 
         if (!trainersChosen) {
             chooseTrainers(x, y);
@@ -625,7 +625,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         }
     }
 
-    public void chooseTrainers(int x, int y){
+    private void chooseTrainers(int x, int y){
         int rectWidth = BOARDWIDTH/6, rectHeight = BOARDHEIGHT/4;
         int i = 5-(BOARDWIDTH - x)/rectWidth, j = 3-(BOARDHEIGHT - y)/rectHeight;
         int z = i*4+j;
@@ -641,7 +641,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     }
 
-    public void chooseTeams(int x, int y){
+    private void chooseTeams(int x, int y){
         if (!teamOneChosen) {
             SceneFunctions.setTeam(trainerOne, Unit.forRoster(), x, BOARDWIDTH, true);
             teamOneChosen = true;
@@ -656,14 +656,14 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         repaint();
     }
 
-    public void placeUnits(int x, int y){
+    private void placeUnits(int x, int y){
         chosenTile = SceneFunctions.chosenTile(x, y, tilesArr);
         int tileStart = (int) Math.round((BOARDWIDTH - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
         Unit unit = queue[0];
         if (queue[1].getTileX() != -1) //Queue moves so when it reaches the end, queue[1] will be the first unit meaning everybody has been placed
             unitsPlaced = true;
         if (chosenTile != null) {
-            if (unit.getTileY() == -1 && unit.getTileX() == -1 && !SceneFunctions.spotTaken(chosenTile.getX(), chosenTile.getY(), queue)) {
+            if (unit.getTileY() == -1 && unit.getTileX() == -1 && !SceneFunctions.spotTaken(chosenTile.getTileX(), chosenTile.getTileY(), queue)) {
                 if (unit.isTeam()) {
                     if (chosenTile.getTileX() < 2) {
                         unit.setTileX(chosenTile.getTileX());
