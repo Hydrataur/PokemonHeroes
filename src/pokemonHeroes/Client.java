@@ -1,9 +1,9 @@
 package pokemonHeroes;
 
-import java.io.*;
-import java.net.*;
-
-import javax.swing.JOptionPane;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
 
 public class Client {
     private Socket socket;
@@ -11,7 +11,7 @@ public class Client {
 
     public Client(Scene scene) {
         try {
-            String ip = "localhost";
+            String ip = "192.168.175.244";
             int port = 12345;
             //ip = JOptionPane.showInputDialog("Input server IP");
 
@@ -29,18 +29,35 @@ public class Client {
     }
 
 
-    public void send(int id, int x, int y, boolean quit) {
+    public void send(int id, int x, int y, boolean quit, double damage) {
         String line;
         if (quit)
             line = "Bye";
         else
             line = id + "&&" + x + "&&" + y;
+        if (damage != 0)
+            line += "&&" + damage;
         System.out.println("ding");
         try {
             out.write(line + "\n");
             out.flush();
 
         } catch (IOException e) {
+            System.err.println("Couldn't read or write");
+            System.exit(1);
+        }
+    }
+
+    public void sendAndroid(String name, int hp, int maxhp, int attack
+
+            , int defense, int mindamage, int maxdamage, int movement, boolean fly, boolean ranged){
+        String line;
+        line = "Android&&" + name.toLowerCase() + "&&" + hp + "&&" + maxhp + "&&" + attack + "&&" + defense
+                + "&&" + mindamage + "&&" + maxdamage + "&&" + movement + "&&" + fly + "&&" + ranged;
+        try {
+            out.write(line + "\n");
+            out.flush();
+        }catch (IOException e){
             System.err.println("Couldn't read or write");
             System.exit(1);
         }

@@ -17,10 +17,11 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class Scene extends JPanel implements MouseListener, ActionListener, MouseMotionListener {
+public class Scene extends JPanel implements MouseListener, ActionListener, MouseMotionListener, KeyListener {
 
     private Client client;
 
+    private boolean paused;
     private boolean myTurn;
     private int id;
 
@@ -51,7 +52,8 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     private int speed = 50; //Time in between ticks. Lower speed-->Things happen faster. Counted in milliseconds.
 
-    private ImageIcon pokeIcon; //Pokemon related graphics
+    //Pokemon related graphics
+    private ImageIcon pokeIcon;
     private Image pokeImage;
     private BufferedImage pokeQueueImage;
     private Graphics pokeGraphics;
@@ -62,7 +64,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
     private boolean inTurn; //Checks if a pokemon is currently moving (if yes, then we must wait until it's done)
 
     private boolean canAttack; //Checks if there are enemies in range of the pokemon
-    private boolean[] enemiesInRange;
+    private boolean[] enemiesInRange; //Order of this array is like queue, but instead of Units it is booleans of if in range
 
     private NodeList roster;
     private ImageIcon rosterIcon;
@@ -71,11 +73,17 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
     private boolean teamsChosen, trainersChosen;
     private boolean teamOneChosen, trainerOneChosen;
 
+    //UI elements for special actions
     private Rectangle defenseTile, trainerAttackTile;
 
     public Scene(){
 
-        try { //Sound related code. Starts music when opening the app
+        //Get focus for KeyListener to work
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+
+        //Sound related code. Starts music when opening the app
+        try {
             File soundFile = new File("CynthiaBattleMusic.wav");
             AudioInputStream as = AudioSystem.getAudioInputStream(soundFile);
             Clip clip = AudioSystem.getClip();
@@ -85,76 +93,31 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         catch (Exception e){
             e.printStackTrace();
         }
+
         this.addMouseListener(this); //Adds ability to change things with mouse
         this.addMouseMotionListener(this); //For dynamic cursor
-
-//        trainerOne = new Trainer("Cynthia", true); //Creates first trainer. Temporary until player can choose
-//        trainerTwo = new Trainer("Cyrus", false); //Same as above
-
-//        trainerOne.addUnit(new Unit("Electivire", 1, true));
-//        trainerOne.addUnit(new Unit("Infernape", 2, true));
-//        trainerOne.addUnit(new Unit("Shiftry", 3, true));
-//        trainerOne.addUnit(new Unit("Roserade", 4, true));
-//        trainerOne.addUnit(new Unit("Torterra", 5, true));
-//        trainerOne.addUnit(new Unit("Staraptor", 6, true));
-//        trainerOne.addUnit(new Unit("Shaymin", 7, true));
-//        trainerTwo.addUnit(new Unit("Sableye", 8, false));
-//        trainerTwo.addUnit(new Unit("Banette", 9, false));
-//        trainerTwo.addUnit(new Unit("Gengar", 10, false));
-//        trainerTwo.addUnit(new Unit("Mismagius", 11, false));
-//        trainerTwo.addUnit(new Unit("Empoleon", 12, false));
-//        trainerTwo.addUnit(new Unit("Dusknoir", 13, false));
-//        trainerTwo.addUnit(new Unit("Mewtwo", 14, false));
-//
-//        queue = SceneFunctions.createQueue(trainerOne, trainerTwo); //Creates the queue according to player's teams
-
-//        queue[0].setTileX(0);queue[0].setTileY(0);
-//        queue[1].setTileX(0);queue[1].setTileY(1);
-//        queue[2].setTileX(0);queue[2].setTileY(2);
-//        queue[3].setTileX(0);queue[3].setTileY(3);
-//        queue[4].setTileX(0);queue[4].setTileY(4);
-//        queue[5].setTileX(0);queue[5].setTileY(5);
-//        queue[6].setTileX(0);queue[6].setTileY(6);
-//        queue[7].setTileX(9);queue[7].setTileY(0);
-//        queue[8].setTileX(9);queue[8].setTileY(1);
-//        queue[9].setTileX(9);queue[9].setTileY(2);
-//        queue[10].setTileX(9);queue[10].setTileY(3);
-//        queue[11].setTileX(9);queue[11].setTileY(4);
-//        queue[12].setTileX(9);queue[12].setTileY(5);
-//        queue[13].setTileX(9);queue[13].setTileY(6);
-//
-//        enemiesInRange = SceneFunctions.enemyInRange(queue);
-//
-//        int tileStart = (int) Math.round((BOARDWIDTH - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
-////        System.out.println(tileStart);
-//
-//        queue[0].setX(tileStart+queue[0].getTileX()*tileLength+queue[0].getTileX()*5);queue[0].setY(50+queue[0].getTileY()*tileLength+queue[0].getTileY()*5);
-//        queue[1].setX(tileStart+queue[1].getTileX()*tileLength+queue[1].getTileX()*5);queue[1].setY(50+queue[1].getTileY()*tileLength+queue[1].getTileY()*5);
-//        queue[2].setX(tileStart+queue[2].getTileX()*tileLength+queue[2].getTileX()*5);queue[2].setY(50+queue[2].getTileY()*tileLength+queue[2].getTileY()*5);
-//        queue[3].setX(tileStart+queue[3].getTileX()*tileLength+queue[3].getTileX()*5);queue[3].setY(50+queue[3].getTileY()*tileLength+queue[3].getTileY()*5);
-//        queue[4].setX(tileStart+queue[4].getTileX()*tileLength+queue[4].getTileX()*5);queue[4].setY(50+queue[4].getTileY()*tileLength+queue[4].getTileY()*5);
-//        queue[5].setX(tileStart+queue[5].getTileX()*tileLength+queue[5].getTileX()*5);queue[5].setY(50+queue[5].getTileY()*tileLength+queue[5].getTileY()*5);
-//        queue[6].setX(tileStart+queue[6].getTileX()*tileLength+queue[6].getTileX()*5);queue[6].setY(50+queue[6].getTileY()*tileLength+queue[6].getTileY()*5);
-//        queue[7].setX(tileStart+queue[7].getTileX()*tileLength+queue[7].getTileX()*5);queue[7].setY(50+queue[7].getTileY()*tileLength+queue[7].getTileY()*5);
-//        queue[8].setX(tileStart+queue[8].getTileX()*tileLength+queue[8].getTileX()*5);queue[8].setY(50+queue[8].getTileY()*tileLength+queue[8].getTileY()*5);
-//        queue[9].setX(tileStart+queue[9].getTileX()*tileLength+queue[9].getTileX()*5);queue[9].setY(50+queue[9].getTileY()*tileLength+queue[9].getTileY()*5);
-//        queue[10].setX(tileStart+queue[10].getTileX()*tileLength+queue[10].getTileX()*5);queue[10].setY(50+queue[10].getTileY()*tileLength+queue[10].getTileY()*5);
-//        queue[11].setX(tileStart+queue[11].getTileX()*tileLength+queue[11].getTileX()*5);queue[11].setY(50+queue[11].getTileY()*tileLength+queue[11].getTileY()*5);
-//        queue[12].setX(tileStart+queue[12].getTileX()*tileLength+queue[12].getTileX()*5);queue[12].setY(50+queue[12].getTileY()*tileLength+queue[12].getTileY()*5);
-//        queue[13].setX(tileStart+queue[13].getTileX()*tileLength+queue[13].getTileX()*5);queue[13].setY(50+queue[13].getTileY()*tileLength+queue[13].getTileY()*5);
+        this.addKeyListener(this); //For pause menu and shortcuts
 
         Timer timer = new Timer(speed, this); //Timer according to which an action will be taken during every tick
         timer.start();
 
+        //Set locations for special action tiles
         defenseTile = new Rectangle(BOARDWIDTH-210, 10, 200, 50);
         trainerAttackTile = new Rectangle(BOARDWIDTH - 210, 70, 200, 50);
 
         inTurn=false; //Starts false by default since nobody has started moving
+
+        //Setup booleans. Become true once their task is complete
         teamsChosen = false;
         teamOneChosen = false;
         unitsPlaced = false;
 
+        System.out.println("About to start client");
+
         client = new Client(this);
+
+        //Temporary for checking
+        client.sendAndroid("a", 0, 0, 0, 0, 0, 0, 0, false, false);
     }
 
     private void drawPokeFieldImage(int numInQueue, Graphics g){
@@ -163,19 +126,12 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
         pokeGraphics = pokeFieldImage.getGraphics();
         Unit unit = queue[numInQueue];
-//        if (numInQueue != 0) {
-//            switch (unit.getSpecialPic())
-//            if (unit.isTeam())
-//                pokeGraphics.drawImage(pokeImage, -32, -64, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-//            else
-//                pokeGraphics.drawImage(pokeImage, -32, -32, pokeImage.getWidth(null), pokeImage.getHeight(null), this);
-//            g.drawImage(pokeFieldImage, queue[numInQueue].getX(), queue[numInQueue].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
-//            return;
-//        }
 
+        //To get the correct part of the spritesheet
         int xPos = 0;
         int yPos = 0;
 
+        //Some units have unique or special spritesheet sizes, so we must treat them accordingly
         switch (unit.getSpecialPic()) {
             case "G4":
                 switch (unit.getDirection()) {
@@ -279,8 +235,13 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
     }
 
     protected void paintComponent(Graphics g) { //Default panel function that allows us to add stuff to the panel
-        super.paintComponent(g); //Functionized draw so that I can have it draw different stuff depending on the situation
+        super.paintComponent(g);
+        //Functionized draw so that I can have it draw different stuff depending on the situation
         g.setFont(new Font("Calibri", 10, 50));
+        if (paused){
+            drawPauseMenu(g);
+            return;
+        }
         if(teamsChosen) {
             drawBattleground(g);
             g.drawString(Boolean.toString(myTurn), 10, 50);
@@ -296,6 +257,15 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 //        delet(g);
     }
 
+    private void drawPauseMenu(Graphics g){
+        setBackground(Color.BLACK);
+        g.setColor(Color.YELLOW);
+        g.drawString("Welcom to the pause menu", 20, 20);
+        g.drawString("To return to the game press Escape", 20, 100);
+        g.drawString("To exit the game press Backspace", 20, 180);
+    }
+
+    //Function for testing spritesheet sizes
     private void delet(Graphics g){
         Trainer t = new Trainer("Roark", true);
         g.drawImage(t.getTrainerImage(), 50, 50, t.getTrainerImage().getWidth(null), t.getTrainerImage().getHeight(null), this);
@@ -304,7 +274,6 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
     private void drawBattleground(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         int tileStart = (int) Math.round((getWidth() - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
-//        System.out.println(tileStart);
         g.drawImage(bgImage, 0, 0, getWidth(), getHeight(), this); //Draw background
 
         AffineTransform tx = AffineTransform.getScaleInstance(-1, 1); //All trainer pictures are by default facing left. This flips them.
@@ -408,19 +377,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
             }
 
         for (int k = 0; k < queue.length; k++) {
-//            pokeIcon = new ImageIcon("Images/PokePics/Combat/" + queue[k].getUnitName() + ".png");
-//            pokeImage = pokeIcon.getImage();
-//            pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
-//            pokeGraphics = pokeFieldImage.getGraphics();
             drawPokeFieldImage(k, g);
-//            pokeGraphics.dispose();
-//            g.drawImage(pokeFieldImage, queue[k].getX(), queue[k].getY(), pokeFieldImage.getWidth() * 2, pokeFieldImage.getHeight() * 2, this);
-//                        queue[k].setX(tileStart+j*tileLength+j*5);
-//                        queue[k].setY(50+i*tileLength+i*5);
-//                        if(k==0){
-//                            System.out.println("X "+queue[k].getX()+" "+ (tileStart+j*tileLength+j*5));
-//                            System.out.println("Y "+queue[k].getY()+" "+(50+i*tileLength+i*5));
-//                        }
             if (unitsPlaced && !trainerAttackReady)
                 if (enemiesInRange[k])
                     g.drawImage(target, queue[k].getX(), queue[k].getY(), tileLength, tileLength, this);
@@ -589,7 +546,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     private void callSendSetup(int x, int y){
         if (myTurn)
-            client.send(id, x, y, false);
+            client.send(id, x, y, false, 0);
         myTurn = !myTurn;
     }
 
@@ -687,10 +644,28 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     }
 
+    public void rightClick(int x, int y){
+        System.out.println("Right Clicked");
+        Tile chosenTile = SceneFunctions.chosenTile(x, y, tilesArr);
+        if(chosenTile != null) {
+            int chosenUnitLoc = SceneFunctions.unitInSpot(queue, chosenTile.getTileX(), chosenTile.getTileY());
+            Unit chosenUnit = queue[chosenUnitLoc];
+            client.sendAndroid(chosenUnit.getUnitName(), chosenUnit.getCurrentHealth(), chosenUnit.getMaxHealth(), chosenUnit.getAttack(), chosenUnit.getDefense(),
+                    chosenUnit.getMinDamage(), chosenUnit.getMaxDamage(), chosenUnit.getMovement(), chosenUnit.isFlying(), chosenUnit.isRanged());
+        }
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (myTurn)
-            findStartupOperation(e.getX(), e.getY());
+        switch (e.getButton()) {
+            case MouseEvent.BUTTON1:
+                if (myTurn && !paused)
+                    findStartupOperation(e.getX(), e.getY());
+                break;
+            case MouseEvent.BUTTON3:
+                if(unitsPlaced)
+                    rightClick(e.getX(), e.getY());
+        }
     }
 
     @Override
@@ -740,6 +715,28 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         }
 
         setCursor(SceneFunctions.makeCursor(e.getX(), e.getY(), t, queue, enemiesInRange, defenseTile, trainerAttackReady));
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        int key = e.getKeyCode();
+        if (key == KeyEvent.VK_ESCAPE) {
+            System.out.println("Game Paused");
+            paused = !paused;
+        }
+        if (paused && key == KeyEvent.VK_BACK_SPACE)
+            endGame();
+        repaint();
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 
     private boolean moveOne = false; //Used to know which part of the animation should be played
@@ -828,7 +825,8 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
             Game.setTitle(id);
             return;
         }
-        if (fromServer.startsWith("start")) {
+        if (fromServer.startsWith("start") || fromServer.startsWith("Android")) {
+            System.out.println(fromServer);
             return;
         }
         if(fromServer.equals("Bye")) {
@@ -847,6 +845,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         }
     }
 
+    //End game when I want to
     public void endGame(){
         System.exit(1);
     }
