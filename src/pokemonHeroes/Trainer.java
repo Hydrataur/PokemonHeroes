@@ -17,7 +17,6 @@ public class Trainer {
     private boolean team; //Tells which team the trainer is, right or left
     private int level;
     private boolean attackedThisTurn; //Trainer can only attack once per round
-    private boolean readyToAttack;
 
     private String friendPoke;
 
@@ -62,8 +61,6 @@ public class Trainer {
         return meleeSpecialty;
     }
 
-    public String getFriendPoke() { return friendPoke; }
-
     public boolean isAttackedThisTurn() {
         return attackedThisTurn;
     }
@@ -71,10 +68,6 @@ public class Trainer {
     public void setAttackedThisTurn(boolean attackedThisTurn) {
         this.attackedThisTurn = attackedThisTurn;
     }
-
-    public boolean isReadyToAttack() { return readyToAttack; }
-
-    public void setReadyToAttack(boolean readyToAttack) { this.readyToAttack = readyToAttack; }
 
     private ImageIcon trainerIcon;
     private Image trainerImage;
@@ -105,13 +98,6 @@ public class Trainer {
     }
 
     private Unit[] units = new Unit[7]; //Array containing the trainers units. Order doesn't actually matter.
-
-    protected Trainer(String name, boolean team){ //Creates icon and image depending on the name
-        this.name = name;
-        this.team = team;
-        this.trainerIcon = new ImageIcon("Images/TrainerPics/"+name+".png");
-        this.trainerImage = trainerIcon.getImage();
-    }
 
     public static NodeList forRoster(){
         try {

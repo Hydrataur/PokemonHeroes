@@ -11,7 +11,7 @@ public class Client {
 
     public Client(Scene scene) {
         try {
-            String ip = "192.168.175.244";
+            String ip = "10.0.0.21";
             int port = 12345;
             //ip = JOptionPane.showInputDialog("Input server IP");
 

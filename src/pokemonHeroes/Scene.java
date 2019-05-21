@@ -21,9 +21,9 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     private Client client;
 
-    private boolean paused;
-    private boolean myTurn;
-    private int id;
+    private boolean paused; //To tell if the pause menu is open
+    private boolean myTurn; //To see if it's player's turn or the opponents turn
+    private int id; //Player id to differentiate between them
 
     private final static int BOARDWIDTH = 1533; //Width of screen in pixels
     private final static int BOARDHEIGHT = 845; //Height of screen in pixels
@@ -115,9 +115,6 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         System.out.println("About to start client");
 
         client = new Client(this);
-
-        //Temporary for checking
-        client.sendAndroid("a", 0, 0, 0, 0, 0, 0, 0, false, false);
     }
 
     private void drawPokeFieldImage(int numInQueue, Graphics g){
@@ -264,12 +261,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         g.drawString("To return to the game press Escape", 20, 100);
         g.drawString("To exit the game press Backspace", 20, 180);
     }
-
-    //Function for testing spritesheet sizes
-    private void delet(Graphics g){
-        Trainer t = new Trainer("Roark", true);
-        g.drawImage(t.getTrainerImage(), 50, 50, t.getTrainerImage().getWidth(null), t.getTrainerImage().getHeight(null), this);
-    }
+    private boolean hasMoved = false; //Makes sure Pokemon doesn't move twice in one turn
 
     private void drawBattleground(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
@@ -550,10 +542,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         myTurn = !myTurn;
     }
 
-    private void callSend(int x, int y){
-        if (myTurn)
-            client.send(id, x, y, false);
-        myTurn = queue[0].isTeam() && id == 0 || !queue[0].isTeam() && id == 1;
+    //Function for testing spritesheet sizes
+    private void delet(Graphics g){
+        //Trainer t = new Trainer("Roark", true);
+        //g.drawImage(t.getTrainerImage(), 50, 50, t.getTrainerImage().getWidth(null), t.getTrainerImage().getHeight(null), this);
     }
 
     private void findStartupOperation(int x, int y){
@@ -613,35 +605,11 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         repaint();
     }
 
-    private void placeUnits(int x, int y){
-        chosenTile = SceneFunctions.chosenTile(x, y, tilesArr);
-        int tileStart = (int) Math.round((BOARDWIDTH - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
-        Unit unit = queue[0];
-        if (queue[1].getTileX() != -1) //Queue moves so when it reaches the end, queue[1] will be the first unit meaning everybody has been placed
-            unitsPlaced = true;
-        if (chosenTile != null) {
-            if (unit.getTileY() == -1 && unit.getTileX() == -1 && !SceneFunctions.spotTaken(chosenTile.getTileX(), chosenTile.getTileY(), queue)) {
-                if (unit.isTeam()) {
-                    if (chosenTile.getTileX() < 2) {
-                        unit.setTileX(chosenTile.getTileX());
-                        unit.setTileY(chosenTile.getTileY());
-                    } else
-                        return;
-                } else {
-                    if (chosenTile.getTileX() > 7) {
-                        unit.setTileX(chosenTile.getTileX());
-                        unit.setTileY(chosenTile.getTileY());
-                    } else
-                        return;
-                }
-                unit.setX(tileStart + unit.getTileX() * tileLength + unit.getTileX() * 5);
-                unit.setY(50 + unit.getTileY() * tileLength + unit.getTileY() * 5);
-                queue = SceneFunctions.updateQueue(queue, trainerOne, trainerTwo);
-                enemiesInRange = SceneFunctions.enemyInRange(queue);
-                repaint();
-            }
-        }
-
+    private void callSend(int x, int y){
+        myTurn = queue[0].isTeam() && id == 0 || !queue[0].isTeam() && id == 1;
+        if (myTurn)
+            client.send(id, x, y, false, 0);
+        //myTurn = queue[0].isTeam() && id == 0 || !queue[0].isTeam() && id == 1;
     }
 
     public void rightClick(int x, int y){
@@ -740,7 +708,39 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
     }
 
     private boolean moveOne = false; //Used to know which part of the animation should be played
-    private boolean hasMoved = false;
+
+    private void placeUnits(int x, int y){
+        chosenTile = SceneFunctions.chosenTile(x, y, tilesArr);
+        int tileStart = (int) Math.round((BOARDWIDTH - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
+        Unit unit = queue[0];
+        client.sendAndroid(unit.getUnitName(), unit.getCurrentHealth(), unit.getMaxHealth(), unit.getAttack(), unit.getDefense(), unit.getMinDamage()
+        , unit.getMaxDamage(), unit.getMovement(), unit.isFlying(), unit.isRanged());
+        if (queue[1].getTileX() != -1) //Queue moves so when it reaches the end, queue[1] will be the first unit meaning everybody has been placed
+            unitsPlaced = true;
+        if (chosenTile != null) {
+            if (unit.getTileY() == -1 && unit.getTileX() == -1 && !SceneFunctions.spotTaken(chosenTile.getTileX(), chosenTile.getTileY(), queue)) {
+                if (unit.isTeam()) {
+                    if (chosenTile.getTileX() < 2) {
+                        unit.setTileX(chosenTile.getTileX());
+                        unit.setTileY(chosenTile.getTileY());
+                    } else
+                        return;
+                } else {
+                    if (chosenTile.getTileX() > 7) {
+                        unit.setTileX(chosenTile.getTileX());
+                        unit.setTileY(chosenTile.getTileY());
+                    } else
+                        return;
+                }
+                unit.setX(tileStart + unit.getTileX() * tileLength + unit.getTileX() * 5);
+                unit.setY(50 + unit.getTileY() * tileLength + unit.getTileY() * 5);
+                queue = SceneFunctions.updateQueue(queue, trainerOne, trainerTwo);
+                enemiesInRange = SceneFunctions.enemyInRange(queue);
+                repaint();
+            }
+        }
+
+    }
 
     @Override
     public void actionPerformed(ActionEvent e){

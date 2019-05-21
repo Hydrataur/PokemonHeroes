@@ -45,15 +45,6 @@ public class Unit {
 
     private String direction;
 
-    public static void fillStat(Unit[] queue){
-        try{
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     public int getMinDamage() {
         return minDamage;
     }
