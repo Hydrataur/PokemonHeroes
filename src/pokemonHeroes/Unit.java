@@ -18,7 +18,6 @@ public class Unit {
     private int attack;
     private int defense;
     private int movement;  //Amount of tiles a Pokemon can move during its turn
-    private int initiative; //Affects the Pokemon's spot in Queue. Higher initiative means it'll be higher in the queue.
     private int CD;  //How long unit must wait between uses of special
 
     private int minDamage; //The minimum amount of damage a unit can deal
@@ -109,10 +108,6 @@ public class Unit {
         this.unitsInStack = unitsInStack;
     }
 
-    public void setInitiative(int initiative){
-        this.initiative = initiative;
-    }
-
     public int getMaxHealth() {
         return maxHealth;
     }
@@ -150,8 +145,6 @@ public class Unit {
     public String getUnitName() {
         return unitName;
     }
-
-    public int getInitiative(){return initiative;}
 
     public boolean isFlying() {
         return flying;
