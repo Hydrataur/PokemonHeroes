@@ -606,33 +606,34 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
     }
 
     private void callSend(int x, int y){
-        myTurn = queue[0].isTeam() && id == 0 || !queue[0].isTeam() && id == 1;
-        if (myTurn)
+        if (myTurn) //Only send message if it's your turn
             client.send(id, x, y, false, 0);
-        //myTurn = queue[0].isTeam() && id == 0 || !queue[0].isTeam() && id == 1;
+        myTurn = queue[0].isTeam() && id == 0 || !queue[0].isTeam() && id == 1; //Sets turn
     }
 
     public void rightClick(int x, int y){
-        System.out.println("Right Clicked");
-        Tile chosenTile = SceneFunctions.chosenTile(x, y, tilesArr);
-        if(chosenTile != null) {
-            int chosenUnitLoc = SceneFunctions.unitInSpot(queue, chosenTile.getTileX(), chosenTile.getTileY());
+        System.out.println("Right Clicked"); //Allows for debugging
+        Tile chosenTile = SceneFunctions.chosenTile(x, y, tilesArr); //Find the tile that was clicked if it exists
+        if(chosenTile != null) { //Enters if when the tile exists, otherwise end the function
+            int chosenUnitLoc = SceneFunctions.unitInSpot(queue, chosenTile.getTileX(), chosenTile.getTileY()); //Find the unit that was clicked
             Unit chosenUnit = queue[chosenUnitLoc];
+            //Send a message to the Android with all the unit's information
             client.sendAndroid(chosenUnit.getUnitName(), chosenUnit.getCurrentHealth(), chosenUnit.getMaxHealth(), chosenUnit.getAttack(), chosenUnit.getDefense(),
                     chosenUnit.getMinDamage(), chosenUnit.getMaxDamage(), chosenUnit.getMovement(), chosenUnit.isFlying(), chosenUnit.isRanged());
         }
     }
 
+    //Allows us to see the x, y locations of a mouse click
     @Override
     public void mouseClicked(MouseEvent e) {
-        switch (e.getButton()) {
-            case MouseEvent.BUTTON1:
-                if (myTurn && !paused)
-                    findStartupOperation(e.getX(), e.getY());
+        switch (e.getButton()) { //Check which mouse button was pressed
+            case MouseEvent.BUTTON1: //Left mouse button
+                if (myTurn && !paused) //Make sure the game isn't paused and that it's your turn
+                    findStartupOperation(e.getX(), e.getY()); //Send x, y coordinates of the click to the apporpriate function
                 break;
-            case MouseEvent.BUTTON3:
-                if(unitsPlaced)
-                    rightClick(e.getX(), e.getY());
+            case MouseEvent.BUTTON3: //Right mouse button
+                if(unitsPlaced) //Make sure the units have been placed
+                    rightClick(e.getX(), e.getY()); //Go to separate function that handles right clicks
         }
     }
 
@@ -661,17 +662,18 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     }
 
+    //Allows for dynamic cursor image
     @Override
     public void mouseMoved(MouseEvent e) {
-        if (inTurn)
+        if (inTurn) //Don't want cursor to change mid-turn
             return;
 
-        Tile t = null;
-        if (unitsPlaced) {
-            boolean foundTile = false;
-            for (Tile[] tileArr : tilesArr){
+        Tile t = null; //Will later become the tile the mouse is on if it exists
+        if (unitsPlaced) { //Make sure units have been placed
+            boolean foundTile = false; //Set by default
+            for (Tile[] tileArr : tilesArr){ //Go through Tile array and see if any of the tiles is being hovered over
                 for (Tile tile : tileArr) {
-                    if (tile.hasBeenClicked(e.getX(), e.getY())) {
+                    if (tile.hasBeenClicked(e.getX(), e.getY())) { //Returns true if the cursor is on a tile
                         t = tile;
                         foundTile = true;
                         break;
@@ -681,18 +683,19 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
                     break;
             }
         }
-
+        //Create a cursor according to all sorts of variables like location, if anybody is in the tile, etc...
         setCursor(SceneFunctions.makeCursor(e.getX(), e.getY(), t, queue, enemiesInRange, defenseTile, trainerAttackReady));
     }
 
+    //Allows for shortcuts and pause menu
     @Override
     public void keyTyped(KeyEvent e) {
-        int key = e.getKeyCode();
-        if (key == KeyEvent.VK_ESCAPE) {
+        int key = e.getKeyCode(); //Gives int value so that we can compare the pressed key
+        if (key == KeyEvent.VK_ESCAPE) { //If escape key is pressed, pause the game
             System.out.println("Game Paused");
             paused = !paused;
         }
-        if (paused && key == KeyEvent.VK_BACK_SPACE)
+        if (paused && key == KeyEvent.VK_BACK_SPACE) //If paused and backspace is pressed then end the game
             endGame();
         repaint();
     }
@@ -709,139 +712,143 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     private boolean moveOne = false; //Used to know which part of the animation should be played
 
+    //Placing the units on the field before the fight
     private void placeUnits(int x, int y){
-        chosenTile = SceneFunctions.chosenTile(x, y, tilesArr);
+        chosenTile = SceneFunctions.chosenTile(x, y, tilesArr); //Get the tiles that was clicked on
         int tileStart = (int) Math.round((BOARDWIDTH - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
-        Unit unit = queue[0];
+        Unit unit = queue[0]; //For easier access to the unit we want
         client.sendAndroid(unit.getUnitName(), unit.getCurrentHealth(), unit.getMaxHealth(), unit.getAttack(), unit.getDefense(), unit.getMinDamage()
-        , unit.getMaxDamage(), unit.getMovement(), unit.isFlying(), unit.isRanged());
-        if (queue[1].getTileX() != -1) //Queue moves so when it reaches the end, queue[1] will be the first unit meaning everybody has been placed
-            unitsPlaced = true;
-        if (chosenTile != null) {
-            if (unit.getTileY() == -1 && unit.getTileX() == -1 && !SceneFunctions.spotTaken(chosenTile.getTileX(), chosenTile.getTileY(), queue)) {
-                if (unit.isTeam()) {
-                    if (chosenTile.getTileX() < 2) {
+        , unit.getMaxDamage(), unit.getMovement(), unit.isFlying(), unit.isRanged()); //Send unit info to Android
+        if (chosenTile != null) { //Makes sure a tile was actually clicked on
+            if (unit.getTileY() == -1 && unit.getTileX() == -1 && !SceneFunctions.spotTaken(chosenTile.getTileX(), chosenTile.getTileY(), queue)) { //Makes sure the Pokemon is allowed to take the spot and that it is not taked
+                if (unit.isTeam()) { //Each team starts on different sides so we must make sure the right side was chosen
+                    if (chosenTile.getTileX() < 2) { //Can only be placed within the first two columns on the left for team 1
                         unit.setTileX(chosenTile.getTileX());
                         unit.setTileY(chosenTile.getTileY());
                     } else
                         return;
                 } else {
-                    if (chosenTile.getTileX() > 7) {
+                    if (chosenTile.getTileX() > 7) { //Can only be placed within the first two columns on the right for team 2
                         unit.setTileX(chosenTile.getTileX());
                         unit.setTileY(chosenTile.getTileY());
                     } else
                         return;
                 }
-                unit.setX(tileStart + unit.getTileX() * tileLength + unit.getTileX() * 5);
+                unit.setX(tileStart + unit.getTileX() * tileLength + unit.getTileX() * 5); //If the unit has been succesfully placed on the tile, set their actual x, y coordinates
                 unit.setY(50 + unit.getTileY() * tileLength + unit.getTileY() * 5);
-                queue = SceneFunctions.updateQueue(queue, trainerOne, trainerTwo);
-                enemiesInRange = SceneFunctions.enemyInRange(queue);
-                repaint();
+                if (queue[1].getTileX() != -1) //Queue moves so when it reaches the end, queue[1] will be the first unit meaning everybody has been placed
+                    unitsPlaced = true;
+                queue = SceneFunctions.updateQueue(queue, trainerOne, trainerTwo); //Once a unit has been placed, it's time to place the next unit
+                enemiesInRange = SceneFunctions.enemyInRange(queue); //Creates the enemies in range for if the last unit is ranged
+                repaint(); //Repaint the screen with the new unit placement
             }
         }
 
     }
 
+    //Function that runs every tick of the timer
     @Override
     public void actionPerformed(ActionEvent e){
-        if(inTurn) {
+        if(inTurn) { //If a move has already been done it means we need to move the Pokemon and make the proper animations
+            //Moves the unit in the correct direction a certain distance allowing for an animation that looks good
             if (queue[0].getX() < chosenTile.getX()) {
-                queue[0].setX(queue[0].getX() + 10);
-                queue[0].setDirection("Right");
-                if(queue[0].getX() >= chosenTile.getX()){
+                queue[0].setX(queue[0].getX() + 10); //Moves the unit
+                queue[0].setDirection("Right"); //Makes sure the unit is facing the right direction
+                if(queue[0].getX() >= chosenTile.getX()){ //Make sure they don't overshoot the target
                     queue[0].setX(chosenTile.getX());
                 }
             }
-
+            //Moves the unit in the correct direction a certain distance allowing for an animation that looks good
             if (queue[0].getX() > chosenTile.getX()) {
-                queue[0].setX(queue[0].getX() - 10);
-                queue[0].setDirection("Left");
-                if(queue[0].getX() <= chosenTile.getX()){
+                queue[0].setX(queue[0].getX() - 10); //Moves the unit
+                queue[0].setDirection("Left"); //Makes sure the unit is facing the left direction
+                if(queue[0].getX() <= chosenTile.getX()){ //Make sure they don't overshoot the target
                     queue[0].setX(chosenTile.getX());
                 }
             }
-
+            //Once the unit is on the correct X position, it's time to move them on the Y axis
             if(queue[0].getX() == chosenTile.getX()) {
-
+                //Moves the unit in the correct direction a certain distance allowing for an animation that looks good
                 if (queue[0].getY() < chosenTile.getY()) {
-                    queue[0].setY(queue[0].getY() + 10);
-                    queue[0].setDirection("Down");
-                    if (queue[0].getY() >= chosenTile.getY()) {
+                    queue[0].setY(queue[0].getY() + 10); //Moves the unit
+                    queue[0].setDirection("Down"); //Makes sure the unit is facing the down direction
+                    if (queue[0].getY() >= chosenTile.getY()) { //Make sure they don't overshoot the target
                         queue[0].setY(chosenTile.getY());
 
                     }
                 }
 
-
+                //Moves the unit in the correct direction a certain distance allowing for an animation that looks good
                 if (queue[0].getY() > chosenTile.getY()) {
-                    queue[0].setY(queue[0].getY() - 10);
-                    queue[0].setDirection("Up");
-                    if (queue[0].getY() <= chosenTile.getY()) {
+                    queue[0].setY(queue[0].getY() - 10); //Moves the unit
+                    queue[0].setDirection("Up"); //Makes sure the unit is facing the up direction
+                    if (queue[0].getY() <= chosenTile.getY()) { //Make sure they don't overshoot the target
                         queue[0].setY(chosenTile.getY());
                     }
                 }
 
             }
 
-            moveOne = !moveOne;
+            moveOne = !moveOne; //Flip the animation for the spritesheet between the two pictures for each direction
 
-            if (queue[0].getX() == chosenTile.getX() && queue[0].getY() == chosenTile.getY()) {
-                inTurn = false;
-                moveOne = false;
-                if (queue[0].isTeam())
+            if (queue[0].getX() == chosenTile.getX() && queue[0].getY() == chosenTile.getY()) { //Make sure we're in the final position
+                inTurn = false; //The turn is officially over and we can move over to the next part of the turn
+                moveOne = false; //Reset animation
+                if (queue[0].isTeam()) //Sets the Pokemon to be looking in the same direction as the rest of their team
                     queue[0].setDirection("Right");
                 else
                     queue[0].setDirection("Left");
-                enemiesInRange = SceneFunctions.enemyInRange(queue);
-                canAttack = false;
-                hasMoved = true;
-                for (boolean inRange : enemiesInRange) {
+                enemiesInRange = SceneFunctions.enemyInRange(queue); //Check which enemies are in range after movement
+                canAttack = false; //Set false by default
+                hasMoved = true; //Make sure they don't move again in the same turn
+                for (boolean inRange : enemiesInRange) { //Set to true if there are enemies in range
                     if (inRange) {
                         canAttack = true;
                         break;
                     }
                 }
-                if (!canAttack) {
-                    queue = SceneFunctions.updateQueue(queue, trainerOne, trainerTwo);
-                    enemiesInRange = SceneFunctions.enemyInRange(queue);
-                    hasMoved = false;
+                if (!canAttack) { //If nobody is in range then end turn
+                    queue = SceneFunctions.updateQueue(queue, trainerOne, trainerTwo); //Update queue
+                    enemiesInRange = SceneFunctions.enemyInRange(queue); //Set enemies in range for the next Pokemon in line
+                    hasMoved = false; //Reset hasMoved for the new Pokemon
                 }
             }
-            repaint();
+            repaint(); //Repaint the screen with the new position
         }
     }
 
+    //Got a message from the server through NetworkRead
     public void update(String fromServer) {
 
-        if (fromServer.startsWith("Wait")){
-            if (fromServer.contains("0")) {
+        if (fromServer.startsWith("Wait")){ //Game has not yet started and not all clients have conneccted
+            if (fromServer.contains("0")) { //Means this is the first client to connect, making their id 0 and getting to move first
                 myTurn = true;
                 id = 0;
             }
-            else {
+            else { //Means this is the second client to connect, making their id 1 and getting to move second
                 myTurn = false;
                 id = 1;
             }
-            Game.setTitle(id);
+            Game.setTitle(id); //Allows differentiation between clients if they're on the same computer
             return;
         }
-        if (fromServer.startsWith("start") || fromServer.startsWith("Android")) {
+        if (fromServer.startsWith("start") || fromServer.startsWith("Android")) { //Either a message that the game has started or a message meant for Android. Print and ignore
             System.out.println(fromServer);
             return;
         }
-        if(fromServer.equals("Bye")) {
+        if(fromServer.equals("Bye")) { //Means the other client has disconnected ending the game
             endGame();
             return;
         }
 
-        String[] parts = fromServer.split("&&");
-        int senderID = Integer.parseInt(parts[0]);
+        String[] parts = fromServer.split("&&"); //Splits the String we get from the other client
+        int senderID = Integer.parseInt(parts[0]); //Allows us to check which client sent the message
 
-        if (senderID != id){
-            int x = Integer.parseInt(parts[1]);
-            int y = Integer.parseInt(parts[2]);
+        if (senderID != id){ //Ignore messages you send
+            int x = Integer.parseInt(parts[1]); //Get the x coordinate of the click
+            int y = Integer.parseInt(parts[2]); //Get the y coordinate of the click
 
-            findStartupOperation(x, y);
+            findStartupOperation(x, y); //Send coordinates to a function that handles them
         }
     }
 
