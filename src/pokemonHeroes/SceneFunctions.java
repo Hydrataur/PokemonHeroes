@@ -6,15 +6,23 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.swing.*;
-import javax.tools.Tool;
 import java.awt.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * This class contains various functions that Scene uses
+ */
 public class SceneFunctions {
 
     @SuppressWarnings("WeakerAccess")
 
-    protected static Unit[] createQueue(Trainer trainer1, Trainer trainer2) { //Creates the queue according to unit movement
+    /**
+     * Creates the queue according to unit movement
+     */
+    protected static Unit[] createQueue(Trainer trainer1, Trainer trainer2) {
+        /**
+         * Create a queue out of the trainer's teams
+         */
         Unit[] queue = new Unit[14];
         for (int i = 0; i < 7; i++) {
             if (trainer1.getUnits()[i] != null)
@@ -27,8 +35,11 @@ public class SceneFunctions {
                 queue[i+7] = null;
         }
 
-        Unit.fillStats(queue);
+        Unit.fillStats(queue); //Set the units stats
 
+        /**
+         * Organize the queue by movement
+         */
         Unit temp;
         for (int i = 0; i < queue.length; i++) {
             for (int j = 1; j < queue.length - i; j++) {
@@ -45,8 +56,18 @@ public class SceneFunctions {
         return queue;
     }
 
+    /**
+     * Move the queue by 1 while getting rid of dead units and resetting trainer attack
+     * @param queue The queue before updating
+     * @param t1 The first trainer in order to reset their trainer attack
+     * @param t2 The second trainer in order to reset their trainer attack
+     * @return
+     */
     public static Unit[] updateQueue(Unit[] queue, Trainer t1, Trainer t2){
 
+        /**
+         * Means that the queue has restarted meaning we need to reset trainer attack
+         */
         if (queue[0].getMovement() < queue[1].getMovement()){
             t1.setAttackedThisTurn(false);
             t2.setAttackedThisTurn(false);
@@ -85,7 +106,14 @@ public class SceneFunctions {
         return newQueue;
     }
 
-    public static boolean spotTaken(int X, int Y, Unit[] queue){ //Checks if the spot a unit wants to move to is taken
+    /**
+     * Checks if the spot a unit wants to move to is taken
+     * @param X The tile X of chosen spot
+     * @param Y The tile Y of chosen spot
+     * @param queue The queue so that we can check the units locations
+     * @return
+     */
+    public static boolean spotTaken(int X, int Y, Unit[] queue){
 
         for (Unit unit : queue) {
             if (unit.getTileX() == X && unit.getTileY() == Y)
@@ -95,6 +123,13 @@ public class SceneFunctions {
         return false;
     }
 
+    /**
+     * Returns the tile which has been clicked on, if one exists in the click location
+     * @param x The X coordinate of the click
+     * @param y The Y coordinate of the click
+     * @param tilesDouble The array of all tiles to get their locations
+     * @return
+     */
     public static Tile chosenTile(int x, int y, Tile[][] tilesDouble){
         try {
             for (Tile[] tiles : tilesDouble)
@@ -107,11 +142,23 @@ public class SceneFunctions {
         return null;
     }
 
-    public static boolean inRange(int x, int y, Unit poke){ //Returns true if tile is within movement range
+    /**
+     * Returns true if tile is within movement range
+     * @param x Tile X of tile
+     * @param y Tile Y of tile
+     * @param poke In order to get their movement
+     * @return
+     */
+    public static boolean inRange(int x, int y, Unit poke){
         return Math.abs(poke.getTileX() - x) + Math.abs(poke.getTileY() - y) <= poke.getMovement();
     }
 
-    public static boolean[] enemyInRange(Unit[] units){ //Returns true if enemy is in attack range
+    /**
+     * Returns boolean array with true in locations where the unit is in range
+     * @param units Need units array to check their locations
+     * @return
+     */
+    public static boolean[] enemyInRange(Unit[] units){
         boolean[] inRange = new boolean[units.length];
         for(int i=1; i<units.length; i++){
             if (Math.abs(units[0].getTileX()-units[i].getTileX())<=1 && Math.abs(units[0].getTileY()-units[i].getTileY())<=1)
@@ -121,6 +168,13 @@ public class SceneFunctions {
         return inRange;
     }
 
+    /**
+     * Find which unit is in a certain spot
+     * @param queue The queue which we use to check locations
+     * @param x Tile X of chosen tile
+     * @param y Tile Y of chosen tile
+     * @return
+     */
     public static int unitInSpot(Unit[] queue, int x, int y){
         for (int i = 0; i<queue.length; i++){
             if (queue[i].getTileX() == x && queue[i].getTileY() == y)
@@ -129,6 +183,13 @@ public class SceneFunctions {
         return -1;
     }
 
+    /**
+     * Attack function with all the calculations
+     * @param attacker Attacking Pokemon
+     * @param defender Defending Pokemon
+     * @param attackingTrainer Attacking Pokemon's trainer
+     * @param defendingTrainer Defending Pokemon's trainer
+     */
     public static void Attack(Unit attacker, Unit defender, Trainer attackingTrainer, Trainer defendingTrainer){
 
         System.out.println(attacker.getUnitName() + " has " + attacker.getUnitsInStack() + " units");
@@ -222,6 +283,11 @@ public class SceneFunctions {
         dealDamage(defender, damage);
     }
 
+    /**
+     * Deals damage to a certain unit, killing it if it runs out of HP
+     * @param unit The unit which is taking damage
+     * @param dmg The amount of damage the defending unit will take
+     */
     private static void dealDamage(Unit unit, double dmg){
         int totalHealth = unit.getCurrentHealth() + unit.getMaxHealth()*(unit.getUnitsInStack()-1); //Total health a unit stack has
 
@@ -255,6 +321,16 @@ public class SceneFunctions {
 
     }
 
+    /**
+     * Checks if the defense tile has been clicked and sets the Pokemon's defended status if it has
+     * @param dTile The defense button
+     * @param x X coordinate of click
+     * @param y Y coordinate of click
+     * @param queue Need queue because this function also goes to updateQueue. Also needed to set defended for clicker
+     * @param t1 Needed for updateQueue
+     * @param t2 Needed for updateQueue
+     * @return
+     */
     public static Unit[] defendButtonPressed(Rectangle dTile, int x, int y, Unit[] queue, Trainer t1, Trainer t2){
         if (dTile.hasBeenClicked(x, y)){
             queue[0].setDefended(true);
@@ -263,7 +339,17 @@ public class SceneFunctions {
         return queue;
     }
 
+    /**
+     * Handles trainerAttack calculations
+     * @param attackingTrainer The trainer which is attacking
+     * @param defendingTrainer The trainer which is defending
+     * @param unit The unit being attacked
+     */
     public static void trainerAttack(Trainer attackingTrainer, Trainer defendingTrainer, Unit unit){
+        /**
+         * Find unit's rank
+         * Higher rank units take less damage
+         */
         int unitRank = 0;
         for (int i = 0; i < defendingTrainer.getUnits().length; i++) {
             if (defendingTrainer.getUnits()[i].getUnitName().equals(unit.getUnitName())) {
@@ -272,6 +358,9 @@ public class SceneFunctions {
             }
         }
 
+        /**
+         * Set damage according to unit rank and trainer level
+         */
         double damage = 0;
         switch (unitRank){
             case 1:
@@ -307,8 +396,16 @@ public class SceneFunctions {
         dealDamage(unit, damage);
     }
 
+    /**
+     * Set a trainer's team according to player's chosen faction
+     * @param trainer The trainer which will get their team made
+     * @param roster Get the roster of Pokemon
+     * @param x Used to find which faction was chosen
+     * @param BOARDWIDTH Used to find which faction was chosen
+     * @param teamB Sets which team the Pokemon is on
+     */
     public static void setTeam(Trainer trainer, NodeList roster, int x, int BOARDWIDTH, boolean teamB){
-        int column = x/(BOARDWIDTH/17);
+        int column = x/(BOARDWIDTH/17); //Calculation to find faction number
         Node node;
         Element element;
         for (int i = 0; i<7; i++){
@@ -321,9 +418,12 @@ public class SceneFunctions {
 
     }
 
+    /**
+     * Returns color and image for drawing factions
+     * @param i The column number
+     * @return
+     */
     public static Pair<Color, Image> rosterColorNeeded(int i){
-
-        Pair<Color, Image> values;
 
         Color clr;
         String fileLoc = "Images/TypeSymbols/";
@@ -417,6 +517,17 @@ public class SceneFunctions {
         return new Pair<>(clr, icon.getImage());
     }
 
+    /**
+     * Create a custom cursor image
+     * @param x X position of mouse
+     * @param y Y position of mouse
+     * @param tile Tile being hovered (if exists)
+     * @param queue The unit queue to see if a unit is being hovered over
+     * @param inAttackRange Check if a Pokemon being hovered over is in attack range
+     * @param defendButton Check if we're hovering over the defend button
+     * @param trainerAttack Check if trainer attack has been readied
+     * @return
+     */
     public static Cursor makeCursor(int x, int y, Tile tile, Unit[] queue, boolean[] inAttackRange, Rectangle defendButton, boolean trainerAttack){ //Changes cursor according to situation.
         Cursor c;
         Image img;
@@ -427,8 +538,6 @@ public class SceneFunctions {
             status = "Shield";
         if (trainerAttack)
             status = "Attack";
-
-        boolean unitInPlace;
 
         if (tile != null && !trainerAttack){
             if (spotTaken(tile.getTileX(), tile.getTileY(), queue)){

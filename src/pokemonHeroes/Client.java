@@ -5,21 +5,32 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+/**
+ * The client through which we connect to the server
+ */
 public class Client {
+
+    /**
+     * The socket through which we connect to the server
+     * BufferedWriter which allows us to send messages to the server
+     */
     private Socket socket;
     private BufferedWriter out;
 
+    /**
+     * Constructs a new client
+     * @param scene The scene which we use to play in order to send messages to it
+     */
     public Client(Scene scene) {
         try {
             String ip = "10.0.0.21";
             int port = 12345;
-            //ip = JOptionPane.showInputDialog("Input server IP");
 
-            socket = new Socket(ip, port);
-            out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            NetworkRead readThread = new NetworkRead(socket, scene);
+            socket = new Socket(ip, port); //Create the socket out of our ip and port
+            out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())); //Create the BufferedWriter so that we can send messages
+            NetworkRead readThread = new NetworkRead(socket, scene); //Create a NetworkRead so that we can get messages from the server
 
-            Thread read = new Thread(readThread);
+            Thread read = new Thread(readThread); //The thread through which we get messages from the server
             read.start();
 
         } catch (IOException e) {
@@ -29,7 +40,14 @@ public class Client {
     }
 
 
-    //Send a message to the other player client
+    /**
+     *Sends a message to the other player client
+     * @param id The sender's id to differentiate between the players
+     * @param x The X location of the click
+     * @param y The Y location of the click
+     * @param quit Whether the player decided to quit or not
+     * @param damage If an attack was made then this is the amount of damage dealt. Must be sent since there is randomness in the calculation.
+     */
     public void send(int id, int x, int y, boolean quit, double damage) {
         String line; //Create the string we plan to send
         if (quit) //If we want to send a quit message then the string must be Bye so that the other clients and the server know to shut down too
@@ -49,7 +67,19 @@ public class Client {
         }
     }
 
-    //Send a message to the Android client
+    /**
+     * Send a message to the Android client with a units stats so that they can be displayed
+     * @param name Unit's name
+     * @param hp Unit's current HP
+     * @param maxhp Unit's maximum HP
+     * @param attack Unit's attack power
+     * @param defense Unit's defensive ability
+     * @param mindamage Min damage a unit can deal on attacking
+     * @param maxdamage Max damage a unit can deal on attacking
+     * @param movement How far a unit can move per turn
+     * @param fly Whether the unit can fly
+     * @param ranged Whether the unit has ranged attacks
+     */
     public void sendAndroid(String name, int hp, int maxhp, int attack
 
             , int defense, int mindamage, int maxdamage, int movement, boolean fly, boolean ranged){

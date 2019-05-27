@@ -5,15 +5,31 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+/**
+ * This class allows us to get and read messages from the server
+ * Implements runnable to access the run function
+ */
 class NetworkRead implements Runnable{
+    /**
+     * Has the socket through which we've connected to the server
+     * Has the scene so that we can send it the messages
+     */
     Socket socket;
     Scene scene;
 
+    /**
+     * Constructor of NetworkRead
+     * @param socket The socket which is connected to the server
+     * @param scene The game's scene
+     */
     public NetworkRead(Socket socket, Scene scene){
         this.socket=socket;
         this.scene=scene;
     }
 
+    /**
+     * A function that constantly runs and checks if we've received a message from the server.
+     */
     public void run(){
         try{
 

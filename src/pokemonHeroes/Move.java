@@ -1,5 +1,8 @@
 package pokemonHeroes;
 
+/**
+ * This class is the special move a Pokemon can use.
+*/
 public class Move {
 
     private String name, type;

@@ -3,10 +3,20 @@ package pokemonHeroes;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This is the main class of the game which creates the frame
+ */
 public class Game {
 
+    /**
+     * The JFrame we'll be drawing our Scene on
+     */
     private static JFrame frame;
 
+    /**
+     * function that creates the frame and a Scene which starts the game
+     * @param args
+     */
     public static void main(String[] args){
         EventQueue.invokeLater(new Runnable() { //Delays functions in order to allow for everything to load
             @Override
@@ -26,6 +36,10 @@ public class Game {
 
     }
 
+    /**
+     * Allows us to change the title of the frame
+     * @param id
+     */
     public static void setTitle(int id){
         frame.setTitle("Player ID = " + id);
     }

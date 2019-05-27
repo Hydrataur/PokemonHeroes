@@ -11,15 +11,29 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
 import java.io.File;
 
+/**
+ * This class represents the player's trainer
+ */
 public class Trainer {
 
-    private String name; //Trainer name used to get correct image
-    private boolean team; //Tells which team the trainer is, right or left
+    /**
+     * Trainer's name to get the correct image
+     * Team differentiates between the players
+     * Trainer's level to calculate damage
+     * AttackedThisTurn as boolean since you can only use a trainer attack once per round
+     */
+    private String name;
+    private boolean team;
     private int level;
-    private boolean attackedThisTurn; //Trainer can only attack once per round
+    private boolean attackedThisTurn;
 
+    /**
+     * Friend Pokemon's name to get the correct image
+     */
     private String friendPoke;
-
+    /**
+     * Integers and booleans for damage calculations
+     */
     private int archeryLevel;
     private int meleeLevel;
     private boolean archerySpecialty;
@@ -27,55 +41,31 @@ public class Trainer {
     private int armorLevel;
     private boolean armorSpecialty;
 
-    public int getLevel() {
-        return level;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public int getArmorLevel() {
-        return armorLevel;
-    }
-
-    public boolean isArmorSpecialty() {
-        return armorSpecialty;
-    }
-
+    /**
+     * Array containing the trainer's units.
+     */
+    private Unit[] units = new Unit[7];
+    /**
+     * ImageIcons and Images to later display them
+     */
     private ImageIcon friendIcon;
-
-    public int getMeleeLevel() {
-        return meleeLevel;
-    }
-
-    public boolean isArcherySpecialty() {
-        return archerySpecialty;
-    }
-
-    public boolean isMeleeSpecialty() {
-        return meleeSpecialty;
-    }
-
-    public boolean isAttackedThisTurn() {
-        return attackedThisTurn;
-    }
-
-    public void setAttackedThisTurn(boolean attackedThisTurn) {
-        this.attackedThisTurn = attackedThisTurn;
-    }
-
     private ImageIcon trainerIcon;
     private Image trainerImage;
     private Image friendImage;
+
+    /**
+     * Constructor for trainer
+     * @param numInRoster The trainer's spot in the trainer roster
+     * @param team The trainer's team
+     * @param level The trainer's level
+     */
     protected Trainer(int numInRoster, boolean team, int level){
         this.team = team;
         this.level = level;
 
+        /**
+         * Sets the trainer's information
+         */
         NodeList roster = forRoster();
         Node node = roster.item(numInRoster);
         if (node.getNodeType() == Node.ELEMENT_NODE){
@@ -90,15 +80,19 @@ public class Trainer {
             this.armorSpecialty = Boolean.parseBoolean(element.getElementsByTagName("armorSpecialty").item(0).getTextContent());
         }
 
+        /**
+         * Set images for later painting
+         */
         this.trainerIcon = new ImageIcon("Images/TrainerPics/"+name+".png");
         this.trainerImage = trainerIcon.getImage();
-
         this.friendIcon = new ImageIcon("Images/TrainerPics/FriendPoke/"+friendPoke+".png");
         this.friendImage = friendIcon.getImage();
     }
 
-    private Unit[] units = new Unit[7]; //Array containing the trainers units. Order doesn't actually matter.
-
+    /**
+     * Returns a NodeList of all the trainers from the XML to display them during the selection stage
+     * @return
+     */
     public static NodeList forRoster(){
         try {
             File inputFile = new File("Resources/trainerInventory.xml");
@@ -114,7 +108,83 @@ public class Trainer {
         return null;
     }
 
-    public void addUnit(Unit unit){ //Adds a unit to the trainer's group in the next empty spot. Order doesn't actually matter.
+    /**
+     * Returns the trainer's level
+     * @return
+     */
+    public int getLevel() {
+        return level;
+    }
+
+    /**
+     * Returns the trainer's name
+     * @return
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Returns the trainer's armor level for damage calculations
+     * @return
+     */
+    public int getArmorLevel() {
+        return armorLevel;
+    }
+
+    /**
+     * Returns the trainer's armor specialty for damage calculations
+     * @return
+     */
+    public boolean isArmorSpecialty() {
+        return armorSpecialty;
+    }
+
+    /**
+     * Returns the trainer's melee level for damage calculations
+     * @return
+     */
+    public int getMeleeLevel() {
+        return meleeLevel;
+    }
+
+    /**
+     * Returns the trainer's archery specialty for damage calculations
+     * @return
+     */
+    public boolean isArcherySpecialty() {
+        return archerySpecialty;
+    }
+
+    /**
+     * Returns the trainer's melee specialty for damage calculations
+     * @return
+     */
+    public boolean isMeleeSpecialty() {
+        return meleeSpecialty;
+    }
+
+    /**
+     * Returns whether or not the trainer has attacked this turn
+     * @return
+     */
+    public boolean isAttackedThisTurn() {
+        return attackedThisTurn;
+    }
+
+    /**
+     * Sets the trainer's attackedThisTurn boolean
+     * @return
+     */
+    public void setAttackedThisTurn(boolean attackedThisTurn) {
+        this.attackedThisTurn = attackedThisTurn;
+    }
+
+    /**
+     * Adds a unit to the trainer's group in the next empty spot
+     * @param unit
+     */
+    public void addUnit(Unit unit){
         for(int i=0; i<units.length; i++){
             if(units[i] == null){
                 units[i] = unit;
@@ -123,17 +193,31 @@ public class Trainer {
         }
     }
 
+    /**
+     * Returns the trainers unit array
+     * @return
+     */
     public Unit[] getUnits(){return units;}
 
-    protected Image getTrainerImage(){
-        return trainerImage;
-    }
-
+    /**
+     * Returns the trainer's image
+     * @return
+     */
+    protected Image getTrainerImage(){return trainerImage;}
+    /**
+     * Returns the trainer's archery level for damage calculations
+     * @return
+     */
     public int getArcheryLevel() { return archeryLevel; }
+    /**
+     * Returns the trainer's team
+     * @return
+     */
+    public boolean getTeam(){return team;}
 
-    public boolean getTeam(){
-        return team;
-    }
-
+    /**
+     * Returns the trainer's friend Pokemon image
+     * @return
+     */
     protected Image getFriendImage(){ return friendImage; }
 }

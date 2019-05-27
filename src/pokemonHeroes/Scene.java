@@ -17,25 +17,46 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+/**
+ * This class is the scene on which everything is painted and where a lot of info is stored
+ */
 public class Scene extends JPanel implements MouseListener, ActionListener, MouseMotionListener, KeyListener {
-
+    /**
+     * BOARDWIDTH: Width of screen in pixels
+     * BOARDHEIGHT: Height of screen in pixels
+     */
+    private final static int BOARDWIDTH = 1533;
+    private final static int BOARDHEIGHT = 845;
+    /**
+     * The client which we'll connect to the server with
+     */
     private Client client;
-
-    private boolean paused; //To tell if the pause menu is open
-    private boolean myTurn; //To see if it's player's turn or the opponents turn
-    private int id; //Player id to differentiate between them
-
-    private final static int BOARDWIDTH = 1533; //Width of screen in pixels
-    private final static int BOARDHEIGHT = 845; //Height of screen in pixels
-
-    private int tiles = 100; //Number of tiles on board
-    private int tileLength = 64; //Length of each tile
-    private int queueTileLength = 100; //Length of each tile in the queue
-
+    /**
+     * paused: To tell if the pause menu is open
+     * myTurn: To see if it's player's turn or the opponents turn
+     * id: Player id to differentiate between them
+     */
+    private boolean paused;
+    private boolean myTurn;
+    private int id;
+    /**
+     * tiles: Number of tiles on board
+     * tileLength: Length of each tile
+     * queueTileLength: Length of each tile in the queue
+     */
+    private int tiles = 100;
+    private int tileLength = 64;
+    private int queueTileLength = 100;
+    /**
+     * trainerAttackReady: Tells if trainer attack has been readied
+     */
     private boolean trainerAttackReady;
+    /**
+     * Various images we need, first icons to later create images that can be displayed
+     */
     private ImageIcon trainerSelectBGIcon = new ImageIcon("Images/TrainerSelectBG.jpg");
-
-    private ImageIcon bgIcon = new ImageIcon("Images/Maps/CmBkBch.png"); //Background image
+    private Image trainerSelectBGImage = trainerSelectBGIcon.getImage();
+    private ImageIcon bgIcon = new ImageIcon("Images/Maps/CmBkBch.png");
     private Image bgImage = bgIcon.getImage();
     private ImageIcon shieldIcon = new ImageIcon("Images/ScreenIcons/Defense.png");
     private Image shieldImage = shieldIcon.getImage();
@@ -43,16 +64,25 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
     private Image trainerAttackImage = trainerAttackIcon.getImage();
     private ImageIcon trainerAttackReadyIcon = new ImageIcon("Images/ScreenIcons/TrainerAttackChosen.png");
     private Image trainerAttackReadyImage = trainerAttackReadyIcon.getImage();
-
-    private Unit[] queue; //Turn queue
-
+    /**
+     * Turn queue
+     */
+    private Unit[] queue;
+    /**
+     * Array of tiles
+     */
     private Tile[][] tilesArr = new Tile[(int)Math.sqrt(tiles)][(int)Math.sqrt(tiles)];
-
-    private Trainer trainerOne, trainerTwo; //The two player's trainers
-
-    private int speed = 50; //Time in between ticks. Lower speed-->Things happen faster. Counted in milliseconds.
-
-    //Pokemon related graphics
+    /**
+     * The two player's trainers
+     */
+    private Trainer trainerOne, trainerTwo;
+    /**
+     * Time in between ticks. Lower speed-->Things happen faster. Counted in milliseconds.
+     */
+    private int speed = 50;
+    /**
+     * Pokemon related graphics
+     */
     private ImageIcon pokeIcon;
     private Image pokeImage;
     private BufferedImage pokeQueueImage;
@@ -60,29 +90,61 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
     private BufferedImage pokeFieldImage;
     private ImageIcon targetIcon = new ImageIcon("Images/targetTemp.png");
     private Image target = targetIcon.getImage();
-
-    private boolean inTurn; //Checks if a pokemon is currently moving (if yes, then we must wait until it's done)
-
-    private boolean canAttack; //Checks if there are enemies in range of the pokemon
-    private boolean[] enemiesInRange; //Order of this array is like queue, but instead of Units it is booleans of if in range
-
+    /**
+     * Checks if a Pokemon is currently moving (if yes, then we must wait until it's done
+     */
+    private boolean inTurn;
+    /**
+     * canAttack: Checks if there are enemies in range of the pokemon
+     * enemiesInRange: Order of this array is like queue, but instead of Units it is booleans of if in range
+     */
+    private boolean canAttack;
+    private boolean[] enemiesInRange;
+    /**
+     * roster: The whole roster to be displayed during team choosing stage
+     * rosterIcon/rosterImage: Used for roster drawing
+     * imageLocation: String location of image to make it look cleaner
+     * teamsChosen/trainersChosen/unitsPlaced: Used to tell which stage of the game we're in
+     * teamOneChosen/trainerOneChosen: Tells which team gets the team/trainer when one is chosen
+     */
     private NodeList roster;
     private ImageIcon rosterIcon;
     private Image rosterImage;
     private String imageLocation;
     private boolean teamsChosen, trainersChosen;
     private boolean teamOneChosen, trainerOneChosen;
-
-    //UI elements for special actions
+    private boolean unitsPlaced;
+    /**
+     * Makes sure Pokemon doesn't move twice in one turn
+     */
+    private boolean hasMoved = false;
+    /**
+     * UI elements for special actions
+     */
     private Rectangle defenseTile, trainerAttackTile;
+    /**
+     * Used to know which part of the animation should be played
+     */
+    private boolean moveOne = false;
+    /**
+     * The tile that has been chosen
+     */
+    private Tile chosenTile;
 
+    /**
+     * Scene constructor
+     */
     public Scene(){
 
-        //Get focus for KeyListener to work
+        /**
+        Get focus for KeyListener to work
+         */
         this.setFocusable(true);
         this.requestFocusInWindow();
 
-        //Sound related code. Starts music when opening the app
+        /**
+         * Sound related code. Starts music when opening the app
+         */
         try {
             File soundFile = new File("CynthiaBattleMusic.wav");
             AudioInputStream as = AudioSystem.getAudioInputStream(soundFile);
@@ -98,37 +160,57 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         this.addMouseMotionListener(this); //For dynamic cursor
         this.addKeyListener(this); //For pause menu and shortcuts
 
-        Timer timer = new Timer(speed, this); //Timer according to which an action will be taken during every tick
+        /**
+         * Timer according to which an action will be taken during every tick
+         */
+        Timer timer = new Timer(speed, this);
         timer.start();
 
-        //Set locations for special action tiles
+        /**
+         * Set locations for special action tiles
+         */
         defenseTile = new Rectangle(BOARDWIDTH-210, 10, 200, 50);
         trainerAttackTile = new Rectangle(BOARDWIDTH - 210, 70, 200, 50);
+        /**
+         * Starts false by default since nobody has started moving
+         */
+        inTurn=false;
 
-        inTurn=false; //Starts false by default since nobody has started moving
-
-        //Setup booleans. Become true once their task is complete
+        /**
+         * Setup booleans. Become true once their task is complete
+         */
         teamsChosen = false;
         teamOneChosen = false;
         unitsPlaced = false;
 
         System.out.println("About to start client");
-
+        /**
+         * Creates the client so that we can connect to the server
+         */
         client = new Client(this);
     }
 
+    /**
+     * Draw the image of a Pokemon on the battlefield from a spritesheet
+     * @param numInQueue Current Pokemon's position in the queue
+     * @param g Used to draw
+     */
     private void drawPokeFieldImage(int numInQueue, Graphics g){
         pokeIcon = new ImageIcon("Images/PokePics/Combat/" + queue[numInQueue].getUnitName() + ".png");
         pokeImage = pokeIcon.getImage();
         pokeFieldImage = new BufferedImage(pokeImage.getWidth(null) / 2, pokeImage.getHeight(null) / 4, BufferedImage.TYPE_INT_ARGB);
         pokeGraphics = pokeFieldImage.getGraphics();
-        Unit unit = queue[numInQueue];
+        Unit unit = queue[numInQueue]; //The Pokemon we're drawing
 
-        //To get the correct part of the spritesheet
+        /**
+         * To get the correct part of the spritesheet
+         */
         int xPos = 0;
         int yPos = 0;
 
-        //Some units have unique or special spritesheet sizes, so we must treat them accordingly
+        /**
+         * Some units have unique or special spritesheet sizes, so we must treat them accordingly
+         */
         switch (unit.getSpecialPic()) {
             case "G4":
                 switch (unit.getDirection()) {
@@ -231,44 +313,62 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     }
 
-    protected void paintComponent(Graphics g) { //Default panel function that allows us to add stuff to the panel
+    /**
+     * Default panel function that allows us to add stuff to the panel
+     * @param g
+     */
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //Functionized draw so that I can have it draw different stuff depending on the situation
-        g.setFont(new Font("Calibri", 10, 50));
+        /**
+         * Functionized draw so that I can have it draw different stuff depending on the situation
+         */
         if (paused){
             drawPauseMenu(g);
             return;
         }
         if(teamsChosen) {
             drawBattleground(g);
+            g.setFont(new Font("Calibri", 10, 50));
             g.drawString(Boolean.toString(myTurn), 10, 50);
             return;
         }
         if (trainersChosen) {
             drawRoster(g);
+            g.setFont(new Font("Calibri", 10, 50));
             g.drawString(Boolean.toString(myTurn), 10, 50);
             return;
         }
         drawTrainerRoster(g);
+        g.setFont(new Font("Calibri", 10, 50));
         g.drawString(Boolean.toString(myTurn), 10, 50);
 //        delet(g);
     }
 
+    /**
+     * Draws the pause menu
+     * @param g
+     */
     private void drawPauseMenu(Graphics g){
         setBackground(Color.BLACK);
         g.setColor(Color.YELLOW);
-        g.drawString("Welcom to the pause menu", 20, 20);
+        g.drawString("Welcome to the pause menu", 20, 20);
         g.drawString("To return to the game press Escape", 20, 100);
         g.drawString("To exit the game press Backspace", 20, 180);
     }
-    private boolean hasMoved = false; //Makes sure Pokemon doesn't move twice in one turn
 
+    /**
+     * Draws the battleground
+     * @param g
+     */
     private void drawBattleground(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         int tileStart = (int) Math.round((getWidth() - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
         g.drawImage(bgImage, 0, 0, getWidth(), getHeight(), this); //Draw background
 
-        AffineTransform tx = AffineTransform.getScaleInstance(-1, 1); //All trainer pictures are by default facing left. This flips them.
+        /**
+         * All trainer pictures are by default facing left. This flips them.
+         */
+        AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
         tx.translate(-trainerOne.getTrainerImage().getWidth(null), 0);
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
 
@@ -368,6 +468,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
                 }
             }
 
+            g.setFont(new Font("Calibri", 10, 15));
         for (int k = 0; k < queue.length; k++) {
             drawPokeFieldImage(k, g);
             if (unitsPlaced && !trainerAttackReady)
@@ -399,6 +500,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     }
 
+    /**
+     * Draws the roster of Pokemon
+     * @param g For graphics
+     */
     private void drawRoster(Graphics g){
 
         Graphics2D g2d = (Graphics2D)g;
@@ -434,15 +539,23 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         }
     }
 
-    private Tile chosenTile;
-    private Image trainerSelectBGImage = trainerSelectBGIcon.getImage();
-
+    /**
+     * The actions taken during a turn
+     * @param x X coordinate of click
+     * @param y Y coordinate of click
+     */
     private void turn(int x, int y){
 
+        /**
+         * Check if we're in trainer attack mode
+         */
         if (trainerAttackReady){
-            if(trainerAttackTile.hasBeenClicked(x, y))
+            if(trainerAttackTile.hasBeenClicked(x, y)) //Turn off trainerAttackReady if it's been reclicked
                 trainerAttackReady = false;
 
+            /**
+             * Check if a viable Pokemon has been clicked on
+             */
             for (int i = 0; i < tilesArr.length; i++){
                 for (int j = 0; j < tilesArr.length; j++){
                     if (tilesArr[i][j].hasBeenClicked(x, y) && SceneFunctions.spotTaken(i, j, queue)) {
@@ -464,8 +577,14 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         }
         else {
 
+            /**
+             * Make sure the Pokemon hasn't already moved in this turn
+             */
             if (!hasMoved) {
-                queue = SceneFunctions.defendButtonPressed(defenseTile, x, y, queue, trainerOne, trainerTwo);
+                queue = SceneFunctions.defendButtonPressed(defenseTile, x, y, queue, trainerOne, trainerTwo); //Checks if defendButton was clicked
+                /**
+                 * Checks if trainer attack button was clicked
+                 */
                 if (queue[0].isTeam() == trainerOne.getTeam()) {
                     if (trainerAttackTile.hasBeenClicked(x, y) && !trainerOne.isAttackedThisTurn())
                         trainerAttackReady = true;
@@ -476,17 +595,24 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
             }
             for (int i = 0; i < tilesArr.length; i++) {
                 for (int j = 0; j < tilesArr.length; j++) {
-                    //System.out.println(e.getX()+" "+e.getY()+" "+ tilesArr[j][i].toString());
+                    /**
+                     * Moves to tile if it's available
+                     */
                     if (!hasMoved && tilesArr[i][j].hasBeenClicked(x, y) && !SceneFunctions.spotTaken(i, j, queue) && SceneFunctions.inRange(i, j, queue[0])) {
-                        //System.out.println(tilesArr[j][i].getX() + " " + tilesArr[j][i].getY());
                         queue[0].setTileX(i);
                         queue[0].setTileY(j);
                         chosenTile = tilesArr[i][j];
                         inTurn = true;
                     }
 
+                    /**
+                     * Spot in queue of unit in chosen spot
+                     */
                     int inSpot = SceneFunctions.unitInSpot(queue, i, j);
 
+                    /**
+                     * Attack unit if available
+                     */
                     if (SceneFunctions.spotTaken(i, j, queue) && enemiesInRange[inSpot] && tilesArr[i][j].hasBeenClicked(x, y)) {
                         System.out.println(queue[0].getUnitName() + " has attacked " + queue[inSpot].getUnitName());
                         if (queue[0].isTeam() == trainerOne.getTeam())
@@ -503,6 +629,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         repaint();
     }
 
+    /**
+     * Draw roster of trainers
+     * @param g For graphics
+     */
     private void drawTrainerRoster(Graphics g){
 
         roster = Trainer.forRoster();
@@ -534,20 +664,31 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         }
     }
 
-    private boolean unitsPlaced;
-
+    /**
+     * Send a message to other player client during setup
+     * @param x X coordinate of click
+     * @param y Y coordinate of click
+     */
     private void callSendSetup(int x, int y){
         if (myTurn)
             client.send(id, x, y, false, 0);
         myTurn = !myTurn;
     }
 
-    //Function for testing spritesheet sizes
+    /**
+     *Function for testing spritesheet sizes
+     * @param g
+     */
     private void delet(Graphics g){
         //Trainer t = new Trainer("Roark", true);
         //g.drawImage(t.getTrainerImage(), 50, 50, t.getTrainerImage().getWidth(null), t.getTrainerImage().getHeight(null), this);
     }
 
+    /**
+     * Sends coordinates to appropriate function according to the stage of the game
+     * @param x X coordinate of click
+     * @param y Y coordinate of click
+     */
     private void findStartupOperation(int x, int y){
 
         if (!trainersChosen) {
@@ -574,6 +715,11 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         }
     }
 
+    /**
+     * Allows players to choose their trainer according to click location
+     * @param x X coordinate of click
+     * @param y Y coordinate of click
+     */
     private void chooseTrainers(int x, int y){
         int rectWidth = BOARDWIDTH/6, rectHeight = BOARDHEIGHT/4;
         int i = 5-(BOARDWIDTH - x)/rectWidth, j = 3-(BOARDHEIGHT - y)/rectHeight;
@@ -589,7 +735,11 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         repaint();
 
     }
-
+    /**
+     * Allows players to choose their team according to click location
+     * @param x X coordinate of click
+     * @param y Y coordinate of click
+     */
     private void chooseTeams(int x, int y){
         if (!teamOneChosen) {
             SceneFunctions.setTeam(trainerOne, Unit.forRoster(), x, BOARDWIDTH, true);
@@ -605,12 +755,22 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         repaint();
     }
 
+    /**
+     * Send a message to the other player client
+     * @param x X location of click
+     * @param y Y location of click
+     */
     private void callSend(int x, int y){
         if (myTurn) //Only send message if it's your turn
             client.send(id, x, y, false, 0);
         myTurn = queue[0].isTeam() && id == 0 || !queue[0].isTeam() && id == 1; //Sets turn
     }
 
+    /**
+     * Handles a right click which has to do with sending messages to Android
+     * @param x X coordinate of click
+     * @param y Y coordinate of click
+     */
     public void rightClick(int x, int y){
         System.out.println("Right Clicked"); //Allows for debugging
         Tile chosenTile = SceneFunctions.chosenTile(x, y, tilesArr); //Find the tile that was clicked if it exists
@@ -623,7 +783,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         }
     }
 
-    //Allows us to see the x, y locations of a mouse click
+    /**
+     * Allows us to see the x, y locations of a mouse click and use them
+     * @param e
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
         switch (e.getButton()) { //Check which mouse button was pressed
@@ -662,7 +825,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     }
 
-    //Allows for dynamic cursor image
+    /**
+     * Allows for dynamic cursor image
+     * @param e
+     */
     @Override
     public void mouseMoved(MouseEvent e) {
         if (inTurn) //Don't want cursor to change mid-turn
@@ -687,7 +853,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         setCursor(SceneFunctions.makeCursor(e.getX(), e.getY(), t, queue, enemiesInRange, defenseTile, trainerAttackReady));
     }
 
-    //Allows for shortcuts and pause menu
+    /**
+     * Allows for shortcuts and pause menu
+     * @param e
+     */
     @Override
     public void keyTyped(KeyEvent e) {
         int key = e.getKeyCode(); //Gives int value so that we can compare the pressed key
@@ -710,9 +879,11 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     }
 
-    private boolean moveOne = false; //Used to know which part of the animation should be played
-
-    //Placing the units on the field before the fight
+    /**
+     * Placing the units on the field before the fight
+     * @param x X coordinate of click
+     * @param y Y coordinate of click
+     */
     private void placeUnits(int x, int y){
         chosenTile = SceneFunctions.chosenTile(x, y, tilesArr); //Get the tiles that was clicked on
         int tileStart = (int) Math.round((BOARDWIDTH - tileLength * Math.sqrt(tiles) + Math.sqrt(tiles) * 5) / 2) - 50; //Starts drawing tiles closer to center instead of on the left side of the screen
@@ -746,7 +917,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
 
     }
 
-    //Function that runs every tick of the timer
+    /**
+     * Function that runs every tick of the timer
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e){
         if(inTurn) { //If a move has already been done it means we need to move the Pokemon and make the proper animations
@@ -817,7 +991,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         }
     }
 
-    //Got a message from the server through NetworkRead
+    /**
+     * Got a message from the server through NetworkRead
+     * @param fromServer The String we've gotten from the server
+     */
     public void update(String fromServer) {
 
         if (fromServer.startsWith("Wait")){ //Game has not yet started and not all clients have conneccted
@@ -852,7 +1029,9 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         }
     }
 
-    //End game when I want to
+    /**
+     * End game when I want to
+     */
     public void endGame(){
         System.exit(1);
     }
