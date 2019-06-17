@@ -189,9 +189,15 @@ public class SceneFunctions {
      * @param defender Defending Pokemon
      * @param attackingTrainer Attacking Pokemon's trainer
      * @param defendingTrainer Defending Pokemon's trainer
+     * @param damageFromOther The amount of damage the other player has dealt for sync purposes
+     * @param scene So that we can update the damage var there
      */
-    public static void Attack(Unit attacker, Unit defender, Trainer attackingTrainer, Trainer defendingTrainer){
+    public static void Attack(Unit attacker, Unit defender, Trainer attackingTrainer, Trainer defendingTrainer, double damageFromOther, Scene scene){
 
+        if (damageFromOther != 0){
+            dealDamage(defender, damageFromOther);
+            return;
+        }
         System.out.println(attacker.getUnitName() + " has " + attacker.getUnitsInStack() + " units");
 
         System.out.println(defender.getUnitName() + " has " + defender.getUnitsInStack() + " units");
@@ -280,6 +286,8 @@ public class SceneFunctions {
 
         double damage = dmgB*(1+I1+I2+I3+I4)*(1-R1)*(1-R2-R3)*(1-R4); //Damage to be dealt
 
+        scene.setDamage(damage);
+
         dealDamage(defender, damage);
     }
 
@@ -331,8 +339,8 @@ public class SceneFunctions {
      * @param t2 Needed for updateQueue
      * @return
      */
-    public static Unit[] defendButtonPressed(Rectangle dTile, int x, int y, Unit[] queue, Trainer t1, Trainer t2){
-        if (dTile.hasBeenClicked(x, y)){
+    public static Unit[] defendButtonPressed(Rectangle dTile, int x, int y, Unit[] queue, Trainer t1, Trainer t2, boolean shortcut){
+        if (dTile.hasBeenClicked(x, y) || shortcut){
             queue[0].setDefended(true);
             queue = SceneFunctions.updateQueue(queue, t1, t2);
         }

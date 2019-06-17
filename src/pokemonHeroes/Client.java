@@ -1,5 +1,6 @@
 package pokemonHeroes;
 
+import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -23,7 +24,9 @@ public class Client {
      */
     public Client(Scene scene) {
         try {
-            String ip = "10.0.0.21";
+            String ip = "";
+            while(ip.length() == 0 || ip == null)
+                ip = JOptionPane.showInputDialog("Please enter a valid IP address");
             int port = 12345;
 
             socket = new Socket(ip, port); //Create the socket out of our ip and port
@@ -54,8 +57,7 @@ public class Client {
             line = "Bye";
         else //If we're not quitting then we want to send the id of the sender and the coordinates of the click
             line = id + "&&" + x + "&&" + y;
-        if (damage != 0) //We wanna make sure the damage is the same for both players since it's randomized. If damage is 0 then no attack was commenced
-            line += "&&" + damage;
+        line += "&&" + damage; //We wanna make sure the damage is the same for both players since it's randomized. If damage is 0 then no attack was commenced
         System.out.println("ding"); //Debugging
         try { //We use try to make sure there's no crash in case of an error when sending the message
             out.write(line + "\n"); //Add the string to the stream

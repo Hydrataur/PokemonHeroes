@@ -40,6 +40,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
     private boolean myTurn;
     private int id;
     /**
+     * damage: The amount of damage dealt by the most recent attack
+     */
+    private double damage = 0;
+    /**
      * tiles: Number of tiles on board
      * tileLength: Length of each tile
      * queueTileLength: Length of each tile in the queue
@@ -352,8 +356,9 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         setBackground(Color.BLACK);
         g.setColor(Color.YELLOW);
         g.drawString("Welcome to the pause menu", 20, 20);
-        g.drawString("To return to the game press Escape", 20, 100);
-        g.drawString("To exit the game press Backspace", 20, 180);
+        g.drawString("To return to the game press p again", 20, 100);
+        g.drawString("To exit the game press e", 20, 180);
+        g.drawString("While playing, you can press d to defend instead of pressing the Defend button", 20, 260);
     }
 
     /**
@@ -543,8 +548,9 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
      * The actions taken during a turn
      * @param x X coordinate of click
      * @param y Y coordinate of click
+     * @param damageFromOther If the other person has attacked, this is to sync damage between clients
      */
-    private void turn(int x, int y){
+    private void turn(int x, int y, double damageFromOther){
 
         /**
          * Check if we're in trainer attack mode
@@ -581,7 +587,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
              * Make sure the Pokemon hasn't already moved in this turn
              */
             if (!hasMoved) {
-                queue = SceneFunctions.defendButtonPressed(defenseTile, x, y, queue, trainerOne, trainerTwo); //Checks if defendButton was clicked
+                queue = SceneFunctions.defendButtonPressed(defenseTile, x, y, queue, trainerOne, trainerTwo, false); //Checks if defendButton was clicked
                 /**
                  * Checks if trainer attack button was clicked
                  */
@@ -616,9 +622,9 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
                     if (SceneFunctions.spotTaken(i, j, queue) && enemiesInRange[inSpot] && tilesArr[i][j].hasBeenClicked(x, y)) {
                         System.out.println(queue[0].getUnitName() + " has attacked " + queue[inSpot].getUnitName());
                         if (queue[0].isTeam() == trainerOne.getTeam())
-                            SceneFunctions.Attack(queue[0], queue[inSpot], trainerOne, trainerTwo);
+                            SceneFunctions.Attack(queue[0], queue[inSpot], trainerOne, trainerTwo, damageFromOther, this);
                         else
-                            SceneFunctions.Attack(queue[0], queue[inSpot], trainerTwo, trainerOne);
+                            SceneFunctions.Attack(queue[0], queue[inSpot], trainerTwo, trainerOne, damageFromOther, this);
                         queue = SceneFunctions.updateQueue(queue, trainerOne, trainerTwo);
                         enemiesInRange = SceneFunctions.enemyInRange(queue);
                         hasMoved = false;
@@ -688,8 +694,9 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
      * Sends coordinates to appropriate function according to the stage of the game
      * @param x X coordinate of click
      * @param y Y coordinate of click
+     * @param damageFromOther For damage sync between clients
      */
-    private void findStartupOperation(int x, int y){
+    private void findStartupOperation(int x, int y, double damageFromOther){
 
         if (!trainersChosen) {
             chooseTrainers(x, y);
@@ -709,7 +716,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
             return;
         }
         if (!inTurn) {
-            turn(x, y);
+            turn(x, y, damageFromOther);
             callSend(x, y);
             repaint();
         }
@@ -762,7 +769,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
      */
     private void callSend(int x, int y){
         if (myTurn) //Only send message if it's your turn
-            client.send(id, x, y, false, 0);
+            client.send(id, x, y, false, damage);
         myTurn = queue[0].isTeam() && id == 0 || !queue[0].isTeam() && id == 1; //Sets turn
     }
 
@@ -792,7 +799,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         switch (e.getButton()) { //Check which mouse button was pressed
             case MouseEvent.BUTTON1: //Left mouse button
                 if (myTurn && !paused) //Make sure the game isn't paused and that it's your turn
-                    findStartupOperation(e.getX(), e.getY()); //Send x, y coordinates of the click to the apporpriate function
+                    findStartupOperation(e.getX(), e.getY(), 0); //Send x, y coordinates of the click to the apporpriate function
                 break;
             case MouseEvent.BUTTON3: //Right mouse button
                 if(unitsPlaced) //Make sure the units have been placed
@@ -859,14 +866,18 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
      */
     @Override
     public void keyTyped(KeyEvent e) {
-        int key = e.getKeyCode(); //Gives int value so that we can compare the pressed key
-        if (key == KeyEvent.VK_ESCAPE) { //If escape key is pressed, pause the game
-            System.out.println("Game Paused");
-            paused = !paused;
-        }
-        if (paused && key == KeyEvent.VK_BACK_SPACE) //If paused and backspace is pressed then end the game
-            endGame();
-        repaint();
+//        if (unitsPlaced) {
+            char key = e.getKeyChar(); //Gives char value so that we can compare the pressed key
+            if (key == 'p') { //If p key is pressed, pause the game
+                System.out.println("Game Paused");
+                paused = !paused;
+            }
+            if (paused && key == 'e') //If paused and e is pressed then end the game
+                endGame(false);
+            if (!paused && key == 'd')
+                queue = SceneFunctions.defendButtonPressed(defenseTile, 0, 0, queue, trainerOne, trainerTwo, true);
+            repaint();
+//        }
     }
 
     @Override
@@ -1014,7 +1025,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
             return;
         }
         if(fromServer.equals("Bye")) { //Means the other client has disconnected ending the game
-            endGame();
+            endGame(true);
             return;
         }
 
@@ -1024,15 +1035,27 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         if (senderID != id){ //Ignore messages you send
             int x = Integer.parseInt(parts[1]); //Get the x coordinate of the click
             int y = Integer.parseInt(parts[2]); //Get the y coordinate of the click
+            double damage = Double.parseDouble(parts[3]); //Get the damage the other client calculated
 
-            findStartupOperation(x, y); //Send coordinates to a function that handles them
+            findStartupOperation(x, y, damage); //Send coordinates to a function that handles them
         }
+    }
+
+    /**
+     * Set damage of most recent attack
+     * @param damage
+     */
+    public void setDamage(double damage) {
+        this.damage = damage;
     }
 
     /**
      * End game when I want to
      */
-    public void endGame(){
+    public void endGame(boolean fromOther) {
+        if(!fromOther){
+            client.send(id, 0, 0, true, 0);
+        }
         System.exit(1);
     }
 

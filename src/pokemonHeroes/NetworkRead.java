@@ -42,7 +42,7 @@ class NetworkRead implements Runnable{
 
                 if(serverString.startsWith("Bye")) { //If the message has bye it means we're quitting
 
-                    scene.endGame(); //Go to end game function where the game is shut down
+                    scene.endGame(true); //Go to end game function where the game is shut down
                     break;
                 }
                 else //If we're not quitting then send the message to scene where the variables we get will be used
