@@ -28,6 +28,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
     private final static int BOARDWIDTH = 1533;
     private final static int BOARDHEIGHT = 845;
     /**
+     * The parent of the scene. Used to set id and dimensions
+     */
+    private JFrame frame;
+    /**
      * The client which we'll connect to the server with
      */
     private Client client;
@@ -138,7 +142,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
     /**
      * Scene constructor
      */
-    public Scene(){
+    public Scene(JFrame frame){
+
+        this.frame = frame;
+        Game.setDimensions(frame, BOARDWIDTH, BOARDHEIGHT);
 
         /**
         Get focus for KeyListener to work
@@ -1017,7 +1024,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
                 myTurn = false;
                 id = 1;
             }
-            Game.setTitle(id); //Allows differentiation between clients if they're on the same computer
+            Game.setTitle(id, frame); //Allows differentiation between clients if they're on the same computer
             return;
         }
         if (fromServer.startsWith("start") || fromServer.startsWith("Android")) { //Either a message that the game has started or a message meant for Android. Print and ignore

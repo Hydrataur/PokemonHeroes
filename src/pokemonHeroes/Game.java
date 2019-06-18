@@ -26,7 +26,7 @@ public class Game {
                 frame.setExtendedState(JFrame.MAXIMIZED_BOTH); //Sets width and height of frame depending on screen size
                 //frame.setUndecorated(true);    //Add this later. Removes borders allowing fullscreen.
 
-                Scene scene = new Scene(); //Panel we draw on
+                Scene scene = new Scene(frame); //Panel we draw on
 
                 frame.add(scene); //Insert our scene into the frame
 
@@ -40,8 +40,10 @@ public class Game {
      * Allows us to change the title of the frame
      * @param id
      */
-    public static void setTitle(int id){
+    public static void setTitle(int id, JFrame frame){
         frame.setTitle("Player ID = " + id);
     }
+
+    public static void setDimensions(JFrame frame, int width, int height){ frame.setPreferredSize(new Dimension(width, height)); }
 
 }
