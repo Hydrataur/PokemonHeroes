@@ -25,6 +25,7 @@ public class Game {
                 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //Terminates app when closing window so that it doesn't run in the background
                 frame.setExtendedState(JFrame.MAXIMIZED_BOTH); //Sets width and height of frame depending on screen size
                 //frame.setUndecorated(true);    //Add this later. Removes borders allowing fullscreen.
+                frame.setSize(1533, 875);
 
                 Scene scene = new Scene(frame); //Panel we draw on
 
