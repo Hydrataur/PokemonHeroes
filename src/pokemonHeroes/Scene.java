@@ -388,6 +388,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         g.drawImage(endImage, 0, 0, BOARDWIDTH, BOARDHEIGHT, this);
         g.drawString("Press e to exit", 20, 20);
         g.setFont(new Font("Calibri", 10, 50));
+        g.setColor(Color.CYAN);
         g.drawString("GAME OVER", BOARDWIDTH/3, BOARDHEIGHT/2);
         paused = true;
     }
