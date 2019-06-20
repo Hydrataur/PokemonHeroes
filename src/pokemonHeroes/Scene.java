@@ -114,6 +114,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
      * imageLocation: String location of image to make it look cleaner
      * teamsChosen/trainersChosen/unitsPlaced: Used to tell which stage of the game we're in
      * teamOneChosen/trainerOneChosen: Tells which team gets the team/trainer when one is chosen
+     * gameOver: Tells if the game has ended and somebody has won
      */
     private NodeList roster;
     private ImageIcon rosterIcon;
@@ -122,6 +123,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
     private boolean teamsChosen, trainersChosen;
     private boolean teamOneChosen, trainerOneChosen;
     private boolean unitsPlaced;
+    private boolean gameOver;
     /**
      * Makes sure Pokemon doesn't move twice in one turn
      */
@@ -333,6 +335,10 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         /**
          * Functionized draw so that I can have it draw different stuff depending on the situation
          */
+        if (gameOver) {
+            drawEndMenu(g);
+            return;
+        }
         if (paused){
             drawPauseMenu(g);
             return;
@@ -366,6 +372,24 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         g.drawString("To return to the game press p again", 20, 100);
         g.drawString("To exit the game press e", 20, 180);
         g.drawString("While playing, you can press d to defend instead of pressing the Defend button", 20, 260);
+    }
+
+    /**
+     * Draw the end menu
+     * @param g
+     */
+    private void drawEndMenu(Graphics g){
+        ImageIcon endIcon;
+        if (queue[0].isTeam())
+            endIcon = new ImageIcon("Images/End_Background/" +trainerOne.getTeamType());
+        else
+            endIcon = new ImageIcon("Images/End_Background/" +trainerTwo.getTeamType());
+        Image endImage = endIcon.getImage();
+        g.drawImage(endImage, 0, 0, BOARDWIDTH, BOARDHEIGHT, this);
+        g.drawString("Press e to exit", 20, 20);
+        g.setFont(new Font("Calibri", 10, 50));
+        g.drawString("GAME OVER", BOARDWIDTH/3, BOARDHEIGHT/2);
+        paused = true;
     }
 
     /**
@@ -725,6 +749,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
         if (!inTurn) {
             turn(x, y, damageFromOther);
             callSend(x, y);
+            System.out.println(myTurn + " " + id + " " + queue[0].isTeam() + " " + queue[0].getUnitName());
             repaint();
         }
     }
@@ -941,6 +966,12 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
      */
     @Override
     public void actionPerformed(ActionEvent e){
+        if (unitsPlaced)
+            gameOver = SceneFunctions.checkGameEnd(queue);
+        if (gameOver){
+            repaint();
+            return;
+        }
         if(inTurn) { //If a move has already been done it means we need to move the Pokemon and make the proper animations
             //Moves the unit in the correct direction a certain distance allowing for an animation that looks good
             if (queue[0].getX() < chosenTile.getX()) {
@@ -1003,6 +1034,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener, Mous
                     queue = SceneFunctions.updateQueue(queue, trainerOne, trainerTwo); //Update queue
                     enemiesInRange = SceneFunctions.enemyInRange(queue); //Set enemies in range for the next Pokemon in line
                     hasMoved = false; //Reset hasMoved for the new Pokemon
+                    myTurn = queue[0].isTeam() && id == 0 || !queue[0].isTeam() && id == 1; //Sets turn
                 }
             }
             repaint(); //Repaint the screen with the new position

@@ -26,6 +26,7 @@ public class Trainer {
     private boolean team;
     private int level;
     private boolean attackedThisTurn;
+    private String teamType;
 
     /**
      * Friend Pokemon's name to get the correct image
@@ -193,6 +194,62 @@ public class Trainer {
         }
     }
 
+    public void setTeamType(){
+        Unit prime = units[units.length-1];
+        switch (prime.getUnitName()){
+            case "Shaymin":
+                teamType = "grass.jpg";
+                return;
+            case "Giratina":
+                teamType = "ghost.jpg";
+                return;
+            case "Rayquaza":
+                teamType = "flying.jpg";
+                return;
+            case "HoOh":
+                teamType = "fire.jpg";
+                return;
+            case "Hitmonchan":
+                teamType = "fighting.jpg";
+                return;
+            case "Zapdos":
+                teamType = "electric.jpg";
+                return;
+            case "Palkia":
+                teamType = "dragon.jpg";
+                return;
+            case "Darkrai":
+                teamType = "dark.jpg";
+                return;
+            case "Armaldo":
+                teamType = "bug.jpg";
+                return;
+            case "Kyogre":
+                teamType = "water.png";
+                return;
+            case "Dialga":
+                teamType = "steel.jpg";
+                return;
+            case "Regirock":
+                teamType = "rock.jpg";
+                return;
+            case "Mewtwo":
+                teamType = "psychic.jpg";
+                return;
+            case "Nidoqueen":
+                teamType = "poison.png";
+                return;
+            case "Regigigas":
+                teamType = "normal.jpg";
+                return;
+            case "Regice":
+                teamType = "ice.jpg";
+                return;
+            case "Groudon":
+                teamType = "ground.jpg";
+        }
+    }
+
     /**
      * Returns the trainers unit array
      * @return
@@ -220,4 +277,10 @@ public class Trainer {
      * @return
      */
     protected Image getFriendImage(){ return friendImage; }
+
+    /**
+     * Returns the team type for the end of game image
+     * @return
+     */
+    public String getTeamType() { return teamType; }
 }

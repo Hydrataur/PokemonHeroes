@@ -423,6 +423,7 @@ public class SceneFunctions {
                 trainer.addUnit(new Unit(element.getElementsByTagName("unitName").item(0).getTextContent(), 10, teamB));
             }
         }
+        trainer.setTeamType();
 
     }
 
@@ -572,6 +573,20 @@ public class SceneFunctions {
         img = toolkit.getImage("Images/Cursors/" + status + ".png");
         c = toolkit.createCustomCursor(img, new Point(0, 0), "img");
         return c;
+    }
+
+    public static boolean checkGameEnd(Unit[] queue){
+        int t1 = 0, t2 = 0;
+        for (Unit unit : queue) {
+            if (unit.isTeam())
+                t1++;
+            else
+                t2++;
+        }
+        if (t1 == 0 || t2 == 0)
+            return true;
+        return false;
+
     }
 
 }
